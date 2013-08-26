@@ -1,15 +1,13 @@
 # encoding: utf-8
+import os
 import subprocess
 from distutils.core import setup
-from distutils.extension import Extension
+
 DESCRIPTION = 'Google word2vec python wrapper'
 
-ext_modules = None
-word2vec = Extension('word2vec',
-                     sources=['word2vec-src/word2vec.c'],
-                     extra_link_args=['-lm', '-pthread', '-O2', '-Wall', '-funroll-loops'])
-ext_modules = [word2vec]
-ext_modules = []
+directory = 'bin'
+if not os.path.exists(directory):
+    os.makedirs(directory)
 
 subprocess.call(['make', '-C', 'word2vec-src'])
 
@@ -18,9 +16,14 @@ setup(
     version='0.0.1',
     maintainer='Daniel Rodriguez',
     maintainer_email='df.rodriguez143@gmail.com',
-    ext_modules=ext_modules,
+    url='https://github.com/danielfrg/word2vec',
+    packages=['word2vec', 'word2vec.tests'],
     description=DESCRIPTION,
-    license='see LICENCE.txt',
+    license='Apache License Version 2.0, January 2004',
     data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/w2v-distance',
-                         'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy'])]
+                         'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy'])],
+    install_requires=[
+        'numpy==1.7.1',
+        'scipy==0.12.0'
+    ],
 )
