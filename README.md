@@ -28,5 +28,5 @@ Some people reported that they needed to do this if running OS X:
 Examples
 --------
 
-[word2vec]()
-[word clusters]()
+[word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-word.ipynb)
+[word clusters](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-clusters.ipynb)
