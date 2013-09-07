@@ -20,4 +20,13 @@ The default functionality from google is available:
 * w2v-word-analogy
 * w2v-compute-accuracy
 
-Also a python interface is available, examples comming soon :)
+### Issues
+
+Some people reported that they needed to do this if running OS X:
+[http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue](http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue)
+
+Examples
+--------
+
+[word2vec]()
+[word clusters]()

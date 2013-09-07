@@ -39,5 +39,9 @@ nosetests.xml
 # IPython Notebook
 .ipynb_checkpoints
 
+examples/text8
+examples/*.vec
+examples/*.clusters
+examples/*.gz
 examples/*.txt
 examples/*.bin
