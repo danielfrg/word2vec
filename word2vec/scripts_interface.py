@@ -3,7 +3,7 @@ import subprocess
 
 
 def word2vec(train, output, size=100, window=5, sample=0, hs=1, negative=0, threads=4,
-             min_count=5, alpha=0.025, debug=2, binary=0, cbow=0,
+             min_count=5, alpha=0.025, debug=2, binary=1, cbow=0,
              save_vocab=None, read_vocab=None):
     process = ['word2vec']
     args = ['-train', '-output', '-size', '-window', '-sample', '-hs', '-negative', '-threads',
@@ -50,6 +50,3 @@ def word2phase(train, output, min_count=5, threshold=100, debug=2):
         process.append(arg)
         process.append(str(value))
     subprocess.call(process)
-
-if __name__ == '__main__':
-    word2vec_classes('../data/text8', 'text8-classes.txt', 100)
