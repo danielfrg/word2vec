@@ -1,42 +1,39 @@
 # coding: utf-8
-import numpy as np
-from scipy.spatial.distance import cosine
 
 
-class TopWords(object):
+class TopItems(object):
+    '''
+    Class that mantains the top (n) items based on a similarity value.
+    Smaller values are considered better and therefore mantained.
 
-    def __init__(self, size, distances=None, values=None, init_dist=1e6):
+    Usage
+    -----
+    top = TopItems(10)
+
+    '''
+
+    def __init__(self, size, items=None, distances=None, init_dist=1e6):
         self.size = size
-        if distances is not None:
+        if distances is not None and items is not None:
             self.distances = distances
-            self.values = values
+            self.items = items
         else:
             self.distances = [init_dist for i in range(size)]
-            self.values = [None for i in range(size)]
+            self.items = [None for i in range(size)]
 
-    def insert(self, n_dist, n_value):
+    def insert(self, n_item, n_dist):
         if n_dist < max(self.distances):
             if n_dist < min(self.distances):
                 self.distances.insert(0, n_dist)
                 self.distances = self.distances[:self.size]
-                self.values.insert(0, n_value)
-                self.values = self.values[:self.size]
+                self.items.insert(0, n_item)
+                self.items = self.items[:self.size]
             else:
                 for i, dist_1 in enumerate(reversed(self.distances[:-1])):
                     dist_2 = self.distances[self.size - i - 1]
                     if n_dist < dist_2 and n_dist >= dist_1:
                         self.distances.insert(self.size - i - 1, n_dist)
                         self.distances = self.distances[:self.size]
-                        self.values.insert(self.size - i - 1, n_value)
-                        self.values = self.values[:self.size]
+                        self.items.insert(self.size - i - 1, n_item)
+                        self.items = self.items[:self.size]
                         break
-
-
-def neighbors(wv, target, n=10):
-    word_ix = np.where(wv.words == target)[0]
-    ol = TopWords(n)
-    for word, vector in zip(wv.words, wv.vectors[:]):
-        if word != target:
-            dist = cosine(wv.vectors[word_ix, :], vector)
-            ol.insert(dist, word)
-    return ol
