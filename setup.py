@@ -17,10 +17,9 @@ if not os.path.exists(directory):
 
 subprocess.call(['make', '-C', 'word2vec-src'])
 
-
 setup(
     name='word2vec',
-    version='0.2',
+    version='0.2.1',
     maintainer='Daniel Rodriguez',
     maintainer_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
@@ -30,7 +29,7 @@ setup(
     data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/w2v-distance',
                          'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy'])],
     install_requires=[
-        'numpy==1.7.1',
-        'scipy==0.12.0'
+        'numpy>=1.7.1',
+        'scipy>=0.12.0'
     ],
 )
