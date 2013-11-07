@@ -49,21 +49,22 @@ class WordVectors(object):
 
     def cosine(self, word, n=10):
         '''
-        Cosine distance.
+        Cosine similarity.
 
         metric = dot(l2norm_of_vectors, l2norm_of_target_vector)
         Uses a precomputed l2norm of the vectors
         '''
-        metric = 1 - np.dot(self.l2norm, self.get_l2_vector(word))
-        best = np.argsort(metric)[:n]
+        metric = np.dot(self.l2norm, self.get_l2_vector(word))
+        best = np.argsort(metric)[::-1][:n + 1]
         return self.generate_response(best, metric, exclude=word)
 
-    def cosine2(self, word, n=10):
+    def _cosine(self, word, n=10):
         '''
         Cosine distance using scipy.distance.cosine
 
         Note: This method is **a lot** slower than `self.cosine`
         and results are the almost the same, really just use `self.cosine`
+        This is just available for testing.
 
         Parameters
         ----------
@@ -80,13 +81,20 @@ class WordVectors(object):
         best = metric.argsort()[:n + 1]
         return self.generate_response(best, metric, exclude=word)
 
-    def analogy(self, one, two, three, n=10):
+    def analogy(self, pos, neg, n=10):
         '''
-        if ONEs opposite is TWO then the opossite of THREE is ______
-        '''
-        return self.most_similar(pos=[two, three], neg=[one], n=n)
+        Analogy similarity.
 
-    def most_similar(self, pos, neg, n=10):
+        Parameters
+        ----------
+        pos : list
+        neg : list
+
+        Example
+        -------
+            king - man + woman = queen | will be:
+            pos=['king', 'woman'], neg=['man']
+        '''
         words = pos + neg
 
         pos = [(word, 1.0) for word in pos]
@@ -98,7 +106,7 @@ class WordVectors(object):
         mean = np.array(mean).mean(axis=0)
 
         similarities = np.dot(self.l2norm, mean)
-        best = np.argsort(similarities)[::-1][:n + len(words)]
+        best = np.argsort(similarities)[::-1][:n + len(words) - 1]
         return [(_word, sim) for _word, sim in zip(self.vocab[best], similarities[best]) if _word not in words]
 
 
@@ -110,7 +118,3 @@ class WordClusters(object):
     def load(self, fname):
         self.words = np.genfromtxt(fname, dtype=object, delimiter=' ', usecols=0)
         self.clusters = np.genfromtxt(fname, dtype=int, delimiter=' ', usecols=1)
-
-
-if __name__ == "__main__":
-    import word2vec

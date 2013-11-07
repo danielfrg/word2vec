@@ -19,7 +19,7 @@ subprocess.call(['make', '-C', 'word2vec-src'])
 
 setup(
     name='word2vec',
-    version='0.2.1',
+    version='0.2.2',
     maintainer='Daniel Rodriguez',
     maintainer_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
