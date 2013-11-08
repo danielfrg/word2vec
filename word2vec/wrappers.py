@@ -6,14 +6,15 @@ from word2vec.utils import unitvec
 
 class WordVectors(object):
 
-    def __init__(self, vocab=None, vectors=None):
+    def __init__(self, vocab=None, vectors=None, saveMemory=True):
         self.vocab = vocab
-        self.vectors = vectors
-        self.l2norm = np.vstack(unitvec(vec) for vec in self.vectors)
+        if not saveMemory:
+            self.vectors = vectors
+        self.l2norm = np.vstack(unitvec(vec) for vec in vectors)
 
     def ix(self, word):
         '''
-        Returns the index on self.vocab, self.vectors and self.l2norm for `word`
+        Returns the index on self.vocab and self.l2norm for `word`
         '''
         temp = np.where(self.vocab == word)[0]
         if temp.size == 0:
@@ -26,7 +27,7 @@ class WordVectors(object):
         Returns the vector for `word`
         '''
         idx = self.ix(word)
-        return self.vectors[idx]
+        return self.l2norm[idx]
 
     def get_l2_vector(self, word):
         '''
@@ -65,6 +66,7 @@ class WordVectors(object):
         Note: This method is **a lot** slower than `self.cosine`
         and results are the almost the same, really just use `self.cosine`
         This is just available for testing.
+        Requires saveMemory=False
 
         Parameters
         ----------
@@ -102,7 +104,7 @@ class WordVectors(object):
 
         mean = []
         for word, direction in pos + neg:
-            mean.append(direction * unitvec(self.vectors[self.ix(word)]))
+            mean.append(direction * unitvec(self.get_vector(word)))
         mean = np.array(mean).mean(axis=0)
 
         similarities = np.dot(self.l2norm, mean)

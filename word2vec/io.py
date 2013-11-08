@@ -8,7 +8,7 @@ http://github.com/piskvorky/gensim/blob/develop/gensim/models/word2vec.py
 '''
 
 
-def load(fname, binary=True):
+def load(fname, binary=True, saveMemory=True):
     '''
     '''
     if binary:
@@ -36,7 +36,7 @@ def load(fname, binary=True):
                 fin.read(1)  # newline
         vocab = np.array(vocab)
 
-        return word2vec.WordVectors(vocab=vocab, vectors=vectors)
+        return word2vec.WordVectors(vocab=vocab, vectors=vectors, saveMemory=saveMemory)
     else:
         shape = tuple()
         with open(fname) as f:
