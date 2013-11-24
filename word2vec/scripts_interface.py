@@ -20,6 +20,7 @@ def word2vec(train, output, size=100, window=5, sample=0, hs=1, negative=0, thre
     if read_vocab is not None:
         process.append('-read-vocab')
         process.append(str(read_vocab))
+
     proc = subprocess.Popen(process, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if verbose:
