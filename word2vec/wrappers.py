@@ -23,7 +23,7 @@ class WordVectors(object):
 
     def get_vector(self, word):
         '''
-        Returns the (l2norm) vector for `word`
+        Returns the (l2norm) vector for `word` in the vocabulary
         '''
         idx = self.ix(word)
         return self.l2norm[idx]
@@ -34,7 +34,7 @@ class WordVectors(object):
     def generate_response(self, indexes, metric, exclude=''):
         '''
         Generates a response as a list of tuples based on the indexes
-        Each tuple is: (word, metric)
+        Each tuple is: (vocab[i], metric[i])
         '''
         if isinstance(exclude, basestring):
             exclude = [exclude]
@@ -60,10 +60,12 @@ class WordVectors(object):
 
         Example
         -------
-        >>> model.cosine('black')
+        >>> model.cosine('black', n=2)
         ```
-
         ```
+        {'black': [('white', 0.94757425919916516),
+                   ('yellow', 0.94640807944950878)]
+        }
         '''
         if isinstance(words, basestring):
             words = [words]
