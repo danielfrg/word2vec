@@ -15,7 +15,7 @@ directory = 'bin'
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-subprocess.call(['make', '-C', 'word2vec-src'])
+subprocess.call(['make', '-C', 'word2vec-c'])
 
 setup(
     name='word2vec',
