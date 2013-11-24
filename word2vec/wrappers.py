@@ -137,8 +137,8 @@ class WordVectors(object):
         mean = np.array(mean).mean(axis=0)
 
         similarities = np.dot(self.l2norm, mean)
-        best = np.argsort(similarities)[::-1][:n + len(words) - 1]
-        return [(_word, sim) for _word, sim in zip(self.vocab[best], similarities[best]) if _word not in words]
+        best = similarities.argsort()[::-1][:n + len(words) - 1]
+        return self.generate_response(best, similarities, exclude=words)
 
 
 class WordClusters(object):
