@@ -30,5 +30,6 @@ setup(
                          'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy'])],
     install_requires=[
         'numpy>=1.7.1',
+        'scipy>=0.12.0'
     ],
 )
