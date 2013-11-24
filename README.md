@@ -13,20 +13,20 @@ Use [virtualenvs](http://www.virtualenv.org/en/latest/)!
 Usage
 -----
 
-The default functionality from google is available:
+The default functionality from Google is available:
 * word2vec
 * word2phrase
 * w2v-distance
 * w2v-word-analogy
 * w2v-compute-accuracy
 
-### Issues
-
-Some people reported that they needed to do this if running OS X:
-[http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue](http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue)
-
-Examples
---------
+### Examples
 
 [word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-word.ipynb)
 [word clusters](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-clusters.ipynb)
+
+Issues
+------
+
+Some people reported that they needed to do this if running OS X:
+[http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue](http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue)
