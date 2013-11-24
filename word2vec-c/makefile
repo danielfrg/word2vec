@@ -1,5 +1,7 @@
 SCRIPTS_DIR=../scripts
 BIN_DIR=../bin
+# Use this for dev when doing: `pip install -e`
+#BIN_DIR=~/anaconda/envs/word2vec/bin
 
 CC = gcc
 #The -Ofast might not work with older versions of gcc; in that case, use -O2
