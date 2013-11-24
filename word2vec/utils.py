@@ -1,5 +1,5 @@
 # coding: utf-8
-import scipy.linalg as LA
+from numpy import linalg as LA
 
 
 def unitvec(vec):

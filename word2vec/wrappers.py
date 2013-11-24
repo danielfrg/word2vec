@@ -33,23 +33,51 @@ class WordVectors(object):
 
     def generate_response(self, indexes, metric, exclude=''):
         '''
-        Generates a response as a list of tuple based on the indexes
+        Generates a response as a list of tuples based on the indexes
         Each tuple is: (word, metric)
         '''
         if isinstance(exclude, basestring):
             exclude = [exclude]
         return [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes]) if word not in exclude]
 
-    def cosine(self, word, n=10):
+    def cosine(self, words, n=10):
         '''
         Cosine similarity.
 
         metric = dot(l2norm_of_vectors, l2norm_of_target_vector)
         Uses a precomputed l2norm of the vectors
+
+        Parameters
+        ----------
+        words : string or list of string
+            word(s) in the vocabulary to calculate the vectors
+        n : int, optional (default 10)
+            number of neighbors to return
+
+        Returns
+        -------
+        dict: with the n similar words and its distance
+
+        Example
+        -------
+        >>> model.cosine('black')
+        ```
+
+        ```
         '''
-        metric = np.dot(self.l2norm, self.get_vector(word))
-        best = np.argsort(metric)[::-1][:n + 1]
-        return self.generate_response(best, metric, exclude=word)
+        if isinstance(words, basestring):
+            words = [words]
+
+        targets = np.vstack((self.get_vector(word) for word in words))
+        metrics = np.dot(self.l2norm, targets.T)
+
+        ans = {}
+        for col, word in enumerate(words):
+            best = np.argsort(metrics[:, col])[::-1][:n + 1]
+            best = self.generate_response(best, metrics[:, col], exclude=word)
+            ans[word] = best
+
+        return ans
 
     def _cosine(self, word, n=10):
         '''
@@ -58,6 +86,8 @@ class WordVectors(object):
         Note: This method is **a lot** slower than `self.cosine`
         and results are the almost the same, really just use `self.cosine`
         This is just available for testing.
+
+        Requires: `__init__(..., saveMemory=False)`
 
         Parameters
         ----------
