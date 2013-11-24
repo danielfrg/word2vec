@@ -1,6 +1,5 @@
 # coding: utf-8
 import numpy as np
-from scipy.spatial import distance
 from word2vec.utils import unitvec
 
 
@@ -24,14 +23,7 @@ class WordVectors(object):
 
     def get_vector(self, word):
         '''
-        Returns the vector for `word`
-        '''
-        idx = self.ix(word)
-        return self.l2norm[idx]
-
-    def get_l2_vector(self, word):
-        '''
-        Returns the l2-norm vector for `word`
+        Returns the (l2norm) vector for `word`
         '''
         idx = self.ix(word)
         return self.l2norm[idx]
@@ -55,7 +47,7 @@ class WordVectors(object):
         metric = dot(l2norm_of_vectors, l2norm_of_target_vector)
         Uses a precomputed l2norm of the vectors
         '''
-        metric = np.dot(self.l2norm, self.get_l2_vector(word))
+        metric = np.dot(self.l2norm, self.get_vector(word))
         best = np.argsort(metric)[::-1][:n + 1]
         return self.generate_response(best, metric, exclude=word)
 
@@ -66,7 +58,6 @@ class WordVectors(object):
         Note: This method is **a lot** slower than `self.cosine`
         and results are the almost the same, really just use `self.cosine`
         This is just available for testing.
-        Requires saveMemory=False
 
         Parameters
         ----------
@@ -75,6 +66,7 @@ class WordVectors(object):
         n : int, optional (default 10)
             number of neighbors to return
         '''
+        from scipy.spatial import distance
         target_vec = self[word]
         metric = np.empty(self.vocab.shape)
         for idx, vector in enumerate(self.vectors):
