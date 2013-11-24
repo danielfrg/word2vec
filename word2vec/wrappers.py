@@ -56,7 +56,7 @@ class WordVectors(object):
 
         Returns
         -------
-        dict: with the n similar words and its distance
+        dict: with the n similar words and its similarity as a list of tuples
 
         Example
         -------
@@ -116,10 +116,15 @@ class WordVectors(object):
         pos : list
         neg : list
 
+        Returns
+        -------
+        List of tuples, each tuple is  (word, similarity)
+
+
         Example
         -------
-            king - man + woman = queen | will be:
-            pos=['king', 'woman'], neg=['man']
+            `king - man + woman = queen` will be:
+            `pos=['king', 'woman'], neg=['man']`
         '''
         words = pos + neg
 
