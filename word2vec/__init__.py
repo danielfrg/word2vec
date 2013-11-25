@@ -1,4 +1,5 @@
 # coding: utf-8
 from io import *
-from wrappers import *
+from wordvectors import *
+from wordclusters import *
 from scripts_interface import *

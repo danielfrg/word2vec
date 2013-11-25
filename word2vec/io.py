@@ -2,15 +2,13 @@
 import word2vec
 import numpy as np
 
-'''
-load with binary=True was gracefully copied from gensim:
-http://github.com/piskvorky/gensim/blob/develop/gensim/models/word2vec.py
-'''
-
 
 def load(fname, binary=True, saveMemory=True):
     '''
     Loads a word vectors binary file
+
+    load with binary=True was gracefully copied from gensim:
+    http://github.com/piskvorky/gensim/blob/develop/gensim/models/word2vec.py
     '''
     if binary:
         vocab = []
@@ -49,3 +47,9 @@ def load(fname, binary=True, saveMemory=True):
         cols = np.arange(1, shape[1] + 1)
         vectors = np.genfromtxt(fname, dtype=float, delimiter=' ', usecols=cols, skip_header=1)
         return word2vec.WordVectors(vocab=vocab, vectors=vectors)
+
+
+def load_clusters(fname):
+    vocab = np.genfromtxt(fname, dtype=np.object, delimiter=' ', usecols=0)
+    clusters = np.genfromtxt(fname, dtype=int, delimiter=' ', usecols=1)
+    return word2vec.WordClusters(vocab=vocab, clusters=clusters)

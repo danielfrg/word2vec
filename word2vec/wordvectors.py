@@ -139,13 +139,3 @@ class WordVectors(object):
         similarities = np.dot(self.l2norm, mean)
         best = similarities.argsort()[::-1][:n + len(words) - 1]
         return self.generate_response(best, similarities, exclude=words)
-
-
-class WordClusters(object):
-    def __init__(self, fname=None):
-        if fname is not None:
-            self.load(fname)
-
-    def load(self, fname):
-        self.words = np.genfromtxt(fname, dtype=object, delimiter=' ', usecols=0)
-        self.clusters = np.genfromtxt(fname, dtype=int, delimiter=' ', usecols=1)
