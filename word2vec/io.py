@@ -10,6 +10,7 @@ http://github.com/piskvorky/gensim/blob/develop/gensim/models/word2vec.py
 
 def load(fname, binary=True, saveMemory=True):
     '''
+    Loads a word vectors binary file
     '''
     if binary:
         vocab = []
