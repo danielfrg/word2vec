@@ -1,4 +1,3 @@
-# encoding: utf-8
 import os
 import subprocess
 from distutils.core import setup
