@@ -18,9 +18,9 @@ class WordVectors(object):
             self.l2norm = l2norm
 
     def ix(self, word):
-        '''
+        """
         Returns the index on self.vocab and self.l2norm for `word`
-        '''
+        """
         temp = np.where(self.vocab == word)[0]
         if temp.size == 0:
             raise KeyError('Word not in vocabulary')
@@ -28,9 +28,9 @@ class WordVectors(object):
             return temp[0]
 
     def get_vector(self, word):
-        '''
+        """
         Returns the (l2norm) vector for `word` in the vocabulary
-        '''
+        """
         idx = self.ix(word)
         return self.l2norm[idx]
 
@@ -38,16 +38,16 @@ class WordVectors(object):
         return self.get_vector(word)
 
     def generate_response(self, indexes, metric, exclude=''):
-        '''
+        """
         Generates a response as a list of tuples based on the indexes
         Each tuple is: (vocab[i], metric[i])
-        '''
+        """
         if isinstance(exclude, basestring):
             exclude = [exclude]
         return [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes]) if word not in exclude]
 
     def cosine(self, words, n=10):
-        '''
+        """
         Cosine similarity.
 
         metric = dot(l2norm_of_vectors, l2norm_of_target_vector)
@@ -72,7 +72,7 @@ class WordVectors(object):
         {'black': [('white', 0.94757425919916516),
                    ('yellow', 0.94640807944950878)]
         }
-        '''
+        """
         if isinstance(words, basestring):
             words = [words]
 
@@ -88,12 +88,12 @@ class WordVectors(object):
         return ans
 
     def _cosine(self, word, n=10):
-        '''
+        """
         Cosine distance using scipy.distance.cosine
 
         Note: This method is **a lot** slower than `self.cosine`
         and results are the almost the same, really just use `self.cosine`
-        This is just available for testing.
+        This is just here for testing.
 
         Requires: `__init__(..., saveMemory=False)`
 
@@ -103,7 +103,7 @@ class WordVectors(object):
             word in the vocabulary to calculate the vectors
         n : int, optional (default 10)
             number of neighbors to return
-        '''
+        """
         from scipy.spatial import distance
         target_vec = self[word]
         metric = np.empty(self.vocab.shape)
@@ -114,7 +114,7 @@ class WordVectors(object):
         return self.generate_response(best, metric, exclude=word)
 
     def analogy(self, pos, neg, n=10):
-        '''
+        """
         Analogy similarity.
 
         Parameters
@@ -131,7 +131,7 @@ class WordVectors(object):
         -------
             `king - man + woman = queen` will be:
             `pos=['king', 'woman'], neg=['man']`
-        '''
+        """
         words = pos + neg
 
         pos = [(word, 1.0) for word in pos]
