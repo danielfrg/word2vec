@@ -9,3 +9,9 @@ class WordClusters(object):
 
     def __getitem__(self, cluster):
         return self.vocab[self.clusters == cluster]
+
+    @classmethod
+    def from_text(cls, fname):
+        vocab = np.genfromtxt(fname, dtype=np.object, delimiter=' ', usecols=0)
+        clusters = np.genfromtxt(fname, dtype=int, delimiter=' ', usecols=1)
+        return cls(vocab=vocab, clusters=clusters)

@@ -138,3 +138,65 @@ class WordVectors(object):
         similarities = np.dot(self.l2norm, mean)
         best = similarities.argsort()[::-1][:n + len(words) - 1]
         return self.generate_response(best, similarities, exclude=words)
+
+    @classmethod
+    def from_binary(cls, fname, saveMemory=True):
+        """
+        Create a WordVectors class based on a word2vec binary file
+
+        Parameters
+        ----------
+        fname : path to file
+        saveMemory : boolean
+
+        Returns
+        -------
+        WordVectors class
+        """
+        with open(fname) as fin:
+            header = fin.readline()
+            vocab_size, vector_size = map(int, header.split())
+
+            vectors = np.empty((vocab_size, vector_size), dtype=np.float)
+            binary_len = np.dtype(np.float32).itemsize * vector_size
+            for line_number in xrange(vocab_size):
+                # mixed text and binary: read text first, then binary
+                word = ''
+                while True:
+                    ch = fin.read(1)
+                    if ch == ' ':
+                        break
+                    word += ch
+                vocab.append(word)
+
+                vector = np.fromstring(fin.read(binary_len), np.float32)
+                vectors[line_number] = vector
+                fin.read(1)  # newline
+        vocab = np.array(vocab)
+
+        return cls(vocab=vocab, vectors=vectors, saveMemory=saveMemory)
+
+    @classmethod
+    def from_text(cls, fname, saveMemory=True):
+        """
+        Create a WordVectors class based on a word2vec text file
+
+        Parameters
+        ----------
+        fname : path to file
+        saveMemory : boolean
+
+        Returns
+        -------
+        WordVectors class
+        """
+        with open(fname) as f:
+            parts = f.readline().strip().split(' ')
+            shape = int(parts[0]), int(parts[1])
+
+        vocab = np.genfromtxt(fname, dtype=object, delimiter=' ', usecols=0, skip_header=1)
+
+        cols = np.arange(1, shape[1] + 1)
+        vectors = np.genfromtxt(fname, dtype=float, delimiter=' ', usecols=cols, skip_header=1)
+
+        return cls(vocab=vocab, vectors=vectors, saveMemory=saveMemory)
