@@ -4,14 +4,30 @@ from word2vec.utils import unitvec
 
 class WordVectors(object):
 
-    def __init__(self, vocab, vectors=None, saveMemory=True, l2norm=None):
+    def __init__(self, vocab, vectors=None, l2norm=None, save_memory=True):
+        """
+        Initialize a WordVectors class based on vocabulary and vectors
+
+        This initializer precomputes the l2norm of the vectors
+
+        Parameters
+        ----------
+        vocab : np.array
+            1d array with the vocabulary
+        vectors : np.array
+            2d array with the vectors calculated by word2vec
+        l2norm : np.array
+            2d array with the calulated l2norm of the vectors
+        save_memory : boolean
+            wheter or not save the original vectors in `self.vectors`
+        """
         if vectors is None and l2norm is None:
             raise Exception('Need vectors OR l2norm arguments')
 
         self.vocab = vocab
 
         if l2norm is None:
-            if not saveMemory:
+            if not save_memory:
                 self.vectors = vectors
             self.l2norm = np.vstack(unitvec(vec) for vec in vectors)
         else:
@@ -62,7 +78,7 @@ class WordVectors(object):
 
         Returns
         -------
-        dict: with the n similar words and its similarity as a list of tuples
+        dict: of list of tuples
 
         Example
         -------
@@ -89,13 +105,12 @@ class WordVectors(object):
 
     def _cosine(self, word, n=10):
         """
-        Cosine distance using scipy.distance.cosine
+        Test method for cosine distance using `scipy.distance.cosine`
 
         Note: This method is **a lot** slower than `self.cosine`
-        and results are the almost the same, really just use `self.cosine`
-        This is just here for testing.
+        and results are the almost the same, you should be using `self.cosine`
 
-        Requires: `__init__(..., saveMemory=False)`
+        Requires: `__init__(..., save_memory=False)`
 
         Parameters
         ----------
@@ -105,12 +120,13 @@ class WordVectors(object):
             number of neighbors to return
         """
         from scipy.spatial import distance
+
         target_vec = self[word]
         metric = np.empty(self.vocab.shape)
         for idx, vector in enumerate(self.vectors):
             metric[idx] = distance.cosine(target_vec, vector)
-
         best = metric.argsort()[:n + 1]
+
         return self.generate_response(best, metric, exclude=word)
 
     def analogy(self, pos, neg, n=10):
@@ -147,14 +163,14 @@ class WordVectors(object):
         return self.generate_response(best, similarities, exclude=words)
 
     @classmethod
-    def from_binary(cls, fname, saveMemory=True):
+    def from_binary(cls, fname, save_memory=True):
         """
         Create a WordVectors class based on a word2vec binary file
 
         Parameters
         ----------
         fname : path to file
-        saveMemory : boolean
+        save_memory : boolean
 
         Returns
         -------
@@ -181,17 +197,17 @@ class WordVectors(object):
                 fin.read(1)  # newline
         vocab = np.array(vocab)
 
-        return cls(vocab=vocab, vectors=vectors, saveMemory=saveMemory)
+        return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)
 
     @classmethod
-    def from_text(cls, fname, saveMemory=True):
+    def from_text(cls, fname, save_memory=True):
         """
         Create a WordVectors class based on a word2vec text file
 
         Parameters
         ----------
         fname : path to file
-        saveMemory : boolean
+        save_memory : boolean
 
         Returns
         -------
@@ -206,4 +222,4 @@ class WordVectors(object):
         cols = np.arange(1, shape[1] + 1)
         vectors = np.genfromtxt(fname, dtype=float, delimiter=' ', usecols=cols, skip_header=1)
 
-        return cls(vocab=vocab, vectors=vectors, saveMemory=saveMemory)
+        return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)

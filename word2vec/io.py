@@ -2,14 +2,14 @@ import word2vec
 import numpy as np
 
 
-def load(fname, binary=True, saveMemory=True):
+def load(fname, binary=True, save_memory=True):
     '''
     Loads a word vectors file
     '''
     if binary:
-        return word2vec.WordVectors.from_binary(fname, saveMemory=saveMemory)
+        return word2vec.WordVectors.from_binary(fname, save_memory=save_memory)
     else:
-        return word2vec.WordVectors.from_text(fname, saveMemory=saveMemory)
+        return word2vec.WordVectors.from_text(fname, save_memory=save_memory)
 
 
 def load_clusters(fname):
