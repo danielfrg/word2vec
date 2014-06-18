@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 import subprocess
 
 realpath = os.path.dirname(os.path.realpath(__file__))
