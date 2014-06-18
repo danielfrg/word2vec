@@ -223,3 +223,7 @@ class WordVectors(object):
         vectors = np.genfromtxt(fname, dtype=float, delimiter=' ', usecols=cols, skip_header=1)
 
         return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)
+
+    @classmethod
+    def from_mmap(cls, vocab_fname, l2norm_fname):
+        pass
