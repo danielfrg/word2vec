@@ -1,39 +1,39 @@
 word2vec
 ========
 
-Python interface to Google word2vec
+Python interface to Google word2vec.
 
-Installation
-------------
+Training is done using the original C code plus some patches, the other funcionality is pure python + numpy.
+
+## Installation
 
 `pip install word2vec`
 
-Use [virtualenvs](http://www.virtualenv.org/en/latest/)!
+I highly recommend the use the [Anaconda python distribution](http://continuum.io/downloads)
 
-Usage
------
+## Usage
 
-The default functionality from Google is available:
-* word2vec
-* word2phrase
-* w2v-distance
-* w2v-word-analogy
-* w2v-compute-accuracy
-
-### Examples
-
+The easiest way is to look at this examples:
 [word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-word.ipynb)
+and
 [word clusters](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-clusters.ipynb)
 
-Issues
-------
+The default functionality from word2vec is also available from the command line:
+- word2vec
+- word2phrase
+- w2v-distance
+- w2v-word-analogy
+- w2v-compute-accuracy
+
+## Issues
 
 Some people reported that they needed to do this if running OS X:
 [http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue](http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue)
 
-Development
------------
-If you want to use the scripts interface (for training models) in development and need to use using
-`pip install -e` you need to change the make file, it has comments ;)
+## Development
 
+1. create a `bin` directory
+2. run the make file inside `word2vec-c`
+3. export the new `bin` directory to PATH
 
+Tests require `py.test`
