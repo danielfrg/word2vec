@@ -4,11 +4,18 @@ from word2vec.utils import unitvec
 
 class WordVectors(object):
 
-    def __init__(self, vocab=None, vectors=None, saveMemory=True):
+    def __init__(self, vocab, vectors=None, saveMemory=True, l2norm=None):
+        if vectors is None and l2norm is None:
+            raise Exception('Need vectors OR l2norm arguments')
+
         self.vocab = vocab
-        if not saveMemory:
-            self.vectors = vectors
-        self.l2norm = np.vstack(unitvec(vec) for vec in vectors)
+
+        if l2norm is None:
+            if not saveMemory:
+                self.vectors = vectors
+            self.l2norm = np.vstack(unitvec(vec) for vec in vectors)
+        else:
+            self.l2norm = l2norm
 
     def ix(self, word):
         '''
