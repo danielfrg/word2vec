@@ -8,7 +8,7 @@ datadir = "../bin"
 def word2vec(train, output, size=100, window=5, sample=0, hs=1, negative=0, threads=4,
              min_count=5, alpha=0.025, debug=2, binary=1, cbow=0,
              save_vocab=None, read_vocab=None, verbose=False):
-    process = [os.path.join(realpath, datadir, word2vec)]
+    process = [os.path.join(realpath, datadir, 'word2vec')]
     args = ['-train', '-output', '-size', '-window', '-sample', '-hs', '-negative', '-threads',
             '-min-count', '-alpha', '-debug', '-binary', '-cbow']
     values = [train, output, size, window, sample, hs, negative, threads,
@@ -38,7 +38,7 @@ def word2vec(train, output, size=100, window=5, sample=0, hs=1, negative=0, thre
 def word2clusters(train, output, classes, size=100, window=5, sample=0, hs=1, negative=0, threads=4,
                   min_count=5, alpha=0.025, debug=2, binary=0, cbow=0,
                   save_vocab=None, read_vocab=None, verbose=False):
-    process = [os.path.join(realpath, datadir, word2vec)]
+    process = [os.path.join(realpath, datadir, 'word2vec')]
     args = ['-train', '-output', '-size', '-window', '-sample', '-hs', '-negative', '-threads',
             '-min-count', '-alpha', '-classes', '-debug', '-binary', '-cbow']
     values = [train, output, size, window, sample, hs, negative, threads,
