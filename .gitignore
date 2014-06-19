@@ -45,3 +45,4 @@ examples/*.clusters
 examples/*.gz
 examples/*.txt
 examples/*.bin
+examples/data/*
