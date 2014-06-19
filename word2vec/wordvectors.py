@@ -1,4 +1,9 @@
 import numpy as np
+try:
+    from sklearn.externals import joblib
+except:
+    joblib = None
+
 from word2vec.utils import unitvec
 
 
@@ -162,6 +167,12 @@ class WordVectors(object):
         best = similarities.argsort()[::-1][:n + len(words) - 1]
         return self.generate_response(best, similarities, exclude=words)
 
+    def to_mmap(self, fname):
+        if not joblib:
+            raise Exception("sklearn needed for save as mmap")
+
+        joblib.dump(self, fname)
+
     @classmethod
     def from_binary(cls, fname, save_memory=True):
         """
@@ -179,6 +190,7 @@ class WordVectors(object):
         with open(fname) as fin:
             header = fin.readline()
             vocab_size, vector_size = map(int, header.split())
+            vocab = []
 
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
             binary_len = np.dtype(np.float32).itemsize * vector_size
@@ -225,5 +237,18 @@ class WordVectors(object):
         return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)
 
     @classmethod
-    def from_mmap(cls, vocab_fname, l2norm_fname):
-        pass
+    def from_mmap(cls, fname):
+        """
+        Create a WordVectors class from a memory map
+
+        Parameters
+        ----------
+        fname : path to file
+        save_memory : boolean
+
+        Returns
+        -------
+        WordVectors class
+        """
+        memmaped = joblib.load(fname, mmap_mode='r+')
+        return cls(vocab=memmaped.vocab, l2norm=memmaped.l2norm)
