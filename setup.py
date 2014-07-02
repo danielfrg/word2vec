@@ -5,7 +5,7 @@ from distutils.core import setup
 '''
 To update to a new version:
 1. change version
-2. python setup.py sdist bdist_wininst upload
+2. python setup.py sdist upload
 '''
 
 DESCRIPTION = 'Google word2vec python wrapper'
