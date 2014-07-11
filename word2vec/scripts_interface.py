@@ -63,7 +63,7 @@ def word2clusters(train, output, classes, size=100, window=5, sample=0, hs=1, ne
         raise Exception(out)
 
 
-def word2phase(train, output, min_count=5, threshold=100, debug=2, verbose=False):
+def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=False):
     process = ['word2phrase']
     args = ['-train', '-output', '-min-count', '-threshold', '-debug']
     values = [train, output, min_count, threshold, debug]
@@ -81,3 +81,5 @@ def word2phase(train, output, min_count=5, threshold=100, debug=2, verbose=False
     out, err = proc.communicate()
     if 'ERROR:' in out:
         raise Exception(out)
+
+word2phase = word2phrase
