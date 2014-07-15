@@ -58,14 +58,12 @@ class WordVectors(object):
     def __getitem__(self, word):
         return self.get_vector(word)
 
-    def generate_response(self, indexes, metric, exclude=''):
+    def generate_response(self, indexes, metric):
         """
         Generates a response as a list of tuples based on the indexes
         Each tuple is: (vocab[i], metric[i])
         """
-        if isinstance(exclude, basestring):
-            exclude = [exclude]
-        return [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes]) if word not in exclude]
+        return [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes])]
 
     def cosine(self, words, n=10):
         """
@@ -102,8 +100,8 @@ class WordVectors(object):
 
         ans = {}
         for col, word in enumerate(words):
-            best = np.argsort(metrics[:, col])[::-1][:n + 1]
-            best = self.generate_response(best, metrics[:, col], exclude=word)
+            best = np.argsort(metrics[:, col])[::-1][1:n + 1]
+            best = self.generate_response(best, metrics[:, col])
             ans[word] = best
 
         return ans
@@ -130,9 +128,9 @@ class WordVectors(object):
         metric = np.empty(self.vocab.shape)
         for idx, vector in enumerate(self.vectors):
             metric[idx] = distance.cosine(target_vec, vector)
-        best = metric.argsort()[:n + 1]
+        best = metric.argsort()[1:n + 1]
 
-        return self.generate_response(best, metric, exclude=word)
+        return self.generate_response(best, metric)
 
     def analogy(self, pos, neg, n=10):
         """
@@ -164,8 +162,8 @@ class WordVectors(object):
         mean = np.array(mean).mean(axis=0)
 
         similarities = np.dot(self.l2norm, mean)
-        best = similarities.argsort()[::-1][:n + len(words) - 1]
-        return self.generate_response(best, similarities, exclude=words)
+        best = similarities.argsort()[::-1][1:n + len(words) - 1]
+        return self.generate_response(best, similarities)
 
     def to_mmap(self, fname):
         if not joblib:
