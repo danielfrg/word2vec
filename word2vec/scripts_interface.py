@@ -81,5 +81,3 @@ def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=Fals
     out, err = proc.communicate()
     if 'ERROR:' in out:
         raise Exception(out)
-
-word2phase = word2phrase
