@@ -58,12 +58,15 @@ class WordVectors(object):
     def __getitem__(self, word):
         return self.get_vector(word)
 
-    def generate_response(self, indexes, metric):
+    def generate_response(self, indexes, metric, n=10, exclude=''):
         """
         Generates a response as a list of tuples based on the indexes
         Each tuple is: (vocab[i], metric[i])
         """
-        return [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes])]
+        if isinstance(exclude, basestring):
+            exclude = [exclude]
+        ans = [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes]) if word not in exclude]
+        return ans[:n]
 
     def cosine(self, words, n=10):
         """
@@ -100,8 +103,8 @@ class WordVectors(object):
 
         ans = {}
         for col, word in enumerate(words):
-            best = np.argsort(metrics[:, col])[::-1][1:n + 1]
-            best = self.generate_response(best, metrics[:, col])
+            best = np.argsort(metrics[:, col])[::-1][:n + 1]
+            best = self.generate_response(best, metrics[:, col], n=n, exclude=word)
             ans[word] = best
 
         return ans
@@ -162,8 +165,8 @@ class WordVectors(object):
         mean = np.array(mean).mean(axis=0)
 
         similarities = np.dot(self.l2norm, mean)
-        best = similarities.argsort()[::-1][1:n + len(words) - 1]
-        return self.generate_response(best, similarities)
+        best = similarities.argsort()[::-1][:n + len(words)]
+        return self.generate_response(best, similarities, n=n, exclude=words)
 
     def to_mmap(self, fname):
         if not joblib:
