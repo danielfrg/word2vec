@@ -33,5 +33,3 @@ Some people reported that they needed to do this if running OS X:
 1. create a `bin` directory
 2. run the make file inside `word2vec-c`
 3. export the new `bin` directory to PATH
-
-Tests require `py.test`
