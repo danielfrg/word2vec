@@ -7,7 +7,27 @@ class WordClusters(object):
         self.vocab = vocab
         self.clusters = clusters
 
-    def __getitem__(self, cluster):
+    def ix(self, word):
+        """
+        Returns the index on self.vocab and self.clusters for `word`
+        """
+        temp = np.where(self.vocab == word)[0]
+        if temp.size == 0:
+            raise KeyError('Word not in vocabulary')
+        else:
+            return temp[0]
+
+    def __getitem__(self, word):
+        return self.get_cluster(word)
+
+    def get_cluster(self, word):
+        """
+        Returns the cluster number for a word in the vocabulary
+        """
+        idx = self.ix(word)
+        return self.clusters[idx]
+
+    def get_words_on_cluster(self, cluster):
         return self.vocab[self.clusters == cluster]
 
     @classmethod

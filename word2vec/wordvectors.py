@@ -9,7 +9,8 @@ from word2vec.utils import unitvec
 
 class WordVectors(object):
 
-    def __init__(self, vocab, vectors=None, l2norm=None, save_memory=True):
+    def __init__(self, vocab, vectors=None, l2norm=None, clusters=None,
+                 save_memory=True):
         """
         Initialize a WordVectors class based on vocabulary and vectors
 
@@ -30,6 +31,7 @@ class WordVectors(object):
             raise Exception('Need vectors OR l2norm arguments')
 
         self.vocab = vocab
+        self.clusters = clusters
 
         if l2norm is None:
             if not save_memory:
@@ -48,6 +50,9 @@ class WordVectors(object):
         else:
             return temp[0]
 
+    def __getitem__(self, word):
+        return self.get_vector(word)
+
     def get_vector(self, word):
         """
         Returns the (l2norm) vector for `word` in the vocabulary
@@ -55,20 +60,7 @@ class WordVectors(object):
         idx = self.ix(word)
         return self.l2norm[idx]
 
-    def __getitem__(self, word):
-        return self.get_vector(word)
-
-    def generate_response(self, indexes, metric, n=10, exclude=''):
-        """
-        Generates a response as a list of tuples based on the indexes
-        Each tuple is: (vocab[i], metric[i])
-        """
-        if isinstance(exclude, basestring):
-            exclude = [exclude]
-        ans = [(word, sim) for word, sim in zip(self.vocab[indexes], metric[indexes]) if word not in exclude]
-        return ans[:n]
-
-    def cosine(self, words, n=10):
+    def cosine(self, word, n=10):
         """
         Cosine similarity.
 
@@ -77,63 +69,14 @@ class WordVectors(object):
 
         Parameters
         ----------
-        words : string or list of string
-            word(s) in the vocabulary to calculate the vectors
-        n : int, optional (default 10)
-            number of neighbors to return
-
-        Returns
-        -------
-        dict: of list of tuples
-
-        Example
-        -------
-        >>> model.cosine('black', n=2)
-        ```
-        ```
-        {'black': [('white', 0.94757425919916516),
-                   ('yellow', 0.94640807944950878)]
-        }
-        """
-        if isinstance(words, basestring):
-            words = [words]
-
-        targets = np.vstack((self.get_vector(word) for word in words))
-        metrics = np.dot(self.l2norm, targets.T)
-
-        ans = {}
-        for col, word in enumerate(words):
-            best = np.argsort(metrics[:, col])[::-1][:n + 1]
-            best = self.generate_response(best, metrics[:, col], n=n, exclude=word)
-            ans[word] = best
-
-        return ans
-
-    def _cosine(self, word, n=10):
-        """
-        Test method for cosine distance using `scipy.distance.cosine`
-
-        Note: This method is **a lot** slower than `self.cosine`
-        and results are the almost the same, you should be using `self.cosine`
-
-        Requires: `__init__(..., save_memory=False)`
-
-        Parameters
-        ----------
         word : string
-            word in the vocabulary to calculate the vectors
         n : int, optional (default 10)
             number of neighbors to return
         """
-        from scipy.spatial import distance
-
-        target_vec = self[word]
-        metric = np.empty(self.vocab.shape)
-        for idx, vector in enumerate(self.vectors):
-            metric[idx] = distance.cosine(target_vec, vector)
-        best = metric.argsort()[1:n + 1]
-
-        return self.generate_response(best, metric)
+        metrics = np.dot(self.l2norm, self[word].T)
+        best = np.argsort(metrics)[::-1][1:n+1]
+        best_metrics = metrics[best]
+        return best, best_metrics
 
     def analogy(self, pos, neg, n=10):
         """
@@ -154,23 +97,32 @@ class WordVectors(object):
             `king - man + woman = queen` will be:
             `pos=['king', 'woman'], neg=['man']`
         """
-        words = pos + neg
-
+        exclude = pos + neg
         pos = [(word, 1.0) for word in pos]
         neg = [(word, -1.0) for word in neg]
 
         mean = []
         for word, direction in pos + neg:
-            mean.append(direction * unitvec(self.get_vector(word)))
+            mean.append(direction * self[word])
         mean = np.array(mean).mean(axis=0)
 
-        similarities = np.dot(self.l2norm, mean)
-        best = similarities.argsort()[::-1][:n + len(words)]
-        return self.generate_response(best, similarities, n=n, exclude=words)
+        metrics = np.dot(self.l2norm, mean)
+        best = metrics.argsort()[::-1][:n + len(exclude)]
+
+        exclude_idx = [np.where(best == self.ix(word)) for word in exclude if self.ix(word) in best]
+        new_best = np.delete(best, exclude_idx)
+        best_metrics = metrics[new_best]
+        return new_best[:n], best_metrics[:n]
+
+    def generate_response(self, indexes, metrics, clusters=True):
+        if self.clusters and clusters:
+            return np.vstack((self.vocab[indexes], metrics, self.clusters.clusters[indexes])).T
+        else:
+            return np.vstack((self.vocab[indexes], metrics)).T
 
     def to_mmap(self, fname):
         if not joblib:
-            raise Exception("sklearn needed for save as mmap")
+            raise Exception("sklearn needed to save as mmap")
 
         joblib.dump(self, fname)
 
