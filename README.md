@@ -27,9 +27,3 @@ The default functionality from word2vec is also available from the command line 
 
 Some people reported that they needed to do this if running OS X:
 [http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue](http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue)
-
-## Development
-
-1. create a `bin` directory
-2. run the make file inside `word2vec-c`
-3. export the new `bin` directory to PATH
