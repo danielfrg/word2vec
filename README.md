@@ -13,12 +13,10 @@ I highly recommend the use the [Anaconda python distribution](http://continuum.i
 
 ## Usage
 
-The easiest way is to look at this examples:
-[word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-word.ipynb)
-and
-[word clusters](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/demo-clusters.ipynb)
+The easiest way is to look at this example:
+[word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/word2vec.ipynb)
 
-The default functionality from word2vec is also available from the command line:
+The default functionality from word2vec is also available from the command line as:
 - word2vec
 - word2phrase
 - w2v-distance
