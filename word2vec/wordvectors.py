@@ -116,9 +116,9 @@ class WordVectors(object):
 
     def generate_response(self, indexes, metrics, clusters=True):
         if self.clusters and clusters:
-            return np.vstack((self.vocab[indexes], metrics, self.clusters.clusters[indexes])).T
+            return np.rec.fromarrays((self.vocab[indexes], metrics, self.clusters.clusters[indexes]), names=('word', 'metric', 'cluster'))
         else:
-            return np.vstack((self.vocab[indexes], metrics)).T
+            return np.rec.fromarrays((self.vocab[indexes], metrics), names=('word', 'metric'))
 
     def to_mmap(self, fname):
         if not joblib:
