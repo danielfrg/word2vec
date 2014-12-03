@@ -178,15 +178,26 @@ class WordVectors(object):
         -------
         WordVectors class
         """
-        with open(fname) as f:
-            parts = f.readline().strip().split(' ')
-            shape = int(parts[0]), int(parts[1])
+        # This version misses some lines of the file
+        # vocab = np.loadtxt(fname2, dtype=object, delimiter=' ', usecols=(0,), skiprows=1)
+        # cols = np.arange(1, shape[1] + 1)
+        # vectors = np.loadtxt(fname2, dtype=float, delimiter=' ', usecols=cols, skiprows=1)
+        
+        fin = open(fname)
+        parts = fin.readline().strip().split(' ')
+        shape = int(parts[0]), int(parts[1])
 
-        vocab = np.genfromtxt(fname, dtype=object, delimiter=' ', usecols=0, skip_header=1)
+        vocab = []
+        vectors = np.zeros((shape[0], shape[1]), dtype=float)
+        for i, line in enumerate(fin):
+            parts = unicode(line, 'utf8').split()
+            if len(parts) != shape[1] + 1:
+                raise ValueError("Invalid line %s" % (i))
+            word, vector = parts[0], parts[1:]
+            vocab.append(word)
+            vectors[i] = vector
 
-        cols = np.arange(1, shape[1] + 1)
-        vectors = np.genfromtxt(fname, dtype=float, delimiter=' ', usecols=cols, skip_header=1)
-
+        fin.close()
         return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)
 
     @classmethod
