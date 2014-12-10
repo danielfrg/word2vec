@@ -14,11 +14,14 @@ directory = 'bin'
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-subprocess.call(['make', '-C', 'word2vec-c'])
+return_code = subprocess.call(['make', '-C', 'word2vec-c'])
+
+if return_code != 0:
+    exit(0)
 
 setup(
     name='word2vec',
-    version='0.6.3',
+    version='0.7',
     maintainer='Daniel Rodriguez',
     maintainer_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',

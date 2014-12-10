@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import numpy as np
 try:
     from sklearn.externals import joblib
@@ -9,12 +11,11 @@ from word2vec.utils import unitvec
 
 class WordVectors(object):
 
-    def __init__(self, vocab, vectors=None, l2norm=None, clusters=None,
-                 save_memory=True):
+    def __init__(self, vocab, vectors, clusters=None):
         """
         Initialize a WordVectors class based on vocabulary and vectors
 
-        This initializer precomputes the l2norm of the vectors
+        This initializer precomputes the vectors of the vectors
 
         Parameters
         ----------
@@ -22,27 +23,16 @@ class WordVectors(object):
             1d array with the vocabulary
         vectors : np.array
             2d array with the vectors calculated by word2vec
-        l2norm : np.array
-            2d array with the calulated l2norm of the vectors
-        save_memory : boolean
-            wheter or not save the original vectors in `self.vectors`
+        clusters : word2vec.WordClusters (optional)
+            1d array with the clusters calculated by word2vec
         """
-        if vectors is None and l2norm is None:
-            raise Exception('Need vectors OR l2norm arguments')
-
         self.vocab = vocab
+        self.vectors = vectors
         self.clusters = clusters
-
-        if l2norm is None:
-            if not save_memory:
-                self.vectors = vectors
-            self.l2norm = np.vstack(unitvec(vec) for vec in vectors)
-        else:
-            self.l2norm = l2norm
 
     def ix(self, word):
         """
-        Returns the index on self.vocab and self.l2norm for `word`
+        Returns the index on self.vocab and `self.vectors` for `word`
         """
         temp = np.where(self.vocab == word)[0]
         if temp.size == 0:
@@ -53,27 +43,36 @@ class WordVectors(object):
     def __getitem__(self, word):
         return self.get_vector(word)
 
+    def __contains__(self, word):
+        return word in self.vocab
+
     def get_vector(self, word):
         """
-        Returns the (l2norm) vector for `word` in the vocabulary
+        Returns the (vectors) vector for `word` in the vocabulary
         """
         idx = self.ix(word)
-        return self.l2norm[idx]
+        return self.vectors[idx]
 
     def cosine(self, word, n=10):
         """
         Cosine similarity.
 
-        metric = dot(l2norm_of_vectors, l2norm_of_target_vector)
-        Uses a precomputed l2norm of the vectors
+        metric = dot(vectors_of_vectors, vectors_of_target_vector)
+        Uses a precomputed vectors of the vectors
 
         Parameters
         ----------
         word : string
         n : int, optional (default 10)
             number of neighbors to return
+
+        Returns
+        -------
+        2 numpy.array:
+            1. position in self.vocab
+            2. cosine similarity
         """
-        metrics = np.dot(self.l2norm, self[word].T)
+        metrics = np.dot(self.vectors, self[word].T)
         best = np.argsort(metrics)[::-1][1:n+1]
         best_metrics = metrics[best]
         return best, best_metrics
@@ -89,8 +88,9 @@ class WordVectors(object):
 
         Returns
         -------
-        List of tuples, each tuple is  (word, similarity)
-
+        2 numpy.array:
+            1. position in self.vocab
+            2. cosine similarity
 
         Example
         -------
@@ -106,7 +106,7 @@ class WordVectors(object):
             mean.append(direction * self[word])
         mean = np.array(mean).mean(axis=0)
 
-        metrics = np.dot(self.l2norm, mean)
+        metrics = np.dot(self.vectors, mean)
         best = metrics.argsort()[::-1][:n + len(exclude)]
 
         exclude_idx = [np.where(best == self.ix(word)) for word in exclude if self.ix(word) in best]
@@ -115,6 +115,10 @@ class WordVectors(object):
         return new_best[:n], best_metrics[:n]
 
     def generate_response(self, indexes, metrics, clusters=True):
+        '''
+        Generates a pure python (no numpy) response based on numpy arrays
+        returned by `self.cosine` and `self.analogy`
+        '''
         if self.clusters and clusters:
             return np.rec.fromarrays((self.vocab[indexes], metrics, self.clusters.clusters[indexes]), names=('word', 'metric', 'cluster'))
         else:
@@ -122,83 +126,75 @@ class WordVectors(object):
 
     def to_mmap(self, fname):
         if not joblib:
-            raise Exception("sklearn needed to save as mmap")
+            raise Exception("sklearn is needed to save as mmap")
 
         joblib.dump(self, fname)
 
     @classmethod
-    def from_binary(cls, fname, save_memory=True):
+    def from_binary(cls, fname, vocabUnicodeSize=78):
         """
         Create a WordVectors class based on a word2vec binary file
 
         Parameters
         ----------
         fname : path to file
-        save_memory : boolean
 
         Returns
         -------
-        WordVectors class
+        WordVectors instance
         """
         with open(fname) as fin:
             header = fin.readline()
             vocab_size, vector_size = map(int, header.split())
-            vocab = []
 
+            vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
             binary_len = np.dtype(np.float32).itemsize * vector_size
-            for line_number in xrange(vocab_size):
-                # mixed text and binary: read text first, then binary
+            for i in xrange(vocab_size):
+                # read word
                 word = ''
                 while True:
-                    ch = fin.read(1)
+                    ch = fin.read(1).decode('ISO-8859-1')
                     if ch == ' ':
                         break
                     word += ch
-                vocab.append(word)
+                vocab[i] = word
 
-                vector = np.fromstring(fin.read(binary_len), np.float32)
-                vectors[line_number] = vector
+                # read vector
+                vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
+                vectors[i] = unitvec(vector)
                 fin.read(1)  # newline
-        vocab = np.array(vocab)
 
-        return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)
+        return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
-    def from_text(cls, fname, save_memory=True):
+    def from_text(cls, fname, vocabUnicodeSize=78):
         """
         Create a WordVectors class based on a word2vec text file
 
         Parameters
         ----------
         fname : path to file
-        save_memory : boolean
 
         Returns
         -------
-        WordVectors class
+        WordVectors instance
         """
-        # This version misses some lines of the file
-        # vocab = np.loadtxt(fname2, dtype=object, delimiter=' ', usecols=(0,), skiprows=1)
-        # cols = np.arange(1, shape[1] + 1)
-        # vectors = np.loadtxt(fname2, dtype=float, delimiter=' ', usecols=cols, skiprows=1)
-        
-        fin = open(fname)
-        parts = fin.readline().strip().split(' ')
-        shape = int(parts[0]), int(parts[1])
+        with open(fname) as fin:
+            header = fin.readline()
+            vocab_size, vector_size = map(int, header.split())
 
-        vocab = []
-        vectors = np.zeros((shape[0], shape[1]), dtype=float)
-        for i, line in enumerate(fin):
-            parts = unicode(line, 'utf8').split()
-            if len(parts) != shape[1] + 1:
-                raise ValueError("Invalid line %s" % (i))
-            word, vector = parts[0], parts[1:]
-            vocab.append(word)
-            vectors[i] = vector
+            vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
+            vectors = np.empty((vocab_size, vector_size), dtype=np.float)
+            for i, line in enumerate(fin):
+                line = line.decode('ISO-8859-1').strip()
+                parts = line.split(' ')
+                word = parts[0]
+                vector = np.array(parts[1:], dtype=np.float)
+                vocab[i] = word
+                vectors[i] = unitvec(vector)
 
-        fin.close()
-        return cls(vocab=vocab, vectors=vectors, save_memory=save_memory)
+        return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
     def from_mmap(cls, fname):
@@ -208,11 +204,10 @@ class WordVectors(object):
         Parameters
         ----------
         fname : path to file
-        save_memory : boolean
 
         Returns
         -------
-        WordVectors class
+        WordVectors instance
         """
         memmaped = joblib.load(fname, mmap_mode='r+')
-        return cls(vocab=memmaped.vocab, l2norm=memmaped.l2norm)
+        return cls(vocab=memmaped.vocab, vectors=memmaped.vectors)
