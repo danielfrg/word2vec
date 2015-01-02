@@ -163,7 +163,6 @@ class WordVectors(object):
                 # read vector
                 vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
                 vectors[i] = unitvec(vector)
-                fin.read(1)  # newline
 
         return cls(vocab=vocab, vectors=vectors)
 
