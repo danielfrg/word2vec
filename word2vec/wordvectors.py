@@ -131,13 +131,15 @@ class WordVectors(object):
         joblib.dump(self, fname)
 
     @classmethod
-    def from_binary(cls, fname, vocabUnicodeSize=78):
+    def from_binary(cls, fname, vocabUnicodeSize=78, desired_vocab=None):
         """
         Create a WordVectors class based on a word2vec binary file
 
         Parameters
         ----------
         fname : path to file
+        vocabUnicodeSize: the maximum string length (78, by default)
+        desired_vocab: if set, this will ignore any word and vector that doesn't fall inside desired_vocab.
 
         Returns
         -------
@@ -158,23 +160,31 @@ class WordVectors(object):
                     if ch == ' ':
                         break
                     word += ch
-                vocab[i] = word
+                include = desired_vocab is None or word in desired_vocab
+                if include:
+                    vocab[i] = word
 
                 # read vector
                 vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
-                vectors[i] = unitvec(vector)
+                if include:
+                    vectors[i] = unitvec(vector)
                 fin.read(1)  # newline
 
+            if desired_vocab is not None:
+                vectors = vectors[vocab != u'', :]
+                vocab = vocab[vocab != u'']
         return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
-    def from_text(cls, fname, vocabUnicodeSize=78):
+    def from_text(cls, fname, vocabUnicodeSize=78, desired_vocab=None):
         """
         Create a WordVectors class based on a word2vec text file
 
         Parameters
         ----------
         fname : path to file
+        vocabUnicodeSize: the maximum string length (78, by default)
+        desired_vocab: if set, this will ignore any word and vector that doesn't fall inside desired_vocab.
 
         Returns
         -------
@@ -190,10 +200,15 @@ class WordVectors(object):
                 line = line.decode('ISO-8859-1').strip()
                 parts = line.split(' ')
                 word = parts[0]
-                vector = np.array(parts[1:], dtype=np.float)
-                vocab[i] = word
-                vectors[i] = unitvec(vector)
+                include = desired_vocab is None or word in desired_vocab
+                if include:
+                    vector = np.array(parts[1:], dtype=np.float)
+                    vocab[i] = word
+                    vectors[i] = unitvec(vector)
 
+            if desired_vocab is not None:
+                vectors = vectors[vocab != u'', :]
+                vocab = vocab[vocab != u'']
         return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
