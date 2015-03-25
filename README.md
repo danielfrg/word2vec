@@ -11,6 +11,10 @@ Training is done using the original C code plus some patches, the other funciona
 
 I highly recommend the use the [Anaconda python distribution](http://continuum.io/downloads)
 
+### Development
+
+Clone the repo and `pip install -e .`
+
 ## Usage
 
 The easiest way is to look at this example:
