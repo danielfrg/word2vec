@@ -1,4 +1,3 @@
 include LICENSE.txt
-include word2vec-c/makefile
 recursive-include word2vec-c *.c
 prune bin
