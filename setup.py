@@ -50,6 +50,6 @@ setup(
     data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/w2v-distance',
                          'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy'])],
     install_requires=[
-        'numpy>=1.7.1'
+        'numpy>=1.9.2'
     ],
 )
