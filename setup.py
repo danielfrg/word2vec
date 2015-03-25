@@ -40,7 +40,7 @@ compile('compute-accuracy.c', 'w2v-compute-accuracy')
 
 setup(
     name='word2vec',
-    version='0.7',
+    version='0.7.1',
     maintainer='Daniel Rodriguez',
     maintainer_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
