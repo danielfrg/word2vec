@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 from distutils.core import setup
 
@@ -10,14 +11,32 @@ To update to a new version:
 
 DESCRIPTION = 'Google word2vec python wrapper'
 
-directory = 'bin'
-if not os.path.exists(directory):
-    os.makedirs(directory)
+SOURCES_DIR = 'word2vec-c'
+BIN_DIR = 'bin'
+if not os.path.exists(BIN_DIR):
+    os.makedirs(BIN_DIR)
 
-return_code = subprocess.call(['make', '-C', 'word2vec-c'])
+def compile(source, target):
+    CC = 'gcc'
+    CFLAGS = '-lm -pthread -O3 -Wall -march=native -funroll-loops -Wno-unused-result'
+    if sys.platform == 'darwin':
+        CFLAGS += ' -I/usr/include/malloc'
 
-if return_code != 0:
-    exit(0)
+    source_path = os.path.join(SOURCES_DIR, source)
+    target_path = os.path.join(BIN_DIR, target)
+    command = [CC, source_path, '-o', target_path]
+    command.extend(CFLAGS.split(' '))
+    print ' '.join(command)
+    return_code = subprocess.call(command)
+
+    if return_code > 0:
+        exit(return_code)
+
+compile('word2vec.c', 'word2vec')
+compile('word2phrase.c', 'word2phrase')
+compile('distance.c', 'w2v-distance')
+compile('word-analogy.c', 'w2v-word-analogy')
+compile('compute-accuracy.c', 'w2v-compute-accuracy')
 
 setup(
     name='word2vec',

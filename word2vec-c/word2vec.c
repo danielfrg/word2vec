@@ -51,17 +51,17 @@ int *table;
 
 void InitUnigramTable() {
   int a, i;
-  long long train_words_pow = 0;
-  real d1, power = 0.75;
+  double train_words_pow = 0;
+  double d1, power = 0.75;
   table = (int *)malloc(table_size * sizeof(int));
   for (a = 0; a < vocab_size; a++) train_words_pow += pow(vocab[a].cn, power);
   i = 0;
-  d1 = pow(vocab[i].cn, power) / (real)train_words_pow;
+  d1 = pow(vocab[i].cn, power) / train_words_pow;
   for (a = 0; a < table_size; a++) {
     table[a] = i;
-    if (a / (real)table_size > d1) {
+    if (a / (double)table_size > d1) {
       i++;
-      d1 += pow(vocab[i].cn, power) / (real)train_words_pow;
+      d1 += pow(vocab[i].cn, power) / train_words_pow;
     }
     if (i >= vocab_size) i = vocab_size - 1;
   }
