@@ -23,9 +23,12 @@ The easiest way is to look at this example:
 The default functionality from word2vec is also available from the command line as:
 - word2vec
 - word2phrase
-- w2v-distance
-- w2v-word-analogy
-- w2v-compute-accuracy
+- word2vec-distance
+- word2vec-word-analogy
+- word2vec-compute-accuracy
+
+Experimental funcionality on doc2vec can be found in this other example:
+[doc2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/doc2vec.ipynb)
 
 ## Issues
 

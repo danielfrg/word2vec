@@ -34,9 +34,10 @@ def compile(source, target):
 
 compile('word2vec.c', 'word2vec')
 compile('word2phrase.c', 'word2phrase')
-compile('distance.c', 'w2v-distance')
-compile('word-analogy.c', 'w2v-word-analogy')
-compile('compute-accuracy.c', 'w2v-compute-accuracy')
+compile('distance.c', 'word2vec-distance')
+compile('word-analogy.c', 'word2vec-word-analogy')
+compile('compute-accuracy.c', 'word2vec-compute-accuracy')
+compile('word2vec-sentence2vec.c', 'word2vec-doc2vec')
 
 setup(
     name='word2vec',
@@ -48,7 +49,8 @@ setup(
     description=DESCRIPTION,
     license='Apache License Version 2.0, January 2004',
     data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/w2v-distance',
-                         'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy'])],
+                         'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy',
+                         'bin/w2v-doc2vec'])],
     install_requires=[
         'numpy>=1.9.2'
     ],
