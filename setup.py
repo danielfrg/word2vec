@@ -48,9 +48,9 @@ setup(
     packages=['word2vec'],
     description=DESCRIPTION,
     license='Apache License Version 2.0, January 2004',
-    data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/w2v-distance',
-                         'bin/w2v-word-analogy', 'bin/w2v-compute-accuracy',
-                         'bin/w2v-doc2vec'])],
+    data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/word2vec-distance',
+                         'bin/word2vec-word-analogy', 'bin/word2vec-compute-accuracy',
+                         'bin/word2vec-doc2vec'])],
     install_requires=[
         'numpy>=1.9.2'
     ],
