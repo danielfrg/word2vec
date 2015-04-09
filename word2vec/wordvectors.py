@@ -1,4 +1,5 @@
-from __future__ import unicode_literals
+#coding:utf-8
+#from __future__ import unicode_literals   //this may cause error for utf-8
 
 import numpy as np
 try:
@@ -34,7 +35,8 @@ class WordVectors(object):
         """
         Returns the index on self.vocab and `self.vectors` for `word`
         """
-        temp = np.where(self.vocab == word)[0]
+        #as the input word is a string, while the keys in vocab are unicodes ,we should decode the word to string before compare
+        temp = np.where(self.vocab == word.decode('utf8'))[0]
         if temp.size == 0:
             raise KeyError('Word not in vocabulary')
         else:
@@ -44,7 +46,7 @@ class WordVectors(object):
         return self.get_vector(word)
 
     def __contains__(self, word):
-        return word in self.vocab
+        return word.decode('utf8') in self.vocab
 
     def get_vector(self, word):
         """
@@ -135,6 +137,8 @@ class WordVectors(object):
         """
         Create a WordVectors class based on a word2vec binary file
 
+        a version that can fit for utf8 text
+
         Parameters
         ----------
         fname : path to file
@@ -156,13 +160,13 @@ class WordVectors(object):
                 # read word
                 word = ''
                 while True:
-                    ch = fin.read(1).decode('ISO-8859-1')
+                    ch = fin.read(1) ##for utf-8 style strings, as one character contains more than one bytes, we should decode the whole word instead of each byte
                     if ch == ' ':
                         break
                     word += ch
                 include = desired_vocab is None or word in desired_vocab
                 if include:
-                    vocab[i] = word
+                    vocab[i] = word.decode('utf-8') #decode here
 
                 # read vector
                 vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
