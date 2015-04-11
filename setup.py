@@ -26,7 +26,7 @@ def compile(source, target):
     target_path = os.path.join(BIN_DIR, target)
     command = [CC, source_path, '-o', target_path]
     command.extend(CFLAGS.split(' '))
-    print ' '.join(command)
+    print(' '.join(command))
     return_code = subprocess.call(command)
 
     if return_code > 0:

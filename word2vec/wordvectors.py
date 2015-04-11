@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 import numpy as np
 try:
@@ -147,12 +147,12 @@ class WordVectors(object):
         """
         with open(fname) as fin:
             header = fin.readline()
-            vocab_size, vector_size = map(int, header.split())
+            vocab_size, vector_size = list(map(int, header.split()))
 
             vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
             binary_len = np.dtype(np.float32).itemsize * vector_size
-            for i in xrange(vocab_size):
+            for i in range(vocab_size):
                 # read word
                 word = ''
                 while True:
@@ -171,8 +171,8 @@ class WordVectors(object):
                 fin.read(1)  # newline
 
             if desired_vocab is not None:
-                vectors = vectors[vocab != u'', :]
-                vocab = vocab[vocab != u'']
+                vectors = vectors[vocab != '', :]
+                vocab = vocab[vocab != '']
         return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
@@ -192,7 +192,7 @@ class WordVectors(object):
         """
         with open(fname) as fin:
             header = fin.readline()
-            vocab_size, vector_size = map(int, header.split())
+            vocab_size, vector_size = list(map(int, header.split()))
 
             vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
@@ -207,8 +207,8 @@ class WordVectors(object):
                     vectors[i] = unitvec(vector)
 
             if desired_vocab is not None:
-                vectors = vectors[vocab != u'', :]
-                vocab = vocab[vocab != u'']
+                vectors = vectors[vocab != '', :]
+                vocab = vocab[vocab != '']
         return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
