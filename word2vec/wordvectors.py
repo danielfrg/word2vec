@@ -53,7 +53,7 @@ class WordVectors(object):
         Returns the (vectors) vector for `word` in the vocabulary
         """
         idx = self.ix(word)
-        return self.vectors[idx]
+        return self.vectors[idx,:]
 
     def cosine(self, word, n=10):
         """
