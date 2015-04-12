@@ -109,7 +109,8 @@ class WordVectors(object):
         metrics = np.dot(self.vectors, mean)
         best = metrics.argsort()[::-1][:n + len(exclude)]
 
-        exclude_idx = [np.where(best == self.ix(word)) for word in exclude if self.ix(word) in best]
+        exclude_idx = [np.where(best == self.ix(word)) for word in exclude if
+                       self.ix(word) in best]
         new_best = np.delete(best, exclude_idx)
         best_metrics = metrics[new_best]
         return new_best[:n], best_metrics[:n]
@@ -120,9 +121,12 @@ class WordVectors(object):
         returned by `self.cosine` and `self.analogy`
         '''
         if self.clusters and clusters:
-            return np.rec.fromarrays((self.vocab[indexes], metrics, self.clusters.clusters[indexes]), names=('word', 'metric', 'cluster'))
+            return np.rec.fromarrays((self.vocab[indexes], metrics,
+                                     self.clusters.clusters[indexes]),
+                                     names=('word', 'metric', 'cluster'))
         else:
-            return np.rec.fromarrays((self.vocab[indexes], metrics), names=('word', 'metric'))
+            return np.rec.fromarrays((self.vocab[indexes], metrics),
+                                     names=('word', 'metric'))
 
     def to_mmap(self, fname):
         if not joblib:
@@ -139,13 +143,14 @@ class WordVectors(object):
         ----------
         fname : path to file
         vocabUnicodeSize: the maximum string length (78, by default)
-        desired_vocab: if set, this will ignore any word and vector that doesn't fall inside desired_vocab.
+        desired_vocab: if set, this will ignore any word and vector that
+                       doesn't fall inside desired_vocab.
 
         Returns
         -------
         WordVectors instance
         """
-        with open(fname) as fin:
+        with open(fname, 'rb') as fin:
             header = fin.readline()
             vocab_size, vector_size = list(map(int, header.split()))
 
@@ -184,13 +189,14 @@ class WordVectors(object):
         ----------
         fname : path to file
         vocabUnicodeSize: the maximum string length (78, by default)
-        desired_vocab: if set, this will ignore any word and vector that doesn't fall inside desired_vocab.
+        desired_vocab: if set, this will ignore any word and vector that
+                       doesn't fall inside desired_vocab.
 
         Returns
         -------
         WordVectors instance
         """
-        with open(fname) as fin:
+        with open(fname, 'rb') as fin:
             header = fin.readline()
             vocab_size, vector_size = list(map(int, header.split()))
 

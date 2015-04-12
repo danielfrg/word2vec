@@ -1,14 +1,11 @@
-
-
-import os
 import sys
 import subprocess
 
 
-def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
-             threads=12, iter_=5, min_count=5, alpha=0.025, debug=2, binary=1,
-             cbow=1,
-             save_vocab=None, read_vocab=None, verbose=False):
+def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0,
+             negative=5, threads=12, iter_=5, min_count=5, alpha=0.025,
+             debug=2, binary=1, cbow=1, save_vocab=None, read_vocab=None,
+             verbose=False):
     """
     word 2 vec execution
 
@@ -22,15 +19,19 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
         window <int>
             Set max skip length between words; default is 5
         sample <float>
-            Set threshold for occurrence of words. Those that appear with higher frequency in the training data will be randomly down-sampled; default is 0 (off), useful value is 1e-5
+            Set threshold for occurrence of words. Those that appear with
+            higher frequency in the training data will be randomly
+            down-sampled; default is 0 (off), useful value is 1e-5
         hs <int>
             Use Hierarchical Softmax; default is 1 (0 = not used)
         negative <int>
-            Number of negative examples; default is 0, common values are 5 - 10 (0 = not used)
+            Number of negative examples; default is 0, common values are 5 - 10
+            (0 = not used)
         threads <int>
             Use <int> threads (default 1)
         min_count <int>
-            This will discard words that appear less than <int> times; default is 5
+            This will discard words that appear less than <int> times; default
+            is 5
         alpha <float>
             Set the starting learning rate; default is 0.025
         debug <int>
@@ -38,11 +39,13 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
         binary <int>
             Save the resulting vectors in binary moded; default is 0 (off)
         cbow <int>
-            Use the continuous back of words model; default is 1 (skip-gram model)
+            Use the continuous back of words model; default is 1 (skip-gram
+            model)
         save_vocab <file>
             The vocabulary will be saved to <file>
         read_vocab <file>
-            The vocabulary will be read from <file>, not constructed from the training data
+            The vocabulary will be read from <file>, not constructed from the
+            training data
         verbose
             Print output from training
     """
@@ -50,8 +53,8 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
     args = ['-train', '-output', '-size', '-window', '-sample', '-hs',
             '-negative', '-threads', '-iter', '-min-count', '-alpha', '-debug',
             '-binary', '-cbow']
-    values = [train, output, size, window, sample, hs, negative, threads, iter_,
-              min_count, alpha, debug, binary, cbow]
+    values = [train, output, size, window, sample, hs, negative, threads,
+              iter_, min_count, alpha, debug, binary, cbow]
 
     for arg, value in zip(args, values):
         command.append(arg)
@@ -63,7 +66,8 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
         command.append('-read-vocab')
         command.append(str(read_vocab))
 
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
     if verbose:
         for line in proc.stdout:
             sys.stdout.write(line)
@@ -83,8 +87,8 @@ def word2clusters(train, output, classes, size=100, window=5, sample='1e-3',
     args = ['-train', '-output', '-size', '-window', '-sample', '-hs',
             '-negative', '-threads', '-iter', '-min-count', '-alpha', '-debug',
             '-binary', '-cbow', '-classes']
-    values = [train, output, size, window, sample, hs, negative, threads, iter_,
-              min_count, alpha, debug, binary, cbow, classes]
+    values = [train, output, size, window, sample, hs, negative, threads,
+              iter_, min_count, alpha, debug, binary, cbow, classes]
 
     for arg, value in zip(args, values):
         command.append(arg)
@@ -97,7 +101,8 @@ def word2clusters(train, output, classes, size=100, window=5, sample='1e-3',
         command.append('-read-vocab')
         command.append(str(read_vocab))
 
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
 
     if verbose:
         for line in proc.stdout:
@@ -107,7 +112,8 @@ def word2clusters(train, output, classes, size=100, window=5, sample='1e-3',
             sys.stdout.flush()
 
 
-def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=False):
+def word2phrase(train, output, min_count=5, threshold=100, debug=2,
+                verbose=False):
     command = ['word2phrase']
 
     args = ['-train', '-output', '-min-count', '-threshold', '-debug']
@@ -117,7 +123,8 @@ def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=Fals
         command.append(str(value))
 
     print(command)
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
 
     if verbose:
         for line in proc.stdout:
@@ -126,16 +133,17 @@ def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=Fals
                 raise Exception(line)
             sys.stdout.flush()
 
+
 def doc2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
             threads=12, iter_=5, min_count=5, alpha=0.025, debug=2, binary=1,
             cbow=1,
             save_vocab=None, read_vocab=None, verbose=False):
     command = ['word2vec-doc2vec']
     args = ['-train', '-output', '-size', '-window', '-sample', '-hs',
-            '-negative', '-threads', '-iter', '-min-count', '-alpha', '-debug',
-            '-binary', '-cbow']
-    values = [train, output, size, window, sample, hs, negative, threads, iter_,
-              min_count, alpha, debug, binary, cbow]
+            '-negative', '-threads', '-iter', '-min-count', '-alpha',
+            '-debug', '-binary', '-cbow']
+    values = [train, output, size, window, sample, hs, negative, threads,
+              iter_, min_count, alpha, debug, binary, cbow]
 
     for arg, value in zip(args, values):
         command.append(arg)
@@ -150,7 +158,8 @@ def doc2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
     command.append('sentence-vectors')
     command.append('1')
 
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
     if verbose:
         for line in proc.stdout:
             sys.stdout.write(line)

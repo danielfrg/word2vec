@@ -1,7 +1,4 @@
-
-
 import word2vec
-import numpy as np
 
 
 def load(fname, kind='auto', *args, **kwargs):

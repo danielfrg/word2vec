@@ -16,9 +16,11 @@ BIN_DIR = 'bin'
 if not os.path.exists(BIN_DIR):
     os.makedirs(BIN_DIR)
 
+
 def compile(source, target):
     CC = 'gcc'
-    CFLAGS = '-lm -pthread -O3 -Wall -march=native -funroll-loops -Wno-unused-result'
+    CFLAGS = ('-lm -pthread -O3 -Wall -march=native -funroll-loops '
+              '-Wno-unused-result')
     if sys.platform == 'darwin':
         CFLAGS += ' -I/usr/include/malloc'
 
@@ -48,8 +50,9 @@ setup(
     packages=['word2vec'],
     description=DESCRIPTION,
     license='Apache License Version 2.0, January 2004',
-    data_files=[('bin', ['bin/word2vec', 'bin/word2phrase', 'bin/word2vec-distance',
-                         'bin/word2vec-word-analogy', 'bin/word2vec-compute-accuracy',
+    data_files=[('bin', ['bin/word2vec', 'bin/word2phrase',
+                         'bin/word2vec-distance', 'bin/word2vec-word-analogy',
+                         'bin/word2vec-compute-accuracy',
                          'bin/word2vec-doc2vec'])],
     install_requires=[
         'numpy>=1.9.2'
