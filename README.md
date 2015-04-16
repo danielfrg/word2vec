@@ -1,6 +1,8 @@
 word2vec
 ========
 
+![travis-ci](https://api.travis-ci.org/danielfrg/word2vec.svg)
+
 Python interface to Google word2vec.
 
 Training is done using the original C code plus some patches, the other funcionality is pure python + numpy.
@@ -9,7 +11,7 @@ Training is done using the original C code plus some patches, the other funciona
 
 `pip install word2vec`
 
-I highly recommend the use the [Anaconda python distribution](http://continuum.io/downloads)
+I recommend the [Anaconda python distribution](http://continuum.io/downloads)
 
 ### Development
 
