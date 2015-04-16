@@ -1,7 +1,4 @@
-from __future__ import unicode_literals
-
 import word2vec
-import numpy as np
 
 
 def load(fname, kind='auto', *args, **kwargs):
