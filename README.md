@@ -5,13 +5,15 @@ word2vec
 
 Python interface to Google word2vec.
 
-Training is done using the original C code plus some patches, the other funcionality is pure python + numpy.
+Training is done using the original C, other funcionality is pure python + numpy.
 
 ## Installation
 
 `pip install word2vec`
 
 I recommend the [Anaconda python distribution](http://continuum.io/downloads)
+
+**Note**: Only linux and OS X are supported.
 
 ### Development
 
