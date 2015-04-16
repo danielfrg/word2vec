@@ -1,0 +1,32 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+
+install:
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
+  - source activate test-environment
+  - conda install numpy pytest
+  - python setup.py install
+  - source deactivate
+
+script:
+  - mkdir -p $HOME/data
+  - pushd
+  - wget http://mattmahoney.net/dc/text8.zip -O text8.zip
+  - unzip text8.zip
+  - head -c 1000000 text8 > text
+  - popd
+  - source activate test-environment
+  - py.test
