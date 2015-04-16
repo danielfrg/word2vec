@@ -1,3 +1,5 @@
+from __future__ import division, print_function, unicode_literals
+
 import sys
 import subprocess
 
@@ -7,7 +9,7 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0,
              debug=2, binary=1, cbow=1, save_vocab=None, read_vocab=None,
              verbose=False):
     """
-    word 2 vec execution
+    word2vec execution
 
     Parameters for training:
         train <file>
@@ -66,16 +68,7 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0,
         command.append('-read-vocab')
         command.append(str(read_vocab))
 
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-    if verbose:
-        for line in proc.stdout:
-            sys.stdout.write(line)
-            if 'ERROR:' in line:
-                raise Exception(line)
-            sys.stdout.flush()
-
-    out, err = proc.communicate()
+    run_cmd(command, verbose=verbose)
 
 
 def word2clusters(train, output, classes, size=100, window=5, sample='1e-3',
@@ -101,15 +94,7 @@ def word2clusters(train, output, classes, size=100, window=5, sample='1e-3',
         command.append('-read-vocab')
         command.append(str(read_vocab))
 
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-
-    if verbose:
-        for line in proc.stdout:
-            sys.stdout.write(line)
-            if 'ERROR:' in line:
-                raise Exception(line)
-            sys.stdout.flush()
+    run_cmd(command, verbose=verbose)
 
 
 def word2phrase(train, output, min_count=5, threshold=100, debug=2,
@@ -122,16 +107,7 @@ def word2phrase(train, output, min_count=5, threshold=100, debug=2,
         command.append(arg)
         command.append(str(value))
 
-    print(command)
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-
-    if verbose:
-        for line in proc.stdout:
-            sys.stdout.write(line)
-            if 'ERROR:' in line:
-                raise Exception(line)
-            sys.stdout.flush()
+    run_cmd(command, verbose=verbose)
 
 
 def doc2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
@@ -158,10 +134,15 @@ def doc2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
     command.append('sentence-vectors')
     command.append('1')
 
+    run_cmd(command, verbose=verbose)
+
+
+def run_cmd(command, verbose=False):
     proc = subprocess.Popen(command, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     if verbose:
         for line in proc.stdout:
+            line = str(line)
             sys.stdout.write(line)
             if 'ERROR:' in line:
                 raise Exception(line)
