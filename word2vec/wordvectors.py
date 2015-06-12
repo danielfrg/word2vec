@@ -160,15 +160,15 @@ class WordVectors(object):
             binary_len = np.dtype(np.float32).itemsize * vector_size
             for i in range(vocab_size):
                 # read word
-                word = ''
+                word = b''
                 while True:
-                    ch = fin.read(1).decode(encoding)
-                    if ch == ' ':
+                    ch = fin.read(1)
+                    if ch == b' ':
                         break
                     word += ch
                 include = desired_vocab is None or word in desired_vocab
                 if include:
-                    vocab[i] = word
+                    vocab[i] = word.decode(encoding)
 
                 # read vector
                 vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
