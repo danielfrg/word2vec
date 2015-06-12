@@ -136,7 +136,7 @@ class WordVectors(object):
         joblib.dump(self, fname)
 
     @classmethod
-    def from_binary(cls, fname, vocabUnicodeSize=78, desired_vocab=None):
+    def from_binary(cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8"):
         """
         Create a WordVectors class based on a word2vec binary file
 
@@ -162,7 +162,7 @@ class WordVectors(object):
                 # read word
                 word = ''
                 while True:
-                    ch = fin.read(1).decode('ISO-8859-1')
+                    ch = fin.read(1).decode(encoding)
                     if ch == ' ':
                         break
                     word += ch
@@ -182,7 +182,7 @@ class WordVectors(object):
         return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
-    def from_text(cls, fname, vocabUnicodeSize=78, desired_vocab=None):
+    def from_text(cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8"):
         """
         Create a WordVectors class based on a word2vec text file
 
@@ -204,7 +204,7 @@ class WordVectors(object):
             vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
             for i, line in enumerate(fin):
-                line = line.decode('ISO-8859-1').strip()
+                line = line.decode(encoding).strip()
                 parts = line.split(' ')
                 word = parts[0]
                 include = desired_vocab is None or word in desired_vocab
