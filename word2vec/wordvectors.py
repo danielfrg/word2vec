@@ -31,21 +31,21 @@ class WordVectors(object):
         self.vectors = vectors
         self.clusters = clusters
 
+        self.vocab_hash = {}
+        for i, word in enumerate(vocab):
+            self.vocab_hash[word] = i
+
     def ix(self, word):
         """
         Returns the index on self.vocab and `self.vectors` for `word`
         """
-        temp = np.where(self.vocab == word)[0]
-        if temp.size == 0:
-            raise KeyError('Word not in vocabulary')
-        else:
-            return temp[0]
+        return self.vocab_hash[word]
 
     def __getitem__(self, word):
         return self.get_vector(word)
 
     def __contains__(self, word):
-        return word in self.vocab
+        return word in self.vocab_hash
 
     def get_vector(self, word):
         """
