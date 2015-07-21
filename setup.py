@@ -6,7 +6,7 @@ from distutils.core import setup
 '''
 To update to a new version:
 1. change version
-2. python setup.py sdist upload
+2. python setup.py sdist register upload
 '''
 
 DESCRIPTION = 'Google word2vec python wrapper'
@@ -43,7 +43,7 @@ compile('word2vec-sentence2vec.c', 'word2vec-doc2vec')
 
 setup(
     name='word2vec',
-    version='0.7.1',
+    version='0.8',
     maintainer='Daniel Rodriguez',
     maintainer_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
