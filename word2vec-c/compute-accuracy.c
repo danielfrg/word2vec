@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <malloc.h>
+//#include <malloc.h>
 #include <ctype.h>
 
 const long long max_size = 2000;         // max length of strings
