@@ -32,6 +32,5 @@ script:
   - head -c 1000000 text8 > text
   - popd
   # py.test
-  - source activate test-environment
   - cd word2vec/tests
   - py.test  -s -vv
