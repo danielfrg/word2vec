@@ -26,6 +26,7 @@ install:
 
 script:
   - pwd
+  - ls $HOME/miniconda/bin
   # Test Data
   - mkdir -p $HOME/data
   - pushd $HOME/data
