@@ -1,9 +1,7 @@
 word2vec
 ========
 
-![travis-ci]()
 [![travis-ci](https://api.travis-ci.org/danielfrg/word2vec.svg)](https://travis-ci.org/danielfrg/word2vec)
-
 
 Python interface to Google word2vec.
 
