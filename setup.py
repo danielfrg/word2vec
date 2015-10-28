@@ -3,7 +3,7 @@ To upload a new version:
 1. make clean
 2. git tag a new version: git tag v1.x.x
 3. python setup.py sdist
-4. python setup.py register upload
+4. python setup.py sdist register upload
 """
 
 from distutils.core import setup
