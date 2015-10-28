@@ -1,7 +1,10 @@
 language: python
+
 python:
   - "2.7"
   - "3.4"
+
+sudo: false
 
 install:
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
