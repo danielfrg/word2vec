@@ -17,17 +17,14 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
-  - source activate test-environment
   - conda install numpy pytest
   - python setup.py install
-  - source deactivate
 
 script:
   - pwd
+  - export PATH="$HOME/miniconda/bin:$PATH"
   - ls $HOME/miniconda/bin
-  # Test Data
+  # Download test Data
   - mkdir -p $HOME/data
   - pushd $HOME/data
   - wget http://mattmahoney.net/dc/text8.zip -O text8.zip
