@@ -40,6 +40,7 @@ nosetests.xml
 .ipynb_checkpoints
 
 examples/text8
+examples/*.zip
 examples/*.vec
 examples/*.clusters
 examples/*.gz
