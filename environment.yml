@@ -1,0 +1,11 @@
+name: word2vec-dev
+dependencies:
+  - python=2.7
+  - ipython
+  - numpy
+  - pytest
+  - pylint
+  - pip:
+    - pytest-cov
+    - yapf
+    - versioneer
