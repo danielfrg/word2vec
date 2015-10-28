@@ -15,7 +15,6 @@ def setup_module(module):
     word2vec.word2vec(input_, output_bin, size=10, binary=1, verbose=False)
     word2vec.word2vec(input_, output_txt, size=10, binary=0, verbose=False)
     word2vec.word2clusters(input_, output_clusters, 10, verbose=True)
-    pass
 
 
 def test_files_create():
