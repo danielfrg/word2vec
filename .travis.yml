@@ -18,14 +18,11 @@ install:
   - conda update -q conda
   - conda info -a
   - conda install numpy pytest
-  - which python
   - python setup.py install
 
 script:
   - pwd
-  - $HOME
   - export PATH="$(pwd)/bin:$HOME/miniconda/bin:$PATH"
-  - ls $HOME/miniconda/bin
   # Download test Data
   - mkdir -p $HOME/data
   - pushd $HOME/data

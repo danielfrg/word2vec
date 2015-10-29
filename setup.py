@@ -5,11 +5,13 @@ To upload a new version:
 3. python setup.py sdist
 4. python setup.py sdist register upload
 
-Note in binary files (data_files):
-When you do `python setup.py install` it will place the
-binary files (`word2vec`, `word2phrase`, ...) in this directory
-When you do pip install it will place them in the correct
-`{{ environtment }}/bin` directory
+Note in binary files (`data_files`) from `setup()` below:
+
+- When you do `python setup.py install` it will place the
+binary files (`word2vec`, `word2phrase`, ...) in this directory: `$(pwd)/bin`
+So you have to export that to the `$PATH`
+- When you do pip install it will place them in the correct
+`{{ environtment }}/bin` directory so users dont need to do that.
 
 """
 
