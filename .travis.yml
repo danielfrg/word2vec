@@ -18,6 +18,7 @@ install:
   - conda update -q conda
   - conda info -a
   - conda install numpy pytest
+  - which python
   - python setup.py install
 
 script:
