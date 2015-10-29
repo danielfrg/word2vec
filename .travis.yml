@@ -23,7 +23,8 @@ install:
 
 script:
   - pwd
-  - export PATH="$HOME/miniconda/bin:$PATH"
+  - $HOME
+  - export PATH="$(pwd)/bin:$HOME/miniconda/bin:$PATH"
   - ls $HOME/miniconda/bin
   # Download test Data
   - mkdir -p $HOME/data
