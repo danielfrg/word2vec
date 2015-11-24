@@ -10,7 +10,7 @@ Note in binary files (`data_files`) from `setup()` below:
 - When you do `python setup.py install` it will place the
 binary files (`word2vec`, `word2phrase`, ...) in this directory: `$(pwd)/bin`
 So you have to export that to the `$PATH`
-- When you do pip install it will place them in the correct
+- When you do `pip install word2vec` it will place them in the correct
 `{{ environtment }}/bin` directory so users dont need to do that.
 
 """
@@ -31,16 +31,18 @@ if not os.path.exists(BIN_DIR):
 
 def compile_c(source, target):
     CC = 'gcc'
-    CFLAGS = ('-lm -pthread -O3 -Wall -march=native -funroll-loops '
+
+    DEFAULT_CFLAGS = ('-lm -pthread -O3 -Wall -march=native -funroll-loops '
               '-Wno-unused-result')
     if sys.platform == 'darwin':
-        CFLAGS += ' -I/usr/include/malloc'
+        DEFAULT_CFLAGS += ' -I/usr/include/malloc'
+    CFLAGS = os.environ.get('CFLAGS', DEFAULT_CFLAGS)
 
     source_path = os.path.join(SOURCES_DIR, source)
     target_path = os.path.join(BIN_DIR, target)
     command = [CC, source_path, '-o', target_path]
     command.extend(CFLAGS.split(' '))
-    print(' '.join(command))
+    print('Compilation command:', ' '.join(command))
     return_code = subprocess.call(command)
 
     if return_code > 0:
