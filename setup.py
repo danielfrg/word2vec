@@ -30,13 +30,15 @@ class install(_install):
     def run(self):
         this_dir = os.path.dirname(os.path.realpath(__file__))
         self.C_SOURCE = os.path.join(this_dir, 'word2vec', 'c')
+
         self.TARGET_DIR = 'bin'
+        if sys.platform == 'win32':
+            self.TARGET_DIR = 'Scripts'
 
         if not os.path.exists(self.TARGET_DIR):
             os.makedirs(self.TARGET_DIR)
 
         if sys.platform == 'win32':
-            self.TARGET_DIR = 'Scripts'
             self.compile_c('win32/word2vec.c', 'word2vec.exe')
             self.compile_c('win32/word2phrase.c', 'word2phrase.exe')
             self.compile_c('win32/distance.c', 'word2vec-distance.exe')
