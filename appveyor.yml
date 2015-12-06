@@ -20,8 +20,8 @@ branches:
 clone_folder: c:\workspace\word2vec
 
 install:
-  - "set PATH=C:\\MinGW\\bin;%PATH%"
-  - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - set PATH=C:\\MinGW\\bin;%PATH%
+  - set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%
   - echo %PATH%
   - conda config --set always_yes yes
   - conda update -q conda
@@ -38,7 +38,7 @@ build_script:
 test_script:
   # Test: Download test data
   - ps: mkdir $HOME/data
-  - ps: wget -q http://mattmahoney.net/dc/text8.zip -OutFile $HOME/data/text8.zip
+  - ps: wget http://mattmahoney.net/dc/text8.zip -OutFile $HOME/data/text8.zip
   - 7z e -o %HOMEPATH%\data %HOMEPATH%\data\text8.zip
   - Get-Content text8 -TotalCount 1MB > text
   # Test: py.test

@@ -83,14 +83,16 @@ cmdclass.update({'install': install})
 
 data_files = []
 if sys.platform == 'win32':
-    data_files = ['Scripts/word2vec.exe', 'Scripts/word2phrase.exe',
-                  'Scripts/word2vec-distance.exe', 'Scripts/word2vec-word-analogy.exe',
-                  'Scripts/word2vec-compute-accuracy.exe']
+    out_data_files = ['Scripts/word2vec.exe', 'Scripts/word2phrase.exe',
+                      'Scripts/word2vec-distance.exe', 'Scripts/word2vec-word-analogy.exe',
+                      'Scripts/word2vec-compute-accuracy.exe']
+    data_files = [('Scripts', out_data_files)]
 else:
-    data_files = ['bin/word2vec', 'bin/word2phrase',
-                  'bin/word2vec-distance', 'bin/word2vec-word-analogy',
-                  'bin/word2vec-compute-accuracy',
-                  'bin/word2vec-doc2vec']
+    out_data_files = ['bin/word2vec', 'bin/word2phrase',
+                      'bin/word2vec-distance', 'bin/word2vec-word-analogy',
+                      'bin/word2vec-compute-accuracy',
+                      'bin/word2vec-doc2vec']
+    data_files = [('bin', out_data_files)]
 
 setup(
     name='word2vec',
@@ -103,6 +105,6 @@ setup(
     description='Wrapper for Google word2vec',
     license='Apache License Version 2.0, January 2004',
     packages=find_packages(),
-    data_files=[('bin', data_files)],
+    data_files=data_files,
     install_requires=required
 )
