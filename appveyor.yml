@@ -42,7 +42,7 @@ test_script:
   - 7z e -o %HOMEPATH%\data %HOMEPATH%\data\text8.zip
   - Get-Content text8 -TotalCount 1MB > text
   # Test: py.test
-  - py.test -s -vv --pyarg word2vec
+  # - py.test -s -vv --pyarg word2vec
 
 on_success:
   - cd dist
