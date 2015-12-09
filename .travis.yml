@@ -1,8 +1,8 @@
 language: python
 
 python:
-  - "2.7"
-  - "3.4"
+  - 2.7
+  - 3.4
 
 sudo: false
 
@@ -14,15 +14,17 @@ install:
     fi
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
-  - conda config --set always_yes yes --set changeps1 no
+  - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
   - conda install numpy pytest
   - python setup.py install
+  # Build and Upload help
+  - pip install -r .ci/requirements.txt
 
 script:
-  - pwd
-  - export PATH="$(pwd)/bin:$HOME/miniconda/bin:$PATH"
+  - export PATH="$(pwd)/bin:$PATH"
+  - echo $PATH
   # Download test Data
   - mkdir -p $HOME/data
   - pushd $HOME/data
@@ -31,5 +33,11 @@ script:
   - head -c 1000000 text8 > text
   - popd
   # py.test
-  - cd word2vec/tests
-  - py.test  -s -vv
+  - pushd word2vec/tests
+  - py.test -s -vv
+  - popd
+  # Build
+  - python setup.py bdist_wheel
+  - ls dist
+  # Upload
+  - aws s3 cp dist/*whl s3://danielfrg-ci/word2vec/

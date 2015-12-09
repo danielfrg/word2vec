@@ -8,11 +8,10 @@ To upload a new version:
 Note in binary files (`data_files`) from `setup()` below:
 
 - When you do `python setup.py install` it will place the
-binary files (`word2vec`, `word2phrase`, ...) in this directory: `$(pwd)/bin`
+binary files (`word2vec`, `word2phrase`, ...) in: `$(pwd)/bin`
 So you have to export that to the `$PATH`
 - When you do `pip install word2vec` it will place them in the correct
 `{{ environtment }}/bin` directory so users dont need to do that.
-
 """
 
 from distutils.core import setup

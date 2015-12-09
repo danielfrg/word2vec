@@ -35,7 +35,6 @@ nosetests.xml
 .project
 .pydevproject
 
-
 # IPython Notebook
 .ipynb_checkpoints
 
