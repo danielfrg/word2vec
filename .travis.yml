@@ -1,14 +1,16 @@
 language: python
 sudo: false
 
-os:
-  - linux
-  - osx
-
 matrix:
   include:
-    - PYTHON_VERSION: 2.7
-    - PYTHON_VERSION: 3.4
+    - os: linux
+      PYTHON_VERSION: 2.7
+    - os: linux
+      PYTHON_VERSION: 3.4
+    - os: osx
+      PYTHON_VERSION: 2.7
+    - os: osx
+      PYTHON_VERSION: 3.4
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
