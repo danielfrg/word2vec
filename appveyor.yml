@@ -21,6 +21,7 @@ environment:
 clone_folder: c:\workspace\word2vec
 
 install:
+  - "set PATH=C:\\MinGW\\bin;%PATH%"
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - conda config --set always_yes yes
   - conda update -q conda
@@ -28,9 +29,9 @@ install:
 
 build_script:
   - conda install --file .ci/conda-requirements.txt -y -q
-  - "%CMD_IN_ENV% python setup.py bdist_wheel"
+  - python setup.py bdist_wheel"
   - ls dist
-  - "%CMD_IN_ENV% pip install dist/*.whl"
+  - pip install dist/*.whl"
 
 # test_script:
 
