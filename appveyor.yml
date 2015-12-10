@@ -19,6 +19,7 @@ install:
   - "set PATH=C:\\MinGW\\bin;%PATH%"
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - echo %PATH%
+  - echo %APPVEYOR_PULL_REQUEST_NUMBER%
   - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
@@ -29,7 +30,6 @@ build_script:
   - python setup.py bdist_wheel
   - ls dist
   - "pip install --pre --no-index --find-links dist/ word2vec"
-  - echo %APPVEYOR_PULL_REQUEST_NUMBER%
 
 # test_script: # TODO
 
