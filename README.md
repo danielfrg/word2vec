@@ -2,10 +2,12 @@ word2vec
 ========
 
 [![travis-ci](https://api.travis-ci.org/danielfrg/word2vec.svg)](https://travis-ci.org/danielfrg/word2vec)
+[![appveyor](https://ci.appveyor.com/api/projects/status/github/danielfrg/word2vec?branch=master&svg=true
+)](https://ci.appveyor.com/project/danielfrg/word2vec)
 
 Python interface to Google word2vec.
 
-Training is done using the original C, other funcionality is pure python + numpy.
+Training is done using the original C, other functionality is pure python + numpy.
 
 ## Installation
 
@@ -31,7 +33,7 @@ The default functionality from word2vec is also available from the command line 
 - word2vec-word-analogy
 - word2vec-compute-accuracy
 
-Experimental funcionality on doc2vec can be found in this other example:
+Experimental functionality on doc2vec can be found in this other example:
 [doc2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/doc2vec.ipynb)
 
 ## Issues
