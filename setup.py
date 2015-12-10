@@ -16,6 +16,7 @@ So you have to export that to the `$PATH`
 
 from setuptools import setup
 from setuptools import find_packages
+from  setuptools.command.install import install as _install
 from Cython.Build import cythonize
 
 import os
@@ -24,44 +25,52 @@ import subprocess
 
 import versioneer
 
-C_SOURCE = os.path.join('word2vec', 'c')
-BIN_DIR = 'bin'
-if not os.path.exists(BIN_DIR):
-    os.makedirs(BIN_DIR)
 
-def compile_c(source, target):
-    CC = 'gcc'
+class install(_install):
+    def run(self):
+        self.C_SOURCE = os.path.join('word2vec', 'c')
+        self.BIN_DIR = 'bin'
+        if not os.path.exists(self.BIN_DIR):
+            os.makedirs(self.BIN_DIR)
 
-    DEFAULT_CFLAGS = ('-lm -pthread -O3 -Wall -march=native -funroll-loops '
-              '-Wno-unused-result')
-    if sys.platform == 'darwin':
-        DEFAULT_CFLAGS += ' -I/usr/include/malloc'
-    CFLAGS = os.environ.get('CFLAGS', DEFAULT_CFLAGS)
+        self.compile_c('word2vec.c', 'word2vec')
+        self.compile_c('word2phrase.c', 'word2phrase')
+        self.compile_c('distance.c', 'word2vec-distance')
+        self.compile_c('word-analogy.c', 'word2vec-word-analogy')
+        self.compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
+        self.compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
 
-    source_path = os.path.join(C_SOURCE, source)
-    target_path = os.path.join(BIN_DIR, target)
-    command = [CC, source_path, '-o', target_path]
-    command.extend(CFLAGS.split(' '))
-    print('Compilation command:', ' '.join(command))
-    return_code = subprocess.call(command)
+        _install.run(self)
 
-    if return_code > 0:
-        exit(return_code)
+    def compile_c(self, source, target):
+        CC = 'gcc'
 
-compile_c('word2vec.c', 'word2vec')
-compile_c('word2phrase.c', 'word2phrase')
-compile_c('distance.c', 'word2vec-distance')
-compile_c('word-analogy.c', 'word2vec-word-analogy')
-compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
-compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
+        DEFAULT_CFLAGS = ('-lm -pthread -O3 -Wall -march=native -funroll-loops '
+                  '-Wno-unused-result')
+        if sys.platform == 'darwin':
+            DEFAULT_CFLAGS += ' -I/usr/include/malloc'
+        CFLAGS = os.environ.get('CFLAGS', DEFAULT_CFLAGS)
+
+        source_path = os.path.join(self.C_SOURCE, source)
+        target_path = os.path.join(self.BIN_DIR, target)
+        command = [CC, source_path, '-o', target_path]
+        command.extend(CFLAGS.split(' '))
+        print('Compilation command:', ' '.join(command))
+        return_code = subprocess.call(command)
+
+        if return_code > 0:
+            exit(return_code)
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
+cmdclass=versioneer.get_cmdclass()
+cmdclass.update({'install': install})
+
 setup(
     name='word2vec',
     version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    cmdclass=cmdclass,
     ext_modules=cythonize("word2vec/noop.pyx"),
     author='Daniel Rodriguez',
     author_email='df.rodriguez143@gmail.com',
