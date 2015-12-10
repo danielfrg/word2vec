@@ -11,7 +11,7 @@ matrix:
     - os: osx
       env: PYTHON_VERSION=3
 
-install:
+before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       if [[ "$PYTHON_VERSION" == "2" ]]; then
         wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
@@ -30,22 +30,22 @@ install:
   - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
-  - conda install numpy cython pytest
-  - python setup.py install
-  # Build and Upload help
-  - pip install -r .ci/requirements.txt
 
-script:
+install:
+  - conda install --file .ci/conda-requirements.txt -y
+  - python setup.py install
   - export PATH="$(pwd)/bin:$PATH"
   - echo $PATH
-  # Download test Data
+
+script:
+  # Test: Download test data
   - mkdir -p $HOME/data
   - pushd $HOME/data
   - wget http://mattmahoney.net/dc/text8.zip -O text8.zip
   - unzip text8.zip
   - head -c 1000000 text8 > text
   - popd
-  # py.test
+  # Test: py.test
   - pushd word2vec/tests
   - py.test -s -vv
   - popd
@@ -53,4 +53,5 @@ script:
   - python setup.py bdist_wheel
   - ls dist
   # Upload
+  - pip install -r .ci/requirements.txt
   - aws s3 cp dist/*whl s3://danielfrg-ci/word2vec/

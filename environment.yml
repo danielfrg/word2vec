@@ -11,3 +11,4 @@ dependencies:
     - yapf
     - versioneer
     - wheel
+    - twine
