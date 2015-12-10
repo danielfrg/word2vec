@@ -79,9 +79,9 @@ cmdclass.update({'install': install})
 
 data_files = []
 if sys.platform == 'win32':
-    data_files = ['bin/word2vec.exe', 'bin/word2phrase.exe',
-                  'bin/word2vec-distance.exe', 'bin/word2vec-word-analogy.exe',
-                  'bin/word2vec-compute-accuracy.exe']
+    data_files = ['Scripts/word2vec.exe', 'Scripts/word2phrase.exe',
+                  'Scripts/word2vec-distance.exe', 'Scripts/word2vec-word-analogy.exe',
+                  'Scripts/word2vec-compute-accuracy.exe']
 else:
     data_files = ['bin/word2vec', 'bin/word2phrase',
                   'bin/word2vec-distance', 'bin/word2vec-word-analogy',
