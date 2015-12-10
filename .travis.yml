@@ -1,24 +1,24 @@
 language: python
-
-python:
-  - 2.7
-  - 3.4
+sudo: false
 
 os:
   - linux
   - osx
 
-sudo: false
+matrix:
+  include:
+    - PYTHON_VERSION: 2.7
+    - PYTHON_VERSION: 3.4
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      if [[ "$PYTHON_VERSION" == "2.7" ]]; then
         wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
       else
         wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
       fi
     else
-      if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      if [[ "$PYTHON_VERSION" == "2.7" ]]; then
         wget https://repo.continuum.io/miniconda/Miniconda-latest-MacOSX-x86_64.sh -O miniconda.sh;
       else
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
