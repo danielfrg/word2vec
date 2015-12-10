@@ -36,7 +36,7 @@ nosetests.xml
 .pydevproject
 
 # Project
-word2vec/c/noop.c
+word2vec/noop.c
 
 # IPython Notebook
 .ipynb_checkpoints
