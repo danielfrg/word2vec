@@ -19,7 +19,7 @@ install:
   - "set PATH=C:\\MinGW\\bin;%PATH%"
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - echo %PATH%
-  - echo %APPVEYOR_PULL_REQUEST_NUMBER%
+  - echo %APPVEYOR_PULL_REQUEST_NUMBER% == "off"
   - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
