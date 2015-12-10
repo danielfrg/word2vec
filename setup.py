@@ -14,7 +14,7 @@ So you have to export that to the `$PATH`
 `{{ environtment }}/bin` directory so users dont need to do that.
 """
 
-from distutils.core import setup
+from setuptools import setup
 from setuptools import find_packages
 
 import os
