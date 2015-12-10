@@ -35,7 +35,7 @@ build_script:
 on_success:
   - cd dist
   - if not defined APPVEYOR_PULL_REQUEST_NUMBER (
-      aws s3 cp . s3://danielfrg-ci/word2vec/ --recursive --exclude * --include *.wh
+      echo "Uploading Wheel" && aws s3 cp . s3://danielfrg-ci/word2vec/ --recursive --exclude * --include *.whl
     ) else (
       echo "Pull Request -> No upload"
     )
