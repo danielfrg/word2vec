@@ -1,3 +1,7 @@
+branches:
+  only:
+    - master
+
 sudo: false
 
 matrix:
@@ -49,4 +53,6 @@ script:
   - py.test -s -vv --pyarg word2vec
   # Upload
   - pip install -r .ci/requirements.txt
-  - aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/
+  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
+      aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/
+    fi

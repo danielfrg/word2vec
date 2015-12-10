@@ -3,38 +3,36 @@ version: "{build}"
 os: Windows Server 2012 R2
 
 environment:
-  global:
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.ci\\run_with_env.cmd"
-    AWS_ACCESS_KEY_ID:
-      secure: xalXUrYrSfaJPK9k7rn0CrdmTK/2WcZzHP28wXD+VvM=
-    AWS_SECRET_ACCESS_KEY:
-      secure: DDabqC3dvAnpkUXK5+r/htaVvV4wPonAWF9iBC6K4WMtUrDZJm5EUQ+SBPxOQAW8
-
   matrix:
     - PYTHON_VERSION: "2.7.10"
       MINICONDA: C:\Miniconda
-      PYTHON_ARCH: "64"
     - PYTHON_VERSION: "3.5.1"
       MINICONDA: C:\Miniconda3
-      PYTHON_ARCH: "64"
+
+branches:
+  only:
+    - master
 
 clone_folder: c:\workspace\word2vec
 
 install:
   - "set PATH=C:\\MinGW\\bin;%PATH%"
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - echo %PATH%
   - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
 
 build_script:
   - conda install --file .ci/conda-requirements.txt -y -q
-  - python setup.py bdist_wheel"
-  - ls dist
-  - pip install dist/*.whl"
-
-# test_script:
-
-after_test:
   - pip install -r .ci/requirements.txt
-  - aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/
+  - python setup.py bdist_wheel
+  - ls dist
+  - "pip install --pre --no-index --find-links dist/ word2vec"
+
+# test_script: # TODO
+
+on_success:
+  - cd dist
+  - echo %APPVEYOR_PULL_REQUEST_NUMBER%
+  # - aws s3 cp . s3://danielfrg-ci/word2vec/ --recursive --exclude * --include *.whl > nul

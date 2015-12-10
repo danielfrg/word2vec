@@ -15,7 +15,9 @@ Training is done using the original C, other functionality is pure python + nump
 
 I recommend the [Anaconda python distribution](http://continuum.io/downloads)
 
-**Note**: Only linux and OS X are supported.
+**Note**: Only Linux and OS X are tested
+
+**Windows:** Experimental support based on a [win32 port](https://github.com/zhangyafeikimi/word2vec-win32)
 
 ### Development
 
