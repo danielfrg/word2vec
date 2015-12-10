@@ -54,5 +54,5 @@ script:
   # Upload
   - pip install -r .ci/requirements.txt
   - if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-      aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/
+      aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/;
     fi
