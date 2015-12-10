@@ -37,7 +37,7 @@ on_success:
   - echo on
   - echo %APPVEYOR_PULL_REQUEST_NUMBER%
   - if "%APPVEYOR_PULL_REQUEST_NUMBER%"=="" (
-      echo "Pull Request -> No upload"
-    ) else (
       aws s3 cp . s3://danielfrg-ci/word2vec/ --recursive --exclude * --include *.wh
+    ) else (
+      echo "Pull Request -> No upload"
     )
