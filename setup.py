@@ -48,12 +48,12 @@ def compile_c(source, target):
     if return_code > 0:
         exit(return_code)
 
-# compile_c('word2vec.c', 'word2vec')
-# compile_c('word2phrase.c', 'word2phrase')
-# compile_c('distance.c', 'word2vec-distance')
-# compile_c('word-analogy.c', 'word2vec-word-analogy')
-# compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
-# compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
+compile_c('word2vec.c', 'word2vec')
+compile_c('word2phrase.c', 'word2phrase')
+compile_c('distance.c', 'word2vec-distance')
+compile_c('word-analogy.c', 'word2vec-word-analogy')
+compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
+compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -62,7 +62,7 @@ setup(
     name='word2vec',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    ext_modules=cythonize("word2vec/c/noop.pyx"),
+    ext_modules=cythonize("word2vec/noop.pyx"),
     author='Daniel Rodriguez',
     author_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
