@@ -32,7 +32,7 @@ before_install:
   - conda info -a
 
 install:
-  - conda install --file .ci/conda-requirements.txt -y
+  - conda install --file .ci/conda-requirements.txt -y -q
   - python setup.py bdist_wheel
   - ls dist
   - pip install dist/*.whl
