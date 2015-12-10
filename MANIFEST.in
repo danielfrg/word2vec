@@ -1,6 +1,6 @@
 include LICENSE.txt
 include requirements.txt
-recursive-include word2vec-c *.c
+recursive-include word2vec/c *.c
 prune bin
 include versioneer.py
 include word2vec/_version.py

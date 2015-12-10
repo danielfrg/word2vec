@@ -3,6 +3,7 @@ dependencies:
   - python=2.7
   - ipython
   - numpy
+  - cython
   - pytest
   - pylint
   - pip:

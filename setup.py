@@ -16,6 +16,7 @@ So you have to export that to the `$PATH`
 
 from setuptools import setup
 from setuptools import find_packages
+from Cython.Build import cythonize
 
 import os
 import sys
@@ -23,7 +24,7 @@ import subprocess
 
 import versioneer
 
-SOURCES_DIR = 'word2vec-c'
+C_SOURCE = os.path.join('word2vec', 'c')
 BIN_DIR = 'bin'
 if not os.path.exists(BIN_DIR):
     os.makedirs(BIN_DIR)
@@ -37,7 +38,7 @@ def compile_c(source, target):
         DEFAULT_CFLAGS += ' -I/usr/include/malloc'
     CFLAGS = os.environ.get('CFLAGS', DEFAULT_CFLAGS)
 
-    source_path = os.path.join(SOURCES_DIR, source)
+    source_path = os.path.join(C_SOURCE, source)
     target_path = os.path.join(BIN_DIR, target)
     command = [CC, source_path, '-o', target_path]
     command.extend(CFLAGS.split(' '))
@@ -47,12 +48,12 @@ def compile_c(source, target):
     if return_code > 0:
         exit(return_code)
 
-compile_c('word2vec.c', 'word2vec')
-compile_c('word2phrase.c', 'word2phrase')
-compile_c('distance.c', 'word2vec-distance')
-compile_c('word-analogy.c', 'word2vec-word-analogy')
-compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
-compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
+# compile_c('word2vec.c', 'word2vec')
+# compile_c('word2phrase.c', 'word2phrase')
+# compile_c('distance.c', 'word2vec-distance')
+# compile_c('word-analogy.c', 'word2vec-word-analogy')
+# compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
+# compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -61,6 +62,7 @@ setup(
     name='word2vec',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    ext_modules=cythonize("word2vec/c/noop.pyx"),
     author='Daniel Rodriguez',
     author_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
