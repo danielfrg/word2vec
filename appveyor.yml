@@ -4,10 +4,14 @@ os: Windows Server 2012 R2
 
 environment:
   matrix:
-    - PYTHON_VERSION: "2.7.10"
+    - PYTHON_VERSION: "2.7.11"
       MINICONDA: C:\Miniconda
+    - PYTHON_VERSION: "2.7.11"
+      MINICONDA: C:\Miniconda-x64
     - PYTHON_VERSION: "3.5.1"
       MINICONDA: C:\Miniconda3
+    - PYTHON_VERSION: "3.5.1"
+      MINICONDA: C:\Miniconda3-x64
 
 branches:
   only:
@@ -24,6 +28,7 @@ install:
   - conda info -a
 
 build_script:
+  - conda install python==%PYTHON_VERSION% -y -q
   - conda install --file .ci/conda-requirements.txt -y -q
   - pip install -r .ci/requirements.txt
   - python setup.py bdist_wheel
