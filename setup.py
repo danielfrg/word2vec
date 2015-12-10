@@ -71,7 +71,7 @@ setup(
     name='word2vec',
     version=versioneer.get_version(),
     cmdclass=cmdclass,
-    ext_modules=cythonize("word2vec/word2vec-noop.pyx"),
+    ext_modules=cythonize("word2vec/word2vec_noop.pyx"),
     author='Daniel Rodriguez',
     author_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
