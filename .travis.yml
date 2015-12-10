@@ -29,7 +29,7 @@ install:
   - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
-  - conda install numpy pytest
+  - conda install numpy cython pytest
   - python setup.py install
   # Build and Upload help
   - pip install -r .ci/requirements.txt
