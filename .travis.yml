@@ -3,23 +3,23 @@ sudo: false
 matrix:
   include:
     - os: linux
-      PYTHON_VERSION: 2.7
+      env: PYTHON_VERSION=2
     - os: linux
-      PYTHON_VERSION: 3.4
+      env: PYTHON_VERSION=3
     - os: osx
-      PYTHON_VERSION: 2.7
+      env: PYTHON_VERSION=2
     - os: osx
-      PYTHON_VERSION: 3.4
+      env: PYTHON_VERSION=3
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      if [[ "$PYTHON_VERSION" == "2.7" ]]; then
+      if [[ "$PYTHON_VERSION" == "2" ]]; then
         wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
       else
         wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
       fi
     else
-      if [[ "$PYTHON_VERSION" == "2.7" ]]; then
+      if [[ "$PYTHON_VERSION" == "2" ]]; then
         wget https://repo.continuum.io/miniconda/Miniconda-latest-MacOSX-x86_64.sh -O miniconda.sh;
       else
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
