@@ -1,3 +1,4 @@
+pip
 numpy
 cython
 pytest
