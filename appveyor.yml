@@ -19,7 +19,6 @@ install:
   - "set PATH=C:\\MinGW\\bin;%PATH%"
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - echo %PATH%
-  - echo %APPVEYOR_PULL_REQUEST_NUMBER% == "off"
   - conda config --set always_yes yes
   - conda update -q conda
   - conda info -a
@@ -35,7 +34,7 @@ build_script:
 
 on_success:
   - cd dist
-  - if "%APPVEYOR_PULL_REQUEST_NUMBER%"=="" (
+  - if not defined APPVEYOR_PULL_REQUEST_NUMBER (
       aws s3 cp . s3://danielfrg-ci/word2vec/ --recursive --exclude * --include *.wh
     ) else (
       echo "Pull Request -> No upload"
