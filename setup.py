@@ -28,27 +28,37 @@ import versioneer
 
 class install(_install):
     def run(self):
-        self.C_SOURCE = os.path.join('word2vec', 'c')
+        this_dir = os.path.dirname(os.path.realpath(__file__))
+        self.C_SOURCE = os.path.join(this_dir, 'word2vec', 'c')
         self.BIN_DIR = 'bin'
         if not os.path.exists(self.BIN_DIR):
             os.makedirs(self.BIN_DIR)
 
-        self.compile_c('word2vec.c', 'word2vec')
-        self.compile_c('word2phrase.c', 'word2phrase')
-        self.compile_c('distance.c', 'word2vec-distance')
-        self.compile_c('word-analogy.c', 'word2vec-word-analogy')
-        self.compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
-        self.compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
+        if sys.platform == 'win32':
+            self.compile_c('win32/word2vec.c', 'word2vec.exe')
+            self.compile_c('win32/word2phrase.c', 'word2phrase.exe')
+            self.compile_c('win32/distance.c', 'word2vec-distance.exe')
+            self.compile_c('win32/word-analogy.c', 'word2vec-word-analogy.exe')
+            self.compile_c('win32/compute-accuracy.c', 'word2vec-compute-accuracy.exe')
+        else:
+            self.compile_c('word2vec.c', 'word2vec')
+            self.compile_c('word2phrase.c', 'word2phrase')
+            self.compile_c('distance.c', 'word2vec-distance')
+            self.compile_c('word-analogy.c', 'word2vec-word-analogy')
+            self.compile_c('compute-accuracy.c', 'word2vec-compute-accuracy')
+            self.compile_c('word2vec-sentence2vec.c', 'word2vec-doc2vec')
 
         _install.run(self)
 
     def compile_c(self, source, target):
         CC = 'gcc'
 
-        DEFAULT_CFLAGS = ('-lm -pthread -O3 -Wall -march=native -funroll-loops '
-                  '-Wno-unused-result')
+        DEFAULT_CFLAGS = '-lm -pthread -O3 -Wall -march=native -funroll-loops'
+        DEFAULT_CFLAGS += ' -Wno-unused-result'
         if sys.platform == 'darwin':
             DEFAULT_CFLAGS += ' -I/usr/include/malloc'
+        if sys.platform == 'win32':
+            DEFAULT_CFLAGS = '-O2 -Wall -funroll-loops'
         CFLAGS = os.environ.get('CFLAGS', DEFAULT_CFLAGS)
 
         source_path = os.path.join(self.C_SOURCE, source)
@@ -67,6 +77,17 @@ with open('requirements.txt') as f:
 cmdclass=versioneer.get_cmdclass()
 cmdclass.update({'install': install})
 
+data_files = []
+if sys.platform == 'win32':
+    data_files = ['bin/word2vec.exe', 'bin/word2phrase.exe',
+                  'bin/word2vec-distance.exe', 'bin/word2vec-word-analogy.exe',
+                  'bin/word2vec-compute-accuracy.exe']
+else:
+    data_files = ['bin/word2vec', 'bin/word2phrase',
+                  'bin/word2vec-distance', 'bin/word2vec-word-analogy',
+                  'bin/word2vec-compute-accuracy',
+                  'bin/word2vec-doc2vec']
+
 setup(
     name='word2vec',
     version=versioneer.get_version(),
@@ -78,9 +99,6 @@ setup(
     description='Wrapper for Google word2vec',
     license='Apache License Version 2.0, January 2004',
     packages=find_packages(),
-    data_files=[('bin', ['bin/word2vec', 'bin/word2phrase',
-                         'bin/word2vec-distance', 'bin/word2vec-word-analogy',
-                         'bin/word2vec-compute-accuracy',
-                         'bin/word2vec-doc2vec'])],
+    data_files=[('bin', data_files)],
     install_requires=required
 )

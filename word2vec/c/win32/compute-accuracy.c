@@ -16,11 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#if __APPLE__
-#include <stdlib.h>
-#else
 #include <malloc.h>
-#endif
 #include <ctype.h>
 
 const long long max_size = 2000;         // max length of strings
@@ -57,13 +53,7 @@ int main(int argc, char **argv)
     return -1;
   }
   for (b = 0; b < words; b++) {
-    a = 0;
-    while (1) {
-      vocab[b * max_w + a] = fgetc(f);
-      if (feof(f) || (vocab[b * max_w + a] == ' ')) break;
-      if ((a < max_w) && (vocab[b * max_w + a] != '\n')) a++;
-    }
-    vocab[b * max_w + a] = 0;
+    fscanf(f, "%s%c", &vocab[b * max_w], &ch);
     for (a = 0; a < max_w; a++) vocab[b * max_w + a] = toupper(vocab[b * max_w + a]);
     for (a = 0; a < size; a++) fread(&M[a + b * size], sizeof(float), 1, f);
     len = 0;
