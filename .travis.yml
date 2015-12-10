@@ -33,9 +33,9 @@ before_install:
 
 install:
   - conda install --file .ci/conda-requirements.txt -y
-  - python setup.py install
-  - export PATH="$(pwd)/bin:$PATH"
-  - echo $PATH
+  - python setup.py bdist_wheel
+  - ls dist
+  - pip install dist/*.whl
 
 script:
   # Test: Download test data
@@ -46,12 +46,7 @@ script:
   - head -c 1000000 text8 > text
   - popd
   # Test: py.test
-  - pushd word2vec/tests
-  - py.test -s -vv
-  - popd
-  # Build
-  - python setup.py bdist_wheel
-  - ls dist
+  - py.test -s -vv --pyarg word2vec
   # Upload
   - pip install -r .ci/requirements.txt
-  - aws s3 cp dist/*whl s3://danielfrg-ci/word2vec/
+  - aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/
