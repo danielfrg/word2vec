@@ -28,14 +28,21 @@ install:
   - conda info -a
 
 build_script:
-  - conda install python==%PYTHON_VERSION% -y -q
+  - conda install python=%PYTHON_VERSION% -y -q
   - conda install --file .ci/conda-requirements.txt -y -q
   - pip install -r .ci/requirements.txt
   - python setup.py bdist_wheel
   - ls dist
-  - "pip install --pre --no-index --find-links dist/ word2vec"
+  - pip install --pre --no-index --find-links dist/ word2vec
 
-# test_script: # TODO
+test_script:
+  # Test: Download test data
+  - ps: mkdir $HOME/data
+  - ps: wget -q http://mattmahoney.net/dc/text8.zip -OutFile $HOME/data/text8.zip
+  - 7z e -o %HOMEPATH%\data %HOMEPATH%\data\text8.zip
+  - Get-Content text8 -TotalCount 1MB > text
+  # Test: py.test
+  - py.test -s -vv --pyarg word2vec
 
 on_success:
   - cd dist
