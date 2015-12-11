@@ -4,13 +4,13 @@ os: Windows Server 2012 R2
 
 environment:
   matrix:
-    - PYTHON_VERSION: "2.7.11"
+    - PYTHON_VERSION: 2.7
       MINICONDA: C:\Miniconda
-    - PYTHON_VERSION: "2.7.11"
+    - PYTHON_VERSION: 2.7
       MINICONDA: C:\Miniconda-x64
-    - PYTHON_VERSION: "3.5.1"
+    - PYTHON_VERSION: 3.5
       MINICONDA: C:\Miniconda3
-    - PYTHON_VERSION: "3.5.1"
+    - PYTHON_VERSION: 3.5
       MINICONDA: C:\Miniconda3-x64
 
 branches:
