@@ -15,11 +15,15 @@ I recommend the [Anaconda python distribution](http://continuum.io/downloads)
 
 `pip install word2vec`
 
-**Note**: Wheels packages for Linux/OS X and Windows are provided on Pypi on a
+**Wheel**: Wheels packages for OS X and Windows are provided on Pypi on a
 best effort sense. The code is quite easy to compile so consider using:
 `--no-use-wheel` on Linux and OS X.
 
-**Windows:** Very experimental support based on a [win32 port](https://github.com/zhangyafeikimi/word2vec-win32)
+**Linux**: There is no wheel support for linux so you have to compile the
+C code. The only requirement is `gcc`. You can override the compilation flags
+if needed: `CFLAGS='-march=corei7' pip install word2vec`
+
+**Windows:** Very experimental support based this [win32 port](https://github.com/zhangyafeikimi/word2vec-win32)
 
 ## Usage
 
