@@ -36,10 +36,12 @@ before_install:
   - conda info -a
 
 install:
+  - conda install python=$PYTHON_VERSION -y -q
   - conda install --file .ci/conda-requirements.txt -y -q
+  - pip install -r .ci/requirements.txt
   - python setup.py bdist_wheel
   - ls dist
-  - pip install dist/*.whl
+  - pip install --pre --no-index --find-links dist/ word2vec
 
 script:
   # Test: Download test data
@@ -51,8 +53,8 @@ script:
   - popd
   # Test: py.test
   - py.test -s -vv --pyarg word2vec
-  # Upload
-  - pip install -r .ci/requirements.txt
+
+after_success:
   - if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
       aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/;
     else
