@@ -1,9 +1,12 @@
 """
 To upload a new version:
-1. make clean
-2. git tag a new version: git tag v1.x.x
-3. python setup.py sdist
-4. python setup.py sdist register upload
+
+1. git tag a new version: git tag v1.x.x
+2. git push
+3. TravisCI and Appveyor build Wheels for Linux OS X and Windows
+4. Download the wheels and put into `$(pwd)/dist`
+5. Build tar file: `python setup.py sdist`
+6. `twine upload dist/*`
 
 Note in binary files (`data_files`) from `setup()` below:
 
