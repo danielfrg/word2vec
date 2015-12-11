@@ -11,17 +11,15 @@ Training is done using the original C, other functionality is pure python + nump
 
 ## Installation
 
-`pip install word2vec`
-
 I recommend the [Anaconda python distribution](http://continuum.io/downloads)
 
-**Note**: Only Linux and OS X are tested
+`pip install word2vec`
 
-**Windows:** Experimental support based on a [win32 port](https://github.com/zhangyafeikimi/word2vec-win32)
+**Note**: Wheels packages for Linux/OS X and Windows are provided on Pypi on a
+best effort sense. The code is quite easy to compile so consider using:
+`--no-use-wheel` on Linux and OS X.
 
-### Development
-
-Clone the repo and `pip install -e .`
+**Windows:** Very experimental support based on a [win32 port](https://github.com/zhangyafeikimi/word2vec-win32)
 
 ## Usage
 
@@ -37,8 +35,3 @@ The default functionality from word2vec is also available from the command line 
 
 Experimental functionality on doc2vec can be found in this other example:
 [doc2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/doc2vec.ipynb)
-
-## Issues
-
-Some people reported that they needed to do this if running OS X:
-[http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue](http://stackoverflow.com/questions/15590169/ld-library-not-found-for-lgfortran-mac-symlink-issue)
