@@ -39,10 +39,11 @@ test_script:
   # Test: Download test data
   - ps: mkdir $HOME/data
   - ps: wget http://mattmahoney.net/dc/text8.zip -OutFile $HOME/data/text8.zip
-  - 7z e -o %HOMEPATH%\data %HOMEPATH%\data\text8.zip
-  - Get-Content text8 -TotalCount 1MB > text
+  # TODO: Fix Download and head of data
+  # - 7z e -o %HOMEPATH%\data %HOMEPATH%\data\text8.zip
+  # - Get-Content text8 -TotalCount 1MB > text
   # Test: py.test
-  # - py.test -s -vv --pyarg word2vec
+  # - py.test -s -vv --pyarg word2vec # Test currently fail on windows
 
 on_success:
   - cd dist
