@@ -30,11 +30,13 @@ class install(_install):
     def run(self):
         this_dir = os.path.dirname(os.path.realpath(__file__))
         self.C_SOURCE = os.path.join(this_dir, 'word2vec', 'c')
-        self.BIN_DIR = 'bin'
-        if not os.path.exists(self.BIN_DIR):
-            os.makedirs(self.BIN_DIR)
+        self.TARGET_DIR = 'bin'
+
+        if not os.path.exists(self.TARGET_DIR):
+            os.makedirs(self.TARGET_DIR)
 
         if sys.platform == 'win32':
+            self.TARGET_DIR = 'Scripts'
             self.compile_c('win32/word2vec.c', 'word2vec.exe')
             self.compile_c('win32/word2phrase.c', 'word2phrase.exe')
             self.compile_c('win32/distance.c', 'word2vec-distance.exe')
@@ -62,7 +64,7 @@ class install(_install):
         CFLAGS = os.environ.get('CFLAGS', DEFAULT_CFLAGS)
 
         source_path = os.path.join(self.C_SOURCE, source)
-        target_path = os.path.join(self.BIN_DIR, target)
+        target_path = os.path.join(self.TARGET_DIR, target)
         command = [CC, source_path, '-o', target_path]
         command.extend(CFLAGS.split(' '))
         print('Compilation command:', ' '.join(command))
