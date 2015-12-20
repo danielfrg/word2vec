@@ -19,7 +19,7 @@ So you have to export that to the `$PATH`
 
 from setuptools import setup
 from setuptools import find_packages
-from  setuptools.command.install import install as _install
+from setuptools.command.install import install as _install
 from Cython.Build import cythonize
 
 import os
