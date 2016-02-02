@@ -78,9 +78,6 @@ class install(_install):
         if return_code > 0:
             exit(return_code)
 
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
-
 cmdclass=versioneer.get_cmdclass()
 cmdclass.update({'install': install})
 
@@ -109,5 +106,5 @@ setup(
     license='Apache License Version 2.0, January 2004',
     packages=find_packages(),
     data_files=data_files,
-    install_requires=required
+    install_requires=['numpy', 'cython']
 )

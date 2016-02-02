@@ -1,5 +1,4 @@
 numpy>=1.9.2
-ipython
 cython
 
 # Tests
@@ -7,6 +6,7 @@ pytest
 pytest-cov
 
 # Utils
+ipython
 pylint
 yapf
 versioneer
