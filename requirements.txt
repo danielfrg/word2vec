@@ -1,2 +1,14 @@
 numpy>=1.9.2
+ipython
 cython
+
+# Tests
+pytest
+pytest-cov
+
+# Utils
+pylint
+yapf
+versioneer
+wheel
+twine
