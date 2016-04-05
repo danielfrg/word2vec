@@ -41,6 +41,22 @@ class WordVectors(object):
         """
         return self.vocab_hash[word]
 
+    def word(self, ix):
+        """
+
+        ----
+
+        Returns the word that corresponds to the index.
+
+        ----
+
+        :param ix: The index of the word
+        :type ix: int
+        :return: The word that corresponds to the index
+        :rtype: str
+        """
+        return self.vocab[ix]
+
     def __getitem__(self, word):
         return self.get_vector(word)
 
@@ -53,6 +69,23 @@ class WordVectors(object):
         """
         idx = self.ix(word)
         return self.vectors[idx]
+
+    def get_word(self, vector):
+        """
+
+        ----
+
+        Returns the word according to the vector
+
+        ----
+
+        :param vector: The representing vector of the word
+        :type vector: numpy.core.multiarray.array
+        :return: The word according to the specified vector if found, else None
+        :rtype: str|None
+        """
+        word_index = np.where(np.all(self.vectors == vector, axis=1))[0]
+        return self.word(word_index[0]) if word_index.size else None
 
     def cosine(self, word, n=10):
         """
