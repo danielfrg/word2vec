@@ -2,6 +2,9 @@ from __future__ import division, print_function, unicode_literals
 
 import os
 import word2vec
+import io
+import sys
+
 
 input_ = os.path.expanduser('~/data/text')
 output_phrases = os.path.expanduser('~/data/text-phrases.txt')
@@ -86,3 +89,21 @@ def test_model_with_clusters():
     py_response = model.generate_response(indexes, metrics).tolist()
     assert len(py_response) == 30
     assert len(py_response[0]) == 3
+
+
+def test_verbosity_python3():
+    saved_stdout = sys.stdout
+
+    try:
+        sys.stdout = io.StringIO()
+
+        word2vec.word2vec(input_, output_bin, size=10, binary=1, verbose=True)
+        output = sys.stdout.getvalue()
+
+        assert "b'" not in output
+        assert "Starting training" in output
+        assert "\\r" not in output
+        assert "\r" in output
+
+    finally:
+        sys.stdout = saved_stdout
