@@ -167,7 +167,7 @@ class WordVectors(object):
         joblib.dump(self, fname)
 
     @classmethod
-    def from_binary(cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8"):
+    def from_binary(cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8", newLines=True):
         """
         Create a WordVectors class based on a word2vec binary file
 
@@ -205,7 +205,8 @@ class WordVectors(object):
                 vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
                 if include:
                     vectors[i] = unitvec(vector)
-                fin.read(1)  # newline
+                if newLines:
+                    fin.read(1)  # newline
 
             if desired_vocab is not None:
                 vectors = vectors[vocab != '', :]
