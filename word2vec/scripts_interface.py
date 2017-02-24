@@ -142,7 +142,7 @@ def run_cmd(command, verbose=False):
                             stderr=subprocess.PIPE)
     if verbose:
         for line in proc.stdout:
-            line = str(line)
+            line = line.decode('ascii')
             sys.stdout.write(line)
             if 'ERROR:' in line:
                 raise Exception(line)
