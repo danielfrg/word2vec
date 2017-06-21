@@ -141,11 +141,14 @@ def run_cmd(command, verbose=False):
     proc = subprocess.Popen(command, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     if verbose:
-        for line in proc.stdout:
-            line = line.decode('ascii')
-            sys.stdout.write(line)
-            if 'ERROR:' in line:
-                raise Exception(line)
-            sys.stdout.flush()
+        while proc.poll() is None:
+            for c in iter(lambda: proc.stdout.read(1) if proc.poll() is None else {}, b''):
+                c = c.decode('ascii')
+                sys.stdout.write(c)
+
+        sys.stdout.flush()
+
+        if proc.returncode != 0:
+            raise Exception("The training could not be completed.")
 
     out, err = proc.communicate()
