@@ -41,8 +41,8 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0,
         binary <int>
             Save the resulting vectors in binary moded; default is 0 (off)
         cbow <int>
-            Use the continuous back of words model; default is 1 (skip-gram
-            model)
+            Use the continuous back of words model; default is 1 (use 0 for
+            skip-gram model)
         save_vocab <file>
             The vocabulary will be saved to <file>
         read_vocab <file>
