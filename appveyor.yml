@@ -44,12 +44,3 @@ test_script:
   # - Get-Content text8 -TotalCount 1MB > text
   # Test: py.test
   # - py.test -s -vv --pyarg word2vec # Test currently fail on windows
-
-on_success:
-  - cd dist
-  - if not defined APPVEYOR_PULL_REQUEST_NUMBER (
-      echo "Uploading Wheel" &&
-      aws s3 cp . s3://danielfrg-ci/word2vec/ --recursive --exclude * --include *.whl
-    ) else (
-      echo "Pull Request -> No upload"
-    )
