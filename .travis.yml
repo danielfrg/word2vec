@@ -1,8 +1,9 @@
+language: python
+sudo: false
+
 branches:
   only:
     - master
-
-sudo: false
 
 matrix:
   include:
@@ -53,10 +54,3 @@ script:
   - popd
   # Test: py.test
   - py.test -s -vv --pyarg word2vec
-
-after_success:
-  - if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-      aws s3 cp dist/*.whl s3://danielfrg-ci/word2vec/;
-    else
-      echo "Pull Request -> No upload";
-    fi
