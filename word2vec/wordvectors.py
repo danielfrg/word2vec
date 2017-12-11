@@ -236,7 +236,7 @@ class WordVectors(object):
             vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
             for i, line in enumerate(fin):
-                line = line.decode(encoding).strip()
+                line = line.decode(encoding).rstrip()
                 parts = line.split(' ')
                 word = parts[0]
                 include = desired_vocab is None or word in desired_vocab
