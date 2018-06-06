@@ -29,6 +29,15 @@ import subprocess
 import versioneer
 
 
+def read_file(filename):
+    filepath = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)), filename)
+    if os.path.exists(filepath):
+        return open(filepath).read()
+    else:
+        return ''
+
+
 class install(_install):
     def run(self):
         this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -99,6 +108,8 @@ setup(
     version=versioneer.get_version(),
     cmdclass=cmdclass,
     ext_modules=cythonize("word2vec/word2vec_noop.pyx"),
+    long_description=read_file('README.md'),
+    long_description_content_type="text/markdown",
     author='Daniel Rodriguez',
     author_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
