@@ -1,51 +1,35 @@
+language: python
 sudo: false
 
-matrix:
-  include:
-    - os: linux
-      env: PYTHON_VERSION=2
-    - os: linux
-      env: PYTHON_VERSION=3
-    - os: osx
-      env: PYTHON_VERSION=2
-    - os: osx
-      env: PYTHON_VERSION=3
+python:
+  - 2.7
+  - 3.5
+
+os:
+  - linux
+  - osx
+
+# matrix:
+#   include:
+#     - os: linux
+#       env: PYTHON_VERSION=2
+#     - os: linux
+#       env: PYTHON_VERSION=3
+#     - os: osx
+#       env: PYTHON_VERSION=2
+#     - os: osx
+#       env: PYTHON_VERSION=3
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      if [[ "$PYTHON_VERSION" == "2" ]]; then
-        wget http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
-      else
-        wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-      fi
-    else
-      if [[ "$PYTHON_VERSION" == "2" ]]; then
-        wget https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -O miniconda.sh;
-      else
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
-      fi
-    fi
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - conda config --set always_yes yes
-  - conda update -q conda
-  - conda info -a
+  - source ci/install_python.sh
 
 install:
-  - conda install python=$PYTHON_VERSION -y -q
-  - conda install --file .ci/conda-requirements.txt -y -q
-  - pip install -r .ci/requirements.txt
-  - python setup.py bdist_wheel
-  - ls dist
-  - pip install --pre --no-index --find-links dist/ word2vec
+  - which python
+  - pip freeze
+  - python setup.py sdist bdist_wheel
+  - pip install dist/*.tar.gz
+  - pip freeze
 
 script:
-  # Test: Download test data
-  - mkdir -p $HOME/data
-  - pushd $HOME/data
-  - wget http://mattmahoney.net/dc/text8.zip -O text8.zip
-  - unzip text8.zip
-  - head -c 1000000 text8 > text
-  - popd
-  # Test: py.test
+  - source ci/download_test_data.sh
   - py.test -s -vv --pyarg word2vec

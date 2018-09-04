@@ -29,10 +29,12 @@ import subprocess
 import versioneer
 
 
+THIS_DIR = os.path.abspath(os.path.dirname(__file__))
+
+
 class install(_install):
     def run(self):
-        this_dir = os.path.dirname(os.path.realpath(__file__))
-        self.C_SOURCE = os.path.join(this_dir, 'word2vec', 'c')
+        self.C_SOURCE = os.path.join(THIS_DIR, 'word2vec', 'c')
 
         self.TARGET_DIR = 'bin'
         if sys.platform == 'win32':
@@ -78,8 +80,15 @@ class install(_install):
         if return_code > 0:
             exit(return_code)
 
-cmdclass=versioneer.get_cmdclass()
+cmdclass = versioneer.get_cmdclass()
 cmdclass.update({'install': install})
+
+def read_file(filename):
+    filepath = os.path.join(THIS_DIR, filename)
+    with  open(filepath) as file:
+        return file.read()
+
+REQUIREMENTS = read_file("requirements.txt").splitlines()
 
 data_files = []
 if sys.platform == 'win32':
@@ -94,6 +103,7 @@ else:
                       'bin/word2vec-doc2vec']
     data_files = [('bin', out_data_files)]
 
+
 setup(
     name='word2vec',
     version=versioneer.get_version(),
@@ -103,8 +113,11 @@ setup(
     author_email='df.rodriguez143@gmail.com',
     url='https://github.com/danielfrg/word2vec',
     description='Wrapper for Google word2vec',
+    long_description=read_file('README.md'),
+    long_description_content_type="text/markdown",
     license='Apache License Version 2.0, January 2004',
     packages=find_packages(),
     data_files=data_files,
-    install_requires=['numpy', 'cython']
+    install_requires=REQUIREMENTS,
+    zip_safe=False,
 )

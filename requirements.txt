@@ -1,14 +1,3 @@
 numpy>=1.9.2
 cython
-
-# Tests
-pytest
-pytest-cov
-
-# Utils
-ipython
-pylint
-yapf
-versioneer
-wheel
-twine
+scikit-learn

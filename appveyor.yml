@@ -24,13 +24,12 @@ install:
   - set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%
   - echo %PATH%
   - conda config --set always_yes yes
-  - conda update -q conda
   - conda info -a
 
 build_script:
   - conda install python=%PYTHON_VERSION% -y -q
-  - conda install --file .ci/conda-requirements.txt -y -q
-  - pip install -r .ci/requirements.txt
+  - pip install -r requirements.txt
+  - pip install -r ci/requirements-test.txt
   - python setup.py bdist_wheel
   - ls dist
   - pip install --pre --no-index --find-links dist/ word2vec

@@ -85,6 +85,27 @@ class WordVectors(object):
         word_index = np.where(np.all(self.vectors == vector, axis=1))[0]
         return self.word(word_index[0]) if word_index.size else None
 
+    def similar(self, word, n=10, metric="cosine"):
+        """
+        Return similar words based on a metric
+        
+        Parameters
+        ----------
+        word : string
+        n : int (default 10)
+            number of neighbors to return
+        metric : string (default "cosine")
+            What metric to use
+
+        Returns
+        -------
+        2 numpy.array:
+            1. position in self.vocab
+            2. similarity based on the metric
+        """
+        if metric == "cosine":
+            return self.cosine(word=word, n=n)
+
     def cosine(self, word, n=10):
         """
         Cosine similarity.
@@ -167,7 +188,7 @@ class WordVectors(object):
         joblib.dump(self, fname)
 
     @classmethod
-    def from_binary(cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8", newLines=True):
+    def from_binary(cls, fname, vocab_unicode_size=78, desired_vocab=None, encoding="utf-8", new_lines=True):
         """
         Create a WordVectors class based on a word2vec binary file
 
@@ -175,18 +196,18 @@ class WordVectors(object):
         ----------
         fname : path to file
         vocabUnicodeSize: the maximum string length (78, by default)
-        desired_vocab: if set, this will ignore any word and vector that
-                       doesn't fall inside desired_vocab.
+        desired_vocab: if set any words that don't fall into this vocab will be droped
 
         Returns
         -------
         WordVectors instance
         """
         with open(fname, 'rb') as fin:
+            # The first line has the vocab_size and the vector_size as text
             header = fin.readline()
             vocab_size, vector_size = list(map(int, header.split()))
 
-            vocab = np.empty(vocab_size, dtype='<U%s' % vocabUnicodeSize)
+            vocab = np.empty(vocab_size, dtype='<U%s' % vocab_unicode_size)
             vectors = np.empty((vocab_size, vector_size), dtype=np.float)
             binary_len = np.dtype(np.float32).itemsize * vector_size
             for i in range(vocab_size):
@@ -205,7 +226,7 @@ class WordVectors(object):
                 vector = np.fromstring(fin.read(binary_len), dtype=np.float32)
                 if include:
                     vectors[i] = unitvec(vector)
-                if newLines:
+                if new_lines:
                     fin.read(1)  # newline
 
             if desired_vocab is not None:
