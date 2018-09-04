@@ -8,7 +8,11 @@ python:
 matrix:
   include:
     - os: osx
+      python: 2.7
       language: generic
+    - os: osx
+      language: generic
+      python: 3.6
 
 before_install:
   - echo $TRAVIS_PYTHON_VERSION
