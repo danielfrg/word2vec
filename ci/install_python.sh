@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
-
 # Install miniconda
 curl https://repo.continuum.io/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -L -k -o ~/miniconda.sh
 bash ~/miniconda.sh -b -p $HOME/miniconda
