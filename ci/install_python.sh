@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # Install miniconda
-curl https://repo.continuum.io/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -L -k -o ~/miniconda.sh
+if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+    curl https://repo.continuum.io/miniconda/Miniconda3-4.5.11-MacOSX-x86_64.sh -L -k -o ~/miniconda.sh
+else
+    # Install some custom requirements on Linux
+    curl https://repo.continuum.io/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -L -k -o ~/miniconda.sh
+fi
 bash ~/miniconda.sh -b -p $HOME/miniconda
 export PATH=$HOME/miniconda/bin:$PATH
 
