@@ -34,7 +34,7 @@ THIS_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class install(_install):
     def run(self):
-        self.C_SOURCE = os.path.join(THIS_DIR, 'word2vec', 'c')
+        self.C_SOURCE = os.path.join(THIS_DIR, 'word2vec', 'src')
 
         self.TARGET_DIR = 'bin'
         if sys.platform == 'win32':

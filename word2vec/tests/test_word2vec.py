@@ -96,7 +96,7 @@ def test_model_with_clusters():
     assert len(py_response[0]) == 3
 
 
-def test_verbosity_python3():
+def test_verbose():
     saved_stdout = sys.stdout
 
     try:
