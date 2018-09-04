@@ -21,7 +21,7 @@ before_install:
 install:
   - which python
   - pip freeze
-  - python setup.py sdist bdist_wheel
+  - python setup.py sdist
   - pip install dist/*.tar.gz
   - pip freeze
 
