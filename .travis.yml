@@ -5,20 +5,17 @@ python:
   - 2.7
   - 3.5
 
-os:
-  - linux
-  - osx
-
-# matrix:
-#   include:
-#     - os: linux
-#       env: PYTHON_VERSION=2
-#     - os: linux
-#       env: PYTHON_VERSION=3
-#     - os: osx
-#       env: PYTHON_VERSION=2
-#     - os: osx
-#       env: PYTHON_VERSION=3
+matrix:
+  include:
+    # - os: linux
+    # - python: 2.7
+    # - os: linux
+    # - python: 3.5
+    #   env: PYTHON_VERSION=3
+    - os: osx
+      env: TRAVIS_PYTHON_VERSION=2.7
+    - os: osx
+      env: TRAVIS_PYTHON_VERSION=3.5
 
 before_install:
   - source ci/install_python.sh
