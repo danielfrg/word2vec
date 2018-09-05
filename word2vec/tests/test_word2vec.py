@@ -48,7 +48,7 @@ def test_load_txt():
 
 def test_prediction():
     model = word2vec.load(output_bin)
-    indexes, metrics = model.distance("the")
+    indexes, metrics = model.similar("the")
     assert indexes.shape == (10,)
     assert indexes.shape == metrics.shape
 
