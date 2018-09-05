@@ -49,7 +49,7 @@ class install(_install):
             DEFAULT_CFLAGS += " -I/usr/include/malloc"
         if sys.platform == "win32":
             DEFAULT_CFLAGS = "-O2 -Wall -funroll-loops"
-        CFLAGS = os.environ.get("CFLAGS", DEFAULT_CFLAGS)
+        CFLAGS = os.environ.get("W2V_CFLAGS", DEFAULT_CFLAGS)
 
         source_path = os.path.join(self.C_SOURCE, source)
         target_path = os.path.join(self.TARGET_DIR, target)
@@ -119,6 +119,5 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
     ],
 )
