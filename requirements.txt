@@ -1,4 +1,5 @@
 six
-numpy>=1.9.2
 cython
+numpy>=1.9.2
+scipy
 scikit-learn
