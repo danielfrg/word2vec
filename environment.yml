@@ -8,9 +8,10 @@ dependencies:
   
   # Dev
   - jupyterlab
-  - pylints
-  - black
   - pip:
+    - pylint
+    - ropes
+    - black
     - pytest
     - pytest-cov
     - pytest-cov

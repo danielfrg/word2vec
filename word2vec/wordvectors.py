@@ -1,13 +1,11 @@
 from __future__ import division, print_function, unicode_literals
 
+import itertools
+
 import numpy as np
+from sklearn.externals import joblib
 
-try:
-    from sklearn.externals import joblib
-except:
-    joblib = None
-
-from word2vec.utils import unitvec
+from word2vec.utils import unitvec, distance
 
 
 class WordVectors(object):
@@ -31,6 +29,7 @@ class WordVectors(object):
         self.vectors = vectors
         self.clusters = clusters
 
+        # To make indexing faster
         self.vocab_hash = {}
         for i, word in enumerate(vocab):
             self.vocab_hash[word] = i
@@ -64,73 +63,69 @@ class WordVectors(object):
 
     def get_vector(self, word):
         """
-        Returns the (vectors) vector for `word` in the vocabulary
+        Returns the vector for a `word` in the vocabulary
         """
-        idx = self.ix(word)
-        return self.vectors[idx]
+        return self.vectors[self.ix(word)]
 
-    def get_word(self, vector):
-        """Returns the word according to the vector
-
-        Parameters
-        -------
-        vector : numpy.core.multiarray.array
-            The representing vector of the word
-
-        Returns
-        -------
-        str or None
-            The word according to the specified vector if found, else None
+    def distance(self, *args, **kwargs):
         """
-        word_index = np.where(np.all(self.vectors == vector, axis=1))[0]
-        return self.word(word_index[0]) if word_index.size else None
-
-    def similar(self, word, n=10, metric="cosine"):
-        """
-        Return similar words based on a metric
+        Compute the distance distance between two vectors or more (all combinations) of words
         
         Parameters
         ----------
-        word : string
+        words : one or more words
         n : int (default 10)
             number of neighbors to return
         metric : string (default "cosine")
             What metric to use
+        """
+        metric = kwargs.get("metric", "dot")  # Default is dot
+
+        combinations = list(itertools.combinations(args, r=2))
+
+        ret = []
+        for word1, word2 in combinations:
+            dist = distance(self[word1], self[word2], metric=metric)
+            ret.append((word1, word2, dist))
+        return ret
+
+    def closest(self, vector, n=10, metric="dot"):
+        """Returns the closest n words to a vector
+
+        Parameters
+        -------
+        vector : numpy.array
+        n : int (default 10)
 
         Returns
         -------
-        2 numpy.array:
+        Tuple of 2 numpy.array:
             1. position in self.vocab
-            2. similarity based on the metric
+            2. cosine similarity
         """
-        if metric == "cosine":
-            return self.cosine(word=word, n=n)
+        distances = distance(self.vectors, vector, metric=metric)
+        best = np.argsort(distances)[::-1][1:n+1]
+        best_metrics = distances[best]
+        return best, best_metrics
 
-    def cosine(self, word, n=10):
+    def similar(self, word, n=10, metric="dot"):
         """
-        Cosine similarity.
-
-        metric = dot(vectors_of_vectors, vectors_of_target_vector)
-        Uses a precomputed vectors of the vectors
+        Return similar words based on a metric
 
         Parameters
         ----------
         word : string
-        n : int, optional (default 10)
-            number of neighbors to return
+        n : int (default 10)
 
         Returns
         -------
-        2 numpy.array:
+        Tuple of 2 numpy.array:
             1. position in self.vocab
             2. cosine similarity
         """
-        metrics = np.dot(self.vectors, self[word].T)
-        best = np.argsort(metrics)[::-1][1:n+1]
-        best_metrics = metrics[best]
-        return best, best_metrics
+        return self.closest(self[word], n=n, metric=metric)
 
-    def analogy(self, pos, neg, n=10):
+    def analogy(self, pos, neg, n=10, metric="dot"):
         """
         Analogy similarity.
 
@@ -159,7 +154,7 @@ class WordVectors(object):
             mean.append(direction * self[word])
         mean = np.array(mean).mean(axis=0)
 
-        metrics = np.dot(self.vectors, mean)
+        metrics = distance(self.vectors, mean)  # cosine distance
         best = metrics.argsort()[::-1][:n + len(exclude)]
 
         exclude_idx = [np.where(best == self.ix(word)) for word in exclude if
@@ -182,9 +177,6 @@ class WordVectors(object):
                                      names=('word', 'metric'))
 
     def to_mmap(self, fname):
-        if not joblib:
-            raise Exception("sklearn is needed to save as mmap")
-
         joblib.dump(self, fname)
 
     @classmethod
@@ -227,7 +219,7 @@ class WordVectors(object):
                 if include:
                     vectors[i] = unitvec(vector)
                 if new_lines:
-                    fin.read(1)  # newline
+                    fin.read(1)  # newline char
 
             if desired_vocab is not None:
                 vectors = vectors[vocab != '', :]
