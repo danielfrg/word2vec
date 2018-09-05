@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
-
 mkdir -p $HOME/data
 pushd $HOME/data
 wget http://mattmahoney.net/dc/text8.zip -O text8.zip

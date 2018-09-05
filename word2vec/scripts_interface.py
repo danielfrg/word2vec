@@ -1,6 +1,7 @@
 from __future__ import division, print_function, unicode_literals
 
 import sys
+import six
 import subprocess
 
 
@@ -138,11 +139,12 @@ def doc2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
 
 
 def run_cmd(command, verbose=False):
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
     if verbose:
         while proc.poll() is None:
-            for c in iter(lambda: proc.stdout.read(1) if proc.poll() is None else {}, b''):
+            string = '' if six.PY2 else b''  # Python 2: ''   -  Python 3: b''
+            for c in iter(lambda: proc.stdout.read(1), string):
                 c = c.decode('ascii')
                 sys.stdout.write(c)
 
