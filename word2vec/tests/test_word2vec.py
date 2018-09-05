@@ -1,11 +1,12 @@
-from __future__ import division, print_function, unicode_literals
-
 import os
-import word2vec
 import io
 import sys
+import numpy as np
 
-input_ = os.path.expanduser("~/data/text")
+import word2vec
+
+
+input_ = os.path.expanduser("~/data/text8-1M")
 output_phrases = os.path.expanduser("~/data/text-phrases.txt")
 output_clusters = os.path.expanduser("~/data/text-clusters.txt")
 output_bin = os.path.expanduser("~/data/vectors.bin")
@@ -19,7 +20,8 @@ def setup_module(module):
     word2vec.word2clusters(input_, output_clusters, 10, verbose=True)
 
 
-def test_files_create():
+def test_files_created_ok():
+    # This are created on the setup_module
     assert os.path.exists(output_phrases)
     assert os.path.exists(output_clusters)
     assert os.path.exists(output_bin)
@@ -46,26 +48,13 @@ def test_load_txt():
     assert vectors.shape[1] == 10
 
 
-def test_prediction():
-    model = word2vec.load(output_bin)
-    indexes, metrics = model.similar("the")
-    assert indexes.shape == (10,)
-    assert indexes.shape == metrics.shape
-
-    py_response = model.generate_response(indexes, metrics).tolist()
-    assert len(py_response) == 10
-    assert len(py_response[0]) == 2
-
-    # TODO: use np.test thingy to compare this arrays
-    # indexes_2, metrics_2 = model.similar('the')
-    # assert indexes == indexes_2
-    # assert metrics == metrics_2
-
-
 def test_distance():
     model = word2vec.load(output_txt)
     metrics = model.distance("the", "the", "the")
     assert len(metrics) == 3
+    for item in metrics:
+        # There should be 3 items per record
+        assert len(item) == 3
 
 
 def test_closest():
@@ -76,6 +65,18 @@ def test_closest():
 
     py_response = model.generate_response(indexes, metrics).tolist()
     assert len(py_response) == 30
+    assert len(py_response[0]) == 2
+
+
+def test_similar():
+    model = word2vec.load(output_bin)
+    indexes, metrics = model.similar("the")
+    assert indexes.shape == (10,)
+    assert indexes.shape == metrics.shape
+
+    py_response = model.generate_response(indexes, metrics).tolist()
+    print(py_response)
+    assert len(py_response) == 10
     assert len(py_response[0]) == 2
 
 

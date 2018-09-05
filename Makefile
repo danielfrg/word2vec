@@ -1,12 +1,11 @@
 PWD := $(shell pwd)
-S3DIR := ${PWD}/s3-data
 
 .PHONY: build
-build:  ## BUild package
+build:  ## Build package
 	python setup.py sdist
 
 .PHONY: upload
-upload:  ## Uplaod package to pypi
+upload:  ## Upload package to pypi
 	twine upload dist/*.tar.gz
 
 .PHONY: env

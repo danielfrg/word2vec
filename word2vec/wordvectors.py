@@ -1,5 +1,3 @@
-from __future__ import division, print_function, unicode_literals
-
 import itertools
 
 import numpy as np
@@ -29,14 +27,14 @@ class WordVectors(object):
         self.vectors = vectors
         self.clusters = clusters
 
-        # To make indexing faster
+        # Used to make indexing faster
         self.vocab_hash = {}
         for i, word in enumerate(vocab):
             self.vocab_hash[word] = i
 
     def ix(self, word):
         """
-        Returns the index on self.vocab and `self.vectors` for `word`
+        Returns the index on `self.vocab` and `self.vectors` for `word`
         """
         return self.vocab_hash[word]
 

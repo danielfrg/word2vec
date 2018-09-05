@@ -1,8 +1,6 @@
-from __future__ import division, print_function, unicode_literals
-
 import sys
-import six
 import subprocess
+import six
 
 
 def word2vec(
