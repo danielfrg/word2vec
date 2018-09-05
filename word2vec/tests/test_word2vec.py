@@ -70,7 +70,7 @@ def test_distance():
 
 def test_closest():
     model = word2vec.load(output_txt)
-    indexes, metrics = model.closest(model["cat"], n=30)
+    indexes, metrics = model.closest(model["the"], n=30)
     assert indexes.shape == (30,)
     assert indexes.shape == metrics.shape
 
@@ -94,7 +94,6 @@ def test_clusters():
     clusters = word2vec.load_clusters(output_clusters)
     assert clusters.vocab.shape == clusters.clusters.shape
     assert clusters.get_words_on_cluster(1).shape[0] > 10    # sanity check
-    assert clusters.get_words_on_cluster(1).all()
 
 
 def test_model_with_clusters():
