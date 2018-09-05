@@ -5,12 +5,11 @@ import word2vec
 import io
 import sys
 
-
-input_ = os.path.expanduser('~/data/text')
-output_phrases = os.path.expanduser('~/data/text-phrases.txt')
-output_clusters = os.path.expanduser('~/data/text-clusters.txt')
-output_bin = os.path.expanduser('~/data/vectors.bin')
-output_txt = os.path.expanduser('~/data/vectors.txt')
+input_ = os.path.expanduser("~/data/text")
+output_phrases = os.path.expanduser("~/data/text-phrases.txt")
+output_clusters = os.path.expanduser("~/data/text-clusters.txt")
+output_bin = os.path.expanduser("~/data/vectors.bin")
+output_txt = os.path.expanduser("~/data/vectors.txt")
 
 
 def setup_module(module):
@@ -49,7 +48,7 @@ def test_load_txt():
 
 def test_prediction():
     model = word2vec.load(output_bin)
-    indexes, metrics = model.cosine('the')
+    indexes, metrics = model.distance("the")
     assert indexes.shape == (10,)
     assert indexes.shape == metrics.shape
 
@@ -63,9 +62,26 @@ def test_prediction():
     # assert metrics == metrics_2
 
 
+def test_distance():
+    model = word2vec.load(output_txt)
+    metrics = model.distance("dog", "cat", "fish")
+    assert len(metrics) == 3
+
+
+def test_closest():
+    model = word2vec.load(output_txt)
+    indexes, metrics = model.closest(model["cat"], n=30)
+    assert indexes.shape == (30,)
+    assert indexes.shape == metrics.shape
+
+    py_response = model.generate_response(indexes, metrics).tolist()
+    assert len(py_response) == 30
+    assert len(py_response[0]) == 2
+
+
 def test_analogy():
     model = word2vec.load(output_txt)
-    indexes, metrics = model.analogy(pos=['the', 'the'], neg=['the'], n=20)
+    indexes, metrics = model.analogy(pos=["the", "the"], neg=["the"], n=20)
     assert indexes.shape == (20,)
     assert indexes.shape == metrics.shape
 
@@ -77,7 +93,7 @@ def test_analogy():
 def test_clusters():
     clusters = word2vec.load_clusters(output_clusters)
     assert clusters.vocab.shape == clusters.clusters.shape
-    assert clusters.get_words_on_cluster(1).shape[0] > 10  # sanity check
+    assert clusters.get_words_on_cluster(1).shape[0] > 10    # sanity check
     assert clusters.get_words_on_cluster(1).all()
 
 
@@ -87,7 +103,7 @@ def test_model_with_clusters():
     assert clusters.vocab.shape == model.vocab.shape
 
     model.clusters = clusters
-    indexes, metrics = model.analogy(pos=['the', 'the'], neg=['the'], n=30)
+    indexes, metrics = model.analogy(pos=["the", "the"], neg=["the"], n=30)
     assert indexes.shape == (30,)
     assert indexes.shape == metrics.shape
 

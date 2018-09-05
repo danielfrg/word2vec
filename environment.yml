@@ -11,7 +11,7 @@ dependencies:
   - pip:
     - pylint
     - ropes
-    - black
+    - yapf
     - pytest
     - pytest-cov
     - pytest-cov
