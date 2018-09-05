@@ -1,22 +1,3 @@
-"""
-To upload a new version:
-
-1. git tag a new version: git tag v1.x.x
-2. git push
-3. TravisCI and Appveyor build Wheels for Linux OS X and Windows
-4. Download the wheels and put into `$(pwd)/dist`
-5. Build tar file: `python setup.py sdist`
-6. `twine upload dist/*`
-
-Note in binary files (`data_files`) from `setup()` below:
-
-- When you do `python setup.py install` it will place the
-binary files (`word2vec`, `word2phrase`, ...) in: `$(pwd)/bin`
-So you have to export that to the `$PATH`
-- When you do `pip install word2vec` it will place them in the correct
-`{{ environtment }}/bin` directory so users dont need to do that.
-"""
-
 from setuptools import setup
 from setuptools import find_packages
 from setuptools.command.install import install as _install
