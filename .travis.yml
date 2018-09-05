@@ -2,19 +2,20 @@ language: python
 sudo: false
 
 python:
-  - 2.7
   - 3.6
+  - 3.7
 
 matrix:
   include:
     - os: osx
       language: generic
-      python: 2.7
-      env: TRAVIS_PYTHON_VERSION=2.7
-    - os: osx
-      language: generic
       python: 3.6
       env: TRAVIS_PYTHON_VERSION=3.6
+    - os: osx
+      language: generic
+      python: 3.7
+      env: TRAVIS_PYTHON_VERSION=3.7
+
 
 before_install:
   - echo $TRAVIS_PYTHON_VERSION

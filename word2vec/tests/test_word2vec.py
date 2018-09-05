@@ -64,7 +64,7 @@ def test_prediction():
 
 def test_distance():
     model = word2vec.load(output_txt)
-    metrics = model.distance("dog", "cat", "fish")
+    metrics = model.distance("the", "the", "the")
     assert len(metrics) == 3
 
 
