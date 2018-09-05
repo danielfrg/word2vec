@@ -11,11 +11,11 @@ class WordClusters(object):
 
     def ix(self, word):
         """
-        Returns the index on self.vocab and self.clusters for `word`
+        Returns the index on self.vocab and self.clusters for 'word'
         """
         temp = np.where(self.vocab == word)[0]
         if temp.size == 0:
-            raise KeyError('Word not in vocabulary')
+            raise KeyError("Word not in vocabulary")
         else:
             return temp[0]
 
@@ -34,6 +34,6 @@ class WordClusters(object):
 
     @classmethod
     def from_text(cls, fname):
-        vocab = np.genfromtxt(fname, dtype=np.object, delimiter=' ', usecols=0)
-        clusters = np.genfromtxt(fname, dtype=int, delimiter=' ', usecols=1)
+        vocab = np.genfromtxt(fname, dtype=str, delimiter=" ", usecols=0)
+        clusters = np.genfromtxt(fname, dtype=int, delimiter=" ", usecols=1)
         return cls(vocab=vocab, clusters=clusters)

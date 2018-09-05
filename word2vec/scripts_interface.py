@@ -5,10 +5,25 @@ import six
 import subprocess
 
 
-def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0,
-             negative=5, threads=12, iter_=5, min_count=5, alpha=0.025,
-             debug=2, binary=1, cbow=1, save_vocab=None, read_vocab=None,
-             verbose=False):
+def word2vec(
+        train,
+        output,
+        size=100,
+        window=5,
+        sample="1e-3",
+        hs=0,
+        negative=5,
+        threads=12,
+        iter_=5,
+        min_count=5,
+        alpha=0.025,
+        debug=2,
+        binary=1,
+        cbow=1,
+        save_vocab=None,
+        read_vocab=None,
+        verbose=False,
+):
     """
     word2vec execution
 
@@ -52,57 +67,128 @@ def word2vec(train, output, size=100, window=5, sample='1e-3', hs=0,
         verbose
             Print output from training
     """
-    command = ['word2vec']
-    args = ['-train', '-output', '-size', '-window', '-sample', '-hs',
-            '-negative', '-threads', '-iter', '-min-count', '-alpha', '-debug',
-            '-binary', '-cbow']
-    values = [train, output, size, window, sample, hs, negative, threads,
-              iter_, min_count, alpha, debug, binary, cbow]
+    command = ["word2vec"]
+    args = [
+        "-train",
+        "-output",
+        "-size",
+        "-window",
+        "-sample",
+        "-hs",
+        "-negative",
+        "-threads",
+        "-iter",
+        "-min-count",
+        "-alpha",
+        "-debug",
+        "-binary",
+        "-cbow",
+    ]
+    values = [
+        train,
+        output,
+        size,
+        window,
+        sample,
+        hs,
+        negative,
+        threads,
+        iter_,
+        min_count,
+        alpha,
+        debug,
+        binary,
+        cbow,
+    ]
 
     for arg, value in zip(args, values):
         command.append(arg)
         command.append(str(value))
     if save_vocab is not None:
-        command.append('-save-vocab')
+        command.append("-save-vocab")
         command.append(str(save_vocab))
     if read_vocab is not None:
-        command.append('-read-vocab')
+        command.append("-read-vocab")
         command.append(str(read_vocab))
 
     run_cmd(command, verbose=verbose)
 
 
-def word2clusters(train, output, classes, size=100, window=5, sample='1e-3',
-                  hs=0, negative=5, threads=12, iter_=5, min_count=5,
-                  alpha=0.025, debug=2, binary=1, cbow=1,
-                  save_vocab=None, read_vocab=None, verbose=False):
-    command = ['word2vec']
+def word2clusters(
+        train,
+        output,
+        classes,
+        size=100,
+        window=5,
+        sample="1e-3",
+        hs=0,
+        negative=5,
+        threads=12,
+        iter_=5,
+        min_count=5,
+        alpha=0.025,
+        debug=2,
+        binary=1,
+        cbow=1,
+        save_vocab=None,
+        read_vocab=None,
+        verbose=False,
+):
+    command = ["word2vec"]
 
-    args = ['-train', '-output', '-size', '-window', '-sample', '-hs',
-            '-negative', '-threads', '-iter', '-min-count', '-alpha', '-debug',
-            '-binary', '-cbow', '-classes']
-    values = [train, output, size, window, sample, hs, negative, threads,
-              iter_, min_count, alpha, debug, binary, cbow, classes]
+    args = [
+        "-train",
+        "-output",
+        "-size",
+        "-window",
+        "-sample",
+        "-hs",
+        "-negative",
+        "-threads",
+        "-iter",
+        "-min-count",
+        "-alpha",
+        "-debug",
+        "-binary",
+        "-cbow",
+        "-classes",
+    ]
+    values = [
+        train,
+        output,
+        size,
+        window,
+        sample,
+        hs,
+        negative,
+        threads,
+        iter_,
+        min_count,
+        alpha,
+        debug,
+        binary,
+        cbow,
+        classes,
+    ]
 
     for arg, value in zip(args, values):
         command.append(arg)
         command.append(str(value))
 
     if save_vocab is not None:
-        command.append('-save-vocab')
+        command.append("-save-vocab")
         command.append(str(save_vocab))
     if read_vocab is not None:
-        command.append('-read-vocab')
+        command.append("-read-vocab")
         command.append(str(read_vocab))
 
     run_cmd(command, verbose=verbose)
 
 
-def word2phrase(train, output, min_count=5, threshold=100, debug=2,
-                verbose=False):
-    command = ['word2phrase']
+def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=False):
+    command = ["word2phrase"]
 
-    args = ['-train', '-output', '-min-count', '-threshold', '-debug']
+    args = ["-train", "-output", "-min-count", "-threshold", "-debug"]
     values = [train, output, min_count, threshold, debug]
     for arg, value in zip(args, values):
         command.append(arg)
@@ -111,29 +197,71 @@ def word2phrase(train, output, min_count=5, threshold=100, debug=2,
     run_cmd(command, verbose=verbose)
 
 
-def doc2vec(train, output, size=100, window=5, sample='1e-3', hs=0, negative=5,
-            threads=12, iter_=5, min_count=5, alpha=0.025, debug=2, binary=1,
-            cbow=1,
-            save_vocab=None, read_vocab=None, verbose=False):
-    command = ['word2vec-doc2vec']
-    args = ['-train', '-output', '-size', '-window', '-sample', '-hs',
-            '-negative', '-threads', '-iter', '-min-count', '-alpha',
-            '-debug', '-binary', '-cbow']
-    values = [train, output, size, window, sample, hs, negative, threads,
-              iter_, min_count, alpha, debug, binary, cbow]
+def doc2vec(
+        train,
+        output,
+        size=100,
+        window=5,
+        sample="1e-3",
+        hs=0,
+        negative=5,
+        threads=12,
+        iter_=5,
+        min_count=5,
+        alpha=0.025,
+        debug=2,
+        binary=1,
+        cbow=1,
+        save_vocab=None,
+        read_vocab=None,
+        verbose=False,
+):
+    command = ["word2vec-doc2vec"]
+    args = [
+        "-train",
+        "-output",
+        "-size",
+        "-window",
+        "-sample",
+        "-hs",
+        "-negative",
+        "-threads",
+        "-iter",
+        "-min-count",
+        "-alpha",
+        "-debug",
+        "-binary",
+        "-cbow",
+    ]
+    values = [
+        train,
+        output,
+        size,
+        window,
+        sample,
+        hs,
+        negative,
+        threads,
+        iter_,
+        min_count,
+        alpha,
+        debug,
+        binary,
+        cbow,
+    ]
 
     for arg, value in zip(args, values):
         command.append(arg)
         command.append(str(value))
     if save_vocab is not None:
-        command.append('-save-vocab')
+        command.append("-save-vocab")
         command.append(str(save_vocab))
     if read_vocab is not None:
-        command.append('-read-vocab')
+        command.append("-read-vocab")
         command.append(str(read_vocab))
 
-    command.append('sentence-vectors')
-    command.append('1')
+    command.append("sentence-vectors")
+    command.append("1")
 
     run_cmd(command, verbose=verbose)
 
@@ -143,9 +271,9 @@ def run_cmd(command, verbose=False):
 
     if verbose:
         while proc.poll() is None:
-            string = '' if six.PY2 else b''  # Python 2: ''   -  Python 3: b''
+            string = "" if six.PY2 else b""    # Python 2: ''   -  Python 3: b''
             for c in iter(lambda: proc.stdout.read(1), string):
-                c = c.decode('ascii')
+                c = c.decode("ascii")
                 sys.stdout.write(c)
 
         sys.stdout.flush()
