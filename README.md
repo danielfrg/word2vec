@@ -15,7 +15,7 @@ pip install word2vec
 
 The installation requires to compile the original C code:
 
-1. The only requirement is `gcc`.
+1. The requirements are `gcc` and `Cython` - Run `pip install Cython` prior to the installation.
 2. You can override the compilation flags if needed: `W2V_CFLAGS='-march=corei7' pip install word2vec`
 
 **Windows:** There is some support for this support based on this [win32 port](https://github.com/zhangyafeikimi/word2vec-win32). Use at your own risk.
