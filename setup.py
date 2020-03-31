@@ -4,8 +4,10 @@ import subprocess
 from setuptools import dist
 from setuptools import setup
 from setuptools import find_packages
+
+# Install Cython and six before
 from setuptools.command.install import install as _install
-dist.Distribution().fetch_build_eggs(['Cython>=0.15.1', 'numpy>=1.10'])
+dist.Distribution().fetch_build_eggs(['Cython', 'six'])
 
 import versioneer
 

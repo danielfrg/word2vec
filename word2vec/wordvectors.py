@@ -1,7 +1,7 @@
 import itertools
 
 import numpy as np
-from sklearn.externals import joblib
+import joblib
 
 from word2vec.utils import unitvec, distance
 
