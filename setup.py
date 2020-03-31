@@ -1,13 +1,22 @@
-from setuptools import setup
-from setuptools import find_packages
-from setuptools.command.install import install as _install
-from Cython.Build import cythonize
-
 import os
 import sys
 import subprocess
+from setuptools import dist
+from setuptools import setup
+from setuptools import find_packages
+from setuptools.command.install import install as _install
+dist.Distribution().fetch_build_eggs(['Cython>=0.15.1', 'numpy>=1.10'])
 
 import versioneer
+
+try:
+    from Cython.Build import cythonize
+except ImportError:
+    # create closure for deferred import
+    def cythonize (*args, ** kwargs ):
+        from Cython.Build import cythonize
+        return cythonize(*args, ** kwargs)
+
 
 THIS_DIR = os.path.abspath(os.path.dirname(__file__))
 
