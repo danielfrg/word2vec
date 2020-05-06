@@ -10,8 +10,7 @@ setup_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 def read_file(filename):
-    this_dir = os.path.abspath(os.path.dirname(__file__))
-    filepath = os.path.join(this_dir, filename)
+    filepath = os.path.join(setup_dir, filename)
     with open(filepath) as file:
         return file.read()
 
