@@ -15,18 +15,18 @@ output_txt = os.path.join(data_dir, "test-output-vectors.txt")
 # output_bin = os.path.join(data_dir, "test-output-vectors.bin")
 
 
-def setup_module(module):
+def test_script_word2vec():
     word2vec.word2vec(input_text, output_txt, verbose=False)
-    # word2vec.word2vec(input_text, output_bin, verbose=False)
-    word2vec.word2phrase(input_text, output_phrases, verbose=False)
-    # word2vec.word2clusters(input_text, output_clusters, 10, verbose=True)
-
-
-def test_files_created_ok():
-    # This are created on the setup_module
     assert os.path.exists(output_txt)
     # assert os.path.exists(output_bin)
-    assert os.path.exists(output_phrases)
+
+
+# def test_script_word2phrase():
+#     word2vec.word2phrase(input_text, output_phrases, verbose=False)
+#     assert os.path.exists(output_phrases)
+
+
+# def test_script_word2clusters():
     # assert os.path.exists(output_clusters)
 
 

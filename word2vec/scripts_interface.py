@@ -266,7 +266,8 @@ def doc2vec(
 
 
 def run_cmd(command, verbose=False):
-    print("Running command:", " ".join(command))
+    if verbose:
+        print("Running command:", " ".join(command))
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if verbose:
