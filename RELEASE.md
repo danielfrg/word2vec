@@ -1,4 +1,4 @@
-## How to release a new version
+# How to release a new version
 
 - Update `CHANGELOG.md`
 - Update `README.md` and docs
