@@ -88,7 +88,7 @@ test-data:  ## Download test data
 	mkdir -p $(PWD)/data \
 	&& curl -o $(PWD)/data/text8.zip http://mattmahoney.net/dc/text8.zip \
 	&& cd $(PWD)/data && unzip text8.zip \
-	&& cd $(PWD)/data && head -c 10000 text8 > text8-small
+	&& cd $(PWD)/data && head -c 100000 text8 > text8-small
 
 
 .PHONY: docker-img
