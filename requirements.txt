@@ -2,7 +2,7 @@
 
 # Base conda deps
 setuptools
-setuptools_scm
+setuptools-scm
 pylint
 flake8
 black

@@ -6,7 +6,6 @@ from setuptools import dist, find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 
-
 setup_dir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -22,6 +21,7 @@ def parse_git(root, **kwargs):
     Parse function for setuptools_scm
     """
     from setuptools_scm.git import parse
+
     kwargs["describe_command"] = "git describe --dirty --tags --long"
     return parse(root, **kwargs)
 
