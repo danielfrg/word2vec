@@ -30,9 +30,9 @@ def test_script_word2phrase():
     assert os.path.exists(output_phrases)
 
 
-# def test_script_word2clusters():
-#     word2vec.word2clusters(input_text, output_clusters, 10, verbose=False)
-#     assert os.path.exists(output_clusters)
+def test_script_word2clusters():
+    word2vec.word2clusters(input_text, output_clusters, 10, verbose=False)
+    assert os.path.exists(output_clusters)
 
 
 # def test_load_bin():
