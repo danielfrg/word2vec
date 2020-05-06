@@ -18,7 +18,7 @@ output_txt = os.path.join(data_dir, "test-output-vectors.txt")
 def setup_module(module):
     word2vec.word2vec(input_text, output_txt, verbose=False)
     # word2vec.word2vec(input_text, output_bin, verbose=False)
-    # word2vec.word2phrase(input_text, output_phrases, verbose=False)
+    word2vec.word2phrase(input_text, output_phrases, verbose=False)
     # word2vec.word2clusters(input_text, output_clusters, 10, verbose=True)
 
 
@@ -26,12 +26,12 @@ def test_files_created_ok():
     # This are created on the setup_module
     assert os.path.exists(output_txt)
     # assert os.path.exists(output_bin)
-    # assert os.path.exists(output_phrases)
+    assert os.path.exists(output_phrases)
     # assert os.path.exists(output_clusters)
 
 
 # def test_load_bin():
-#     model = word2vec.load(output_bin)
+#     model = word2vec.load(output_txt)
 #     vocab = model.vocab
 #     vectors = model.vectors
 #
@@ -71,7 +71,7 @@ def test_files_created_ok():
 #
 #
 # def test_similar():
-#     model = word2vec.load(output_bin)
+#     model = word2vec.load(output_txt)
 #     indexes, metrics = model.similar("the")
 #     assert indexes.shape == (10,)
 #     assert indexes.shape == metrics.shape
@@ -101,7 +101,7 @@ def test_files_created_ok():
 #
 # def test_model_with_clusters():
 #     clusters = word2vec.load_clusters(output_clusters)
-#     model = word2vec.load(output_bin)
+#     model = word2vec.load(output_txt)
 #     assert clusters.vocab.shape == model.vocab.shape
 #
 #     model.clusters = clusters
@@ -120,7 +120,7 @@ def test_files_created_ok():
 #     try:
 #         sys.stdout = io.StringIO()
 #
-#         word2vec.word2vec(input_, output_bin, size=10, binary=1, verbose=True)
+#         word2vec.word2vec(input_, output_txt, size=10, verbose=True)
 #         output = sys.stdout.getvalue()
 #
 #         assert "b'" not in output
