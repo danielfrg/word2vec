@@ -13,7 +13,7 @@ first: help
 
 .PHONY: clean
 clean:  ## Clean build files
-	@rm -rf build dist site htmlcov .pytest_cache
+	@rm -rf build dist site htmlcov .pytest_cache .eggs
 	@rm -f .coverage coverage.xml word2vec/_generated_version.py
 	@find . -type f -name '*.py[co]' -delete
 	@find . -type d -name __pycache__ -exec rm -rf {} +
@@ -88,7 +88,7 @@ test-data:  ## Download test data
 	mkdir -p $(PWD)/data \
 	&& curl -o $(PWD)/data/text8.zip http://mattmahoney.net/dc/text8.zip \
 	&& cd $(PWD)/data && unzip text8.zip \
-	&& cd $(PWD)/data && head -c 100 text8 > text8-small
+	&& cd $(PWD)/data && head -c 1000 text8 > text8-small
 
 
 .PHONY: docker-img
