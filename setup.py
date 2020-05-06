@@ -2,7 +2,6 @@ import os
 import subprocess
 import sys
 
-# import versioneer
 from setuptools import dist, find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.install import install
