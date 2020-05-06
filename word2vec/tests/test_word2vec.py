@@ -12,22 +12,27 @@ input_text = os.path.join(data_dir, "text8-small")
 output_phrases = os.path.join(data_dir, "test-output-text-phrases.txt")
 output_clusters = os.path.join(data_dir, "test-output-text-clusters.txt")
 output_txt = os.path.join(data_dir, "test-output-vectors.txt")
-# output_bin = os.path.join(data_dir, "test-output-vectors.bin")
+output_bin = os.path.join(data_dir, "test-output-vectors.bin")
 
 
 def test_script_word2vec():
     word2vec.word2vec(input_text, output_txt, verbose=False)
     assert os.path.exists(output_txt)
-    # assert os.path.exists(output_bin)
 
 
-# def test_script_word2phrase():
-#     word2vec.word2phrase(input_text, output_phrases, verbose=False)
-#     assert os.path.exists(output_phrases)
+def test_script_word2vec_bin():
+    word2vec.word2vec(input_text, output_bin, binary=1, verbose=False)
+    assert os.path.exists(output_bin)
+
+
+def test_script_word2phrase():
+    word2vec.word2phrase(input_text, output_phrases, verbose=False)
+    assert os.path.exists(output_phrases)
 
 
 # def test_script_word2clusters():
-    # assert os.path.exists(output_clusters)
+#     word2vec.word2clusters(input_text, output_clusters, 10, verbose=False)
+#     assert os.path.exists(output_clusters)
 
 
 # def test_load_bin():

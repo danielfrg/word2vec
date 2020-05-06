@@ -48,10 +48,12 @@ jobs:
         word2vec
         word2vec -train /home/runner/work/word2vec/word2vec/data/text8-small -output /home/runner/work/word2vec/word2vec/data/test-output-vectors-inline.txt
         cat /home/runner/work/word2vec/word2vec/data/test-output-vectors-inline.txt
-        python -c "import word2vec; word2vec.phrase('/home/runner/work/word2vec/word2vec/data/text8-small', '/home/runner/work/word2vec/word2vec/data/test-output-vectors-in2.txt')"
+        python -c "import word2vec; word2vec.word2vec('/home/runner/work/word2vec/word2vec/data/text8-small', '/home/runner/work/word2vec/word2vec/data/test-output-vectors-in2.txt')"
         cat /home/runner/work/word2vec/word2vec/data/test-output-vectors-in2.txt
         word2phrase -train /home/runner/work/word2vec/word2vec/data/text8-small -output /home/runner/work/word2vec/word2vec/data/test-output-phrases-inline.txt
         cat /home/runner/work/word2vec/word2vec/data/test-output-phrases-inline.txt
+        python -c "import word2vec; word2vec.word2vec('/home/runner/work/word2vec/word2vec/data/text8-small', '/home/runner/work/word2vec/word2vec/data/test-output-phrases-in2.txt')"
+        cat /home/runner/work/word2vec/word2vec/data/test-output-phrases-in2.txt
 
     - name: Check linting
       run: |
