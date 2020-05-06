@@ -8,7 +8,7 @@ import word2vec
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
 data_dir = os.path.abspath(os.path.join(this_dir, "..", "..", "data"))
-input_text = os.path.join(data_dir, "text8-1M")
+input_text = os.path.join(data_dir, "text8-small")
 output_phrases = os.path.join(data_dir, "test-output-text-phrases.txt")
 output_clusters = os.path.join(data_dir, "test-output-text-clusters.txt")
 output_bin = os.path.join(data_dir, "test-output-vectors.bin")

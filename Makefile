@@ -14,7 +14,7 @@ first: help
 .PHONY: clean
 clean:  ## Clean build files
 	@rm -rf build dist site htmlcov .pytest_cache
-	@rm -f .coverage coverage.xml
+	@rm -f .coverage coverage.xml word2vec/_generated_version.py
 	@find . -type f -name '*.py[co]' -delete
 	@find . -type d -name __pycache__ -exec rm -rf {} +
 	@find . -type d -name .ipynb_checkpoints -exec rm -rf {} +
@@ -88,4 +88,4 @@ test-data:  ## Download test data
 	mkdir -p $(PWD)/data \
 	&& curl -o $(PWD)/data/text8.zip http://mattmahoney.net/dc/text8.zip \
 	&& cd $(PWD)/data && unzip text8.zip \
-	&& cd $(PWD)/data && head -c 1000000 text8 > text8-1M
+	&& cd $(PWD)/data && head -c 10000 text8 > text8-small
