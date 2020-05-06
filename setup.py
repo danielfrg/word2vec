@@ -122,7 +122,7 @@ else:
 
 setup(
     name="word2vec",
-    packages=find_packages() + ["word2vec.tests"],
+    packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
     package_data={"word2vec": ["includes/**/*.c"]},
@@ -134,11 +134,9 @@ setup(
         "parse": parse_git,
         "write_to": os.path.join("word2vec/_generated_version.py"),
     },
-    test_suite="word2vec/tests",
+    python_requires=">=3.6",
     setup_requires=["setuptools_scm"],
     install_requires=read_file("requirements.package.txt").splitlines(),
-    tests_require=["pytest",],
-    python_requires=">=3.6",
     description="Wrapper for Google word2vec",
     long_description=read_file("README.md"),
     long_description_content_type="text/markdown",
