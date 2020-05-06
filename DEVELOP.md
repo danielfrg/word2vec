@@ -26,3 +26,15 @@ make test-data
 # Run tests
 make test
 ```
+
+### Docker for Linux
+
+```
+make docker-img
+make docker-Run
+
+# Inside the container
+conda activate word2vec
+make develop
+make test
+```

@@ -138,7 +138,7 @@ setup(
     setup_requires=["setuptools_scm"],
     install_requires=read_file("requirements.package.txt").splitlines(),
     tests_require=["pytest",],
-    python_requires=">=3.5",
+    python_requires=">=3.6",
     description="Wrapper for Google word2vec",
     long_description=read_file("README.md"),
     long_description_content_type="text/markdown",
