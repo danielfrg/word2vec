@@ -3,3 +3,4 @@ def test_import():
 
     assert word2vec.__version__ is not None
     assert len(word2vec.__version__) > 0
+    assert word2vec.__version__ != "0.0.0"

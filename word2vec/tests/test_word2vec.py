@@ -27,7 +27,7 @@ def test_script_word2vec_bin():
 
 
 @pytest.mark.skipif(
-    os.environ.get("CI", False),
+    os.environ.get("CI", None) is not None,
     reason="Failing on Github Actions: Aborted (core dumped)",
 )
 def test_script_word2phrase():
