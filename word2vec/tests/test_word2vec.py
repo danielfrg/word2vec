@@ -11,23 +11,23 @@ data_dir = os.path.abspath(os.path.join(this_dir, "..", "..", "data"))
 input_text = os.path.join(data_dir, "text8-small")
 output_phrases = os.path.join(data_dir, "test-output-text-phrases.txt")
 output_clusters = os.path.join(data_dir, "test-output-text-clusters.txt")
-output_bin = os.path.join(data_dir, "test-output-vectors.bin")
 output_txt = os.path.join(data_dir, "test-output-vectors.txt")
+# output_bin = os.path.join(data_dir, "test-output-vectors.bin")
 
 
 def setup_module(module):
-    word2vec.word2vec(input_text, output_bin, verbose=False)
     word2vec.word2vec(input_text, output_txt, verbose=False)
-    word2vec.word2phrase(input_text, output_phrases, verbose=False)
-    word2vec.word2clusters(input_text, output_clusters, 10, verbose=True)
+    # word2vec.word2vec(input_text, output_bin, verbose=False)
+    # word2vec.word2phrase(input_text, output_phrases, verbose=False)
+    # word2vec.word2clusters(input_text, output_clusters, 10, verbose=True)
 
 
 def test_files_created_ok():
     # This are created on the setup_module
-    assert os.path.exists(output_bin)
     assert os.path.exists(output_txt)
-    assert os.path.exists(output_phrases)
-    assert os.path.exists(output_clusters)
+    # assert os.path.exists(output_bin)
+    # assert os.path.exists(output_phrases)
+    # assert os.path.exists(output_clusters)
 
 
 # def test_load_bin():

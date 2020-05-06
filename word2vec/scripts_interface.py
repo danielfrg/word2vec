@@ -17,7 +17,7 @@ def word2vec(
     min_count=5,
     alpha=0.025,
     debug=2,
-    binary=1,
+    binary=0,
     cbow=1,
     save_vocab=None,
     read_vocab=None,

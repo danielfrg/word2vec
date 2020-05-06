@@ -48,6 +48,8 @@ jobs:
         word2vec
         word2vec -train /home/runner/work/word2vec/word2vec/data/text8-small -output /home/runner/work/word2vec/word2vec/data/test-output-vectors.txt
         cat /home/runner/work/word2vec/word2vec/data/test-output-vectors.txt
+        python -c "import word2vec; word2vec.word2vec('/home/runner/work/word2vec/word2vec/data/text8-small', '/home/runner/work/word2vec/word2vec/data/test-output-vectors2.txt')"
+        cat /home/runner/work/word2vec/word2vec/data/test-output-vectors2.txt
 
     - name: Check linting
       run: |
