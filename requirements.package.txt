@@ -1,0 +1,4 @@
+six
+cython
+numpy>=1.9.2
+joblib

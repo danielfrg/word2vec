@@ -1,15 +1,17 @@
 import os
 import sys
+
+import versioneer
+from setuptools import find_packages, setup
+
 import subprocess
 from setuptools import dist
 from setuptools import setup
 from setuptools import find_packages
 
-# Install Cython and six before
+# First install Cython and six becuase we use then on setup
 from setuptools.command.install import install as _install
 dist.Distribution().fetch_build_eggs(['Cython', 'six'])
-
-import versioneer
 
 try:
     from Cython.Build import cythonize
@@ -18,9 +20,6 @@ except ImportError:
     def cythonize (*args, ** kwargs ):
         from Cython.Build import cythonize
         return cythonize(*args, ** kwargs)
-
-
-THIS_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class install(_install):
@@ -78,25 +77,24 @@ cmdclass.update({"install": install})
 
 
 def read_file(filename):
-    filepath = os.path.join(THIS_DIR, filename)
+    this_dir = os.path.abspath(os.path.dirname(__file__))
+    filepath = os.path.join(this_dir, filename)
     with open(filepath) as file:
         return file.read()
 
 
-REQUIREMENTS = read_file("requirements.txt").splitlines()
-
 data_files = []
 if sys.platform == "win32":
-    out_data_files = [
+    files = [
         "Scripts/word2vec.exe",
         "Scripts/word2phrase.exe",
         "Scripts/word2vec-distance.exe",
         "Scripts/word2vec-word-analogy.exe",
         "Scripts/word2vec-compute-accuracy.exe",
     ]
-    data_files = [("Scripts", out_data_files)]
+    data_files = [("Scripts", files)]
 else:
-    out_data_files = [
+    files = [
         "bin/word2vec",
         "bin/word2phrase",
         "bin/word2vec-distance",
@@ -104,31 +102,26 @@ else:
         "bin/word2vec-compute-accuracy",
         "bin/word2vec-doc2vec",
     ]
-    data_files = [("bin", out_data_files)]
+    data_files = [("bin", files)]
+
 
 setup(
     name="word2vec",
     version=versioneer.get_version(),
-    cmdclass=cmdclass,
-    ext_modules=cythonize("word2vec/word2vec_noop.pyx"),
-    author="Daniel Rodriguez",
-    author_email="df.rodriguez143@gmail.com",
-    url="https://github.com/danielfrg/word2vec",
     description="Wrapper for Google word2vec",
     long_description=read_file("README.md"),
     long_description_content_type="text/markdown",
-    license="Apache License Version 2.0, January 2004",
+    author="Daniel Rodriguez",
+    author_email="daniel@danielfrg.com",
+    url="https://github.com/danielfrg/word2vec",
+    license="Apache License Version 2.0",
+    python_requires=">=3.0,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*",
+    install_requires=read_file("requirements.package.txt").splitlines(),
+    keywords=["NLP", "word2vec", "cython"],
     packages=find_packages(),
+    include_package_data=True,
     data_files=data_files,
-    python_requires=">=3.0,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*",
-    install_requires=REQUIREMENTS,
     zip_safe=False,
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: Implementation :: CPython",
-    ],
+    cmdclass=versioneer.get_cmdclass(),
+    entry_points = {},
 )

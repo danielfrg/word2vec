@@ -1,0 +1,6 @@
+[run]
+omit =
+    word2vec/_version.py
+    word2vec/tests/*
+source =
+    word2vec

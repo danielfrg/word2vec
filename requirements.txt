@@ -1,5 +1,20 @@
-six
+# This is used by Netlify and CI - It should match environment.yml
+
+# Base conda deps
+pylint
+flake8
+black
+isort
+twine
+wheel
+pytest
+pytest-cov
+
+# This project conda deps
+numpy
 cython
-numpy>=1.9.2
-scipy
-joblib
+scikit-learn
+notebook
+jupyterlab
+
+# This project pip deps
