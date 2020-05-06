@@ -86,6 +86,6 @@ test:  ## Run tests
 .PHONY: test-data
 test-data:  ## Download test data
 	mkdir -p $(PWD)/data \
-	&& @curl -o $(PWD)/data/text8.zip http://mattmahoney.net/dc/text8.zip \
+	&& curl -o $(PWD)/data/text8.zip http://mattmahoney.net/dc/text8.zip \
 	&& cd $(PWD)/data && unzip text8.zip \
 	&& cd $(PWD)/data && head -c 1000000 text8 > text8-1M
