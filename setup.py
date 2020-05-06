@@ -1,15 +1,11 @@
 import os
+import subprocess
 import sys
 
 # import versioneer
-from setuptools import find_packages, setup
-
-import subprocess
-from setuptools import dist
-from setuptools import setup
-from setuptools import find_packages
-from setuptools.command.install import install
+from setuptools import dist, find_packages, setup
 from setuptools.command.develop import develop
+from setuptools.command.install import install
 
 
 def read_file(filename):
@@ -20,7 +16,6 @@ def read_file(filename):
 
 
 class InstallCmd(install):
-
     def run(self):
         print("Running custom Install command")
         compile_all()
@@ -28,7 +23,6 @@ class InstallCmd(install):
 
 
 class DevelopCmd(develop):
-
     def run(self):
         print("Running custom Develop command")
         compile_all()
@@ -118,15 +112,12 @@ setup(
     include_package_data=True,
     package_data={"word2vec": ["includes/**/*.c"]},
     data_files=data_files,
-    cmdclass={
-        "install": InstallCmd,
-        "develop": DevelopCmd
-    },
+    cmdclass={"install": InstallCmd, "develop": DevelopCmd},
     # entry_points = {},
     test_suite="word2vec/tests",
     setup_requires=["setuptools_scm"],
     install_requires=read_file("requirements.package.txt").splitlines(),
-    tests_require=["pytest", ],
+    tests_require=["pytest",],
     python_requires=">=3.5",
     description="Wrapper for Google word2vec",
     long_description=read_file("README.md"),
@@ -136,10 +127,10 @@ setup(
     maintainer_email="daniel@danielfrg.com",
     url="https://github.com/danielfrg/word2vec",
     classifiers=[
-    "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
-    keywords=["NLP", "word2vec"]
+    keywords=["NLP", "word2vec"],
 )

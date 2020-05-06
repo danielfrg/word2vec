@@ -1,13 +1,12 @@
 import itertools
 
-import numpy as np
 import joblib
+import numpy as np
 
-from word2vec.utils import unitvec, distance
+from word2vec.utils import distance, unitvec
 
 
 class WordVectors(object):
-
     def __init__(self, vocab, vectors, clusters=None):
         """
         Initialize a WordVectors class based on vocabulary and vectors
@@ -77,7 +76,7 @@ class WordVectors(object):
         metric : string (default "cosine")
             What metric to use
         """
-        metric = kwargs.get("metric", "cosine")    # Default is cosine
+        metric = kwargs.get("metric", "cosine")  # Default is cosine
 
         combinations = list(itertools.combinations(args, r=2))
 
@@ -102,7 +101,7 @@ class WordVectors(object):
             2. cosine similarity
         """
         distances = distance(self.vectors, vector, metric=metric)
-        best = np.argsort(distances)[::-1][1:n + 1]
+        best = np.argsort(distances)[::-1][1 : n + 1]
         best_metrics = distances[best]
         return best, best_metrics
 
@@ -152,9 +151,11 @@ class WordVectors(object):
         mean = np.array(mean).mean(axis=0)
 
         metrics = distance(self.vectors, mean, metric=metric)
-        best = metrics.argsort()[::-1][:n + len(exclude)]
+        best = metrics.argsort()[::-1][: n + len(exclude)]
 
-        exclude_idx = [np.where(best == self.ix(word)) for word in exclude if self.ix(word) in best]
+        exclude_idx = [
+            np.where(best == self.ix(word)) for word in exclude if self.ix(word) in best
+        ]
         new_best = np.delete(best, exclude_idx)
         best_metrics = metrics[new_best]
         return new_best[:n], best_metrics[:n]
@@ -170,19 +171,21 @@ class WordVectors(object):
                 names=("word", "metric", "cluster"),
             )
         else:
-            return np.rec.fromarrays((self.vocab[indexes], metrics), names=("word", "metric"))
+            return np.rec.fromarrays(
+                (self.vocab[indexes], metrics), names=("word", "metric")
+            )
 
     def to_mmap(self, fname):
         joblib.dump(self, fname)
 
     @classmethod
     def from_binary(
-            cls,
-            fname,
-            vocab_unicode_size=78,
-            desired_vocab=None,
-            encoding="utf-8",
-            new_lines=True,
+        cls,
+        fname,
+        vocab_unicode_size=78,
+        desired_vocab=None,
+        encoding="utf-8",
+        new_lines=True,
     ):
         """
         Create a WordVectors class based on a word2vec binary file
@@ -222,7 +225,7 @@ class WordVectors(object):
                 if include:
                     vectors[i] = unitvec(vector)
                 if new_lines:
-                    fin.read(1)    # newline char
+                    fin.read(1)  # newline char
 
             if desired_vocab is not None:
                 vectors = vectors[vocab != "", :]
@@ -230,7 +233,9 @@ class WordVectors(object):
         return cls(vocab=vocab, vectors=vectors)
 
     @classmethod
-    def from_text(cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8"):
+    def from_text(
+        cls, fname, vocabUnicodeSize=78, desired_vocab=None, encoding="utf-8"
+    ):
         """
         Create a WordVectors class based on a word2vec text file
 

@@ -1,6 +1,7 @@
-import os
 import io
+import os
 import sys
+
 import numpy as np
 
 import word2vec

@@ -1,0 +1,29 @@
+[build-system]
+# Minimum requirements for the build system to execute.
+requires = [
+    "setuptools",
+    "setuptools_scm",
+    "wheel"
+]
+
+[tool.setuptools_scm]
+write_to = "word2vec/_generated_version.py"
+
+[tool.black]
+target-version = ["py36", "py37", "py38"]
+exclude = '''
+(
+    asv_bench/env
+  | \.egg
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)
+'''
