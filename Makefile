@@ -85,8 +85,7 @@ test:  ## Run tests
 
 .PHONY: test-data
 test-data:  ## Download test data
-	@mkdir -p ./data
-	@cd ./data
-	@wget http://mattmahoney.net/dc/text8.zip -O ./data/text8.zip
-	@cd ./data && unzip text8.zip
-	@cd ./data && head -c 1000000 text8 > text8-1M
+	mkdir -p $(PWD)/data \
+	&& @wget http://mattmahoney.net/dc/text8.zip -O $(PWD)/data/text8.zip \
+	&& cd $(PWD)/data && unzip text8.zip \
+	&& cd $(PWD)/data && head -c 1000000 text8 > text8-1M
