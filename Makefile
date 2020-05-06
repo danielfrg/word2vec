@@ -40,6 +40,7 @@ env:
 	conda env create
 
 
+.PHONY: develop
 develop:  ## Install package for development
 	python -m pip install --no-build-isolation -e .
 
