@@ -7,11 +7,23 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 
+setup_dir = os.path.abspath(os.path.dirname(__file__))
+
+
 def read_file(filename):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     filepath = os.path.join(this_dir, filename)
     with open(filepath) as file:
         return file.read()
+
+
+def parse_git(root, **kwargs):
+    """
+    Parse function for setuptools_scm
+    """
+    from setuptools_scm.git import parse
+    kwargs["describe_command"] = "git describe --dirty --tags --long"
+    return parse(root, **kwargs)
 
 
 class InstallCmd(install):
@@ -113,6 +125,11 @@ setup(
     data_files=data_files,
     cmdclass={"install": InstallCmd, "develop": DevelopCmd},
     # entry_points = {},
+    use_scm_version={
+        "root": setup_dir,
+        "parse": parse_git,
+        "write_to": os.path.join("word2vec/_generated_version.py"),
+    },
     test_suite="word2vec/tests",
     setup_requires=["setuptools_scm"],
     install_requires=read_file("requirements.package.txt").splitlines(),
