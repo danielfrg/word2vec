@@ -73,7 +73,9 @@ def compile_c(source, target):
 
     CC = "gcc"
 
-    DEFAULT_CFLAGS = "-lm -pthread -Ofast -Wall -march=native -funroll-loops -Wno-unused-result"
+    DEFAULT_CFLAGS = (
+        "-lm -pthread -Ofast -Wall -march=native -funroll-loops -Wno-unused-result"
+    )
 
     if sys.platform == "darwin":
         DEFAULT_CFLAGS += " -I/usr/include/malloc"
