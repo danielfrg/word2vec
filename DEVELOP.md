@@ -6,19 +6,23 @@ Create dev environment
 # Create conda env
 make env
 conda activate word2vec
-
-pip install -e .
+make develop
 ```
 
-When you do `python setup.py install` or `pip install -e .` it will place the
-binary files (`word2vec`, `word2phrase`, ...) in: `$(pwd)/bin`
-so you have to export that to the `$PATH`.
+When you do `python setup.py develop` or `pip install -e .` the binary files
+binary files (`word2vec`, `word2phrase`, ...) will be placed under: `$(pwd)/bin`
+so you have to export that to the `$PATH` for development.
 
-With `pip install word2vec` it will place them in the correct
-`{{ sys.prefix }}/bin` directory so users don't need to do that.
+```
+export PATH=$(PWD)/bin:$PATH
+```
 
 ## Testing
 
 ```
+# Download test data
+make test-data
+
+# Run tests
 make test
 ```

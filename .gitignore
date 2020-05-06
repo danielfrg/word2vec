@@ -106,8 +106,13 @@ dmypy.json
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# setuptools_scm
+_generated_version.py
+
 ### Project specific ###
 Scripts
+bin
+data
 word2vec/word2vec_noop.c
 
 examples/text8

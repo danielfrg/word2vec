@@ -12,7 +12,6 @@ pytest-cov
 
 # This project conda deps
 numpy
-cython
 scikit-learn
 notebook
 jupyterlab

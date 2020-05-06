@@ -265,18 +265,21 @@ def doc2vec(
 
 
 def run_cmd(command, verbose=False):
+    print("Running command:", " ".join(command))
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if verbose:
         while proc.poll() is None:
-            string = "" if six.PY2 else b""    # Python 2: ''   -  Python 3: b''
+            string = b""
             for c in iter(lambda: proc.stdout.read(1), string):
                 c = c.decode("ascii")
                 sys.stdout.write(c)
 
         sys.stdout.flush()
 
-        if proc.returncode != 0:
-            raise Exception("The training could not be completed.")
+    proc.wait()
+    if proc.returncode != 0:
+        out, err = proc.communicate()
+        raise Exception("The training could not be completed (returncode=%i): %s %s" % (proc.returncode, out, err))
 
     out, err = proc.communicate()

@@ -18,11 +18,13 @@ clean:  ## Clean build files
 	@find . -type f -name '*.py[co]' -delete
 	@find . -type d -name __pycache__ -exec rm -rf {} +
 	@find . -type d -name .ipynb_checkpoints -exec rm -rf {} +
+	@rm -rf data/test-output*
 
 
 .PHONY: cleanall
 cleanall: clean   ## Clean everything
 	@rm -rf *.egg-info
+	@rm -rf bin data
 
 
 .PHONY: help
@@ -36,6 +38,10 @@ help:  ## Show this help menu
 .PHONY: env  ## Create dev environment
 env:
 	conda env create
+
+
+develop:  ## Install package for development
+	python -m pip install --no-build-isolation -e .
 
 
 .PHONY: build
@@ -72,7 +78,15 @@ upload-test:  ## Upload package to test PyPI
 
 .PHONY: test
 test:  ## Run tests
-	pytest -vv word2vec/tests -k $(TEST_FILTER)
+	pytest -s -vv word2vec/tests -k $(TEST_FILTER)
 
 # ------------------------------------------------------------------------------
 # Project specific
+
+.PHONY: test-data
+test-data:  ## Download test data
+	@mkdir -p ./data
+	@cd ./data
+	@wget http://mattmahoney.net/dc/text8.zip -O ./data/text8.zip
+	@cd ./data && unzip text8.zip
+	@cd ./data && head -c 1000000 text8 > text8-1M
