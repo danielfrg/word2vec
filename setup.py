@@ -73,13 +73,15 @@ def compile_c(source, target):
 
     CC = "gcc"
 
-    DEFAULT_CFLAGS = "-lm -pthread -O3 -Wall -march=native -funroll-loops"
-    DEFAULT_CFLAGS += " -Wno-unused-result"
+    DEFAULT_CFLAGS = "-lm -pthread -Ofast -Wall -march=native -funroll-loops -Wno-unused-result"
+
     if sys.platform == "darwin":
         DEFAULT_CFLAGS += " -I/usr/include/malloc"
+
     if sys.platform == "win32":
         DEFAULT_CFLAGS = "-O2 -Wall -funroll-loops"
-    CFLAGS = os.environ.get("W2V_CFLAGS", DEFAULT_CFLAGS)
+
+    CFLAGS = os.environ.get("WORD2VEC_CFLAGS", DEFAULT_CFLAGS)
 
     source = os.path.join(c_source, source)
     target = os.path.join(target_dir, target)

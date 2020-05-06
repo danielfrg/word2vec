@@ -1,8 +1,0 @@
-include README.md
-include LICENSE.txt
-include CHANGELOG.md
-include requirements.package.txt
-
-recursive-include word2vec/includes *.c
-include word2vec/*.pyx
-prune bin

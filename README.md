@@ -23,7 +23,7 @@ In order to compile the original C code a `gcc` compiler is needed.
 You can override the compilation flags if needed:
 
 ```
-W2V_CFLAGS='-march=corei7' pip install word2vec
+WORD2VEC_CFLAGS='-march=corei7' pip install word2vec
 ```
 
 **Windows:** There is basic some support for this support based on this [win32 port](https://github.com/zhangyafeikimi/word2vec-win32).

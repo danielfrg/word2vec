@@ -40,6 +40,12 @@ jobs:
       run: |
         make test-data
 
+    - name: DEBUG
+      run: |
+        cat /etc/*-release
+        gcc --version
+        word2vec
+
     - name: Check linting
       run: |
         make check
