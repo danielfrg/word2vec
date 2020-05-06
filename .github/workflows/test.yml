@@ -17,6 +17,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
