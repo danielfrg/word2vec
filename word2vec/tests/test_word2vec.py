@@ -16,8 +16,8 @@ output_txt = os.path.join(data_dir, "test-output-vectors.txt")
 
 
 def setup_module(module):
-    word2vec.word2vec(input_text, output_bin, size=10, binary=1, verbose=False)
-    word2vec.word2vec(input_text, output_txt, size=10, binary=0, verbose=False)
+    word2vec.word2vec(input_text, output_bin, verbose=False)
+    word2vec.word2vec(input_text, output_txt, verbose=False)
     word2vec.word2phrase(input_text, output_phrases, verbose=False)
     word2vec.word2clusters(input_text, output_clusters, 10, verbose=True)
 
