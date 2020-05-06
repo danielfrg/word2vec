@@ -9,13 +9,14 @@ except ImportError:
     # Package is not installed, parse git tag at runtime
     try:
         import setuptools_scm
-        
+
         # Code duplicated from setup.py to avoid a dependency on each other
         def parse_git(root, **kwargs):
             """
             Parse function for setuptools_scm
             """
             from setuptools_scm.git import parse
+
             kwargs["describe_command"] = "git describe --dirty --tags --long"
             return parse(root, **kwargs)
 
