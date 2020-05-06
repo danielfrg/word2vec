@@ -1,4 +1,4 @@
-# This is used by Netlify and CI - It should match environment.yml
+# Used for CI - It should match environment.yml
 
 # Base conda deps
 setuptools
