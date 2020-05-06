@@ -55,6 +55,7 @@ jobs:
       run: |
         make test
 
-    - uses: codecov/codecov-action@v1
+    - name: Codecov
+      uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml
