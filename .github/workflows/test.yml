@@ -45,6 +45,7 @@ jobs:
         cat /etc/*-release
         gcc --version
         word2vec
+        word2vec -train /home/runner/work/word2vec/word2vec/data/text8-small -output /home/runner/work/word2vec/word2vec/data/test-output-vectors.txt
 
     - name: Check linting
       run: |
