@@ -1,8 +1,6 @@
 import subprocess
 import sys
 
-import six
-
 
 def word2vec(
     train,

@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 
-from setuptools import dist, find_packages, setup
+from setuptools import find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 
@@ -40,9 +40,6 @@ class DevelopCmd(develop):
 
 
 def compile_all():
-    this_dir = os.path.abspath(os.path.dirname(__file__))
-    c_source = os.path.join(this_dir, "word2vec", "include")
-
     if sys.platform == "win32":
         compile_c("win32/word2vec.c", "word2vec.exe")
         compile_c("win32/word2phrase.c", "word2phrase.exe")

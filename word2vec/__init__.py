@@ -1,7 +1,7 @@
-from .io import *
-from .scripts_interface import *
-from .wordclusters import *
-from .wordvectors import *
+from .io import load, load_clusters  # noqa
+from .scripts_interface import doc2vec, word2clusters, word2phrase, word2vec  # noqa
+from .wordclusters import WordClusters  # noqa
+from .wordvectors import WordVectors  # noqa
 
 try:
     from ._generated_version import version as __version__
