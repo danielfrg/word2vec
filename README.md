@@ -31,15 +31,14 @@ WORD2VEC_CFLAGS='-march=corei7' pip install word2vec
 
 ## Usage
 
-Look at this example:
-[word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/word2vec.ipynb)
+Example notebook: [word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/word2vec.ipynb)
 
-The default functionality from word2vec is also available from the command line as:
-- word2vec
-- word2phrase
-- word2vec-distance
-- word2vec-word-analogy
-- word2vec-compute-accuracy
+The default functionality from word2vec is available from the command line:
+- `word2vec`
+- `word2phrase`
+- `word2vec-distance`
+- `word2vec-word-analogy`
+- `word2vec-compute-accuracy`
 
 Experimental functionality on doc2vec can be found in this other example:
 [doc2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/doc2vec.ipynb)

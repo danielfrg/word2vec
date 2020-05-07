@@ -89,7 +89,9 @@ test-data:  ## Download test data
 	mkdir -p $(PWD)/data \
 	&& curl -o $(PWD)/data/text8.zip http://mattmahoney.net/dc/text8.zip \
 	&& cd $(PWD)/data && unzip text8.zip \
-	&& cd $(PWD)/data && head -c 100000 text8 > text8-small
+	&& cd $(PWD)/data && head -c 100000 text8 > text8-small \
+	&& curl -o $(PWD)/data/aclImdb_v1.tar.gz http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz \
+ 	&& cd $(PWD)/data && tar -xf aclImdb_v1.tar.gz
 
 
 .PHONY: docker-img

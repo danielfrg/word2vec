@@ -22,6 +22,7 @@ dependencies:
   - scikit-learn
   - notebook
   - jupyterlab
+  - nltk
 
   - pip:
     # This project pip deps

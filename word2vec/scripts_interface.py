@@ -15,7 +15,7 @@ def word2vec(
     min_count=5,
     alpha=0.025,
     debug=2,
-    binary=0,
+    binary=False,
     cbow=1,
     save_vocab=None,
     read_vocab=None,
@@ -94,7 +94,7 @@ def word2vec(
         min_count,
         alpha,
         debug,
-        binary,
+        int(binary),
         cbow,
     ]
 
@@ -125,7 +125,7 @@ def word2clusters(
     min_count=5,
     alpha=0.025,
     debug=2,
-    binary=0,
+    binary=False,
     cbow=1,
     save_vocab=None,
     read_vocab=None,
@@ -163,7 +163,7 @@ def word2clusters(
         min_count,
         alpha,
         debug,
-        binary,
+        int(binary),
         cbow,
         classes,
     ]
@@ -207,7 +207,7 @@ def doc2vec(
     min_count=5,
     alpha=0.025,
     debug=2,
-    binary=0,
+    binary=False,
     cbow=1,
     save_vocab=None,
     read_vocab=None,
@@ -243,7 +243,7 @@ def doc2vec(
         min_count,
         alpha,
         debug,
-        binary,
+        int(binary),
         cbow,
     ]
 

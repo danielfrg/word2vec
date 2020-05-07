@@ -17,5 +17,6 @@ numpy
 scikit-learn
 notebook
 jupyterlab
+nltk
 
 # This project pip deps
