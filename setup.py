@@ -143,11 +143,11 @@ setup(
     maintainer="Daniel Rodriguez",
     maintainer_email="daniel@danielfrg.com",
     url="https://github.com/danielfrg/word2vec",
+    keywords=["NLP", "word2vec"],
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    keywords=["NLP", "word2vec"],
 )
