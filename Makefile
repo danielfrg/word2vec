@@ -56,7 +56,7 @@ package:  ## Build Python package (sdist)
 
 .PHONY: check
 check:  ## Check linting
-	@flake8 word2vec .
+	@flake8
 	@isort --check-only --diff --recursive --project word2vec --section-default THIRDPARTY word2vec .
 	@black --check word2vec .
 
