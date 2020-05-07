@@ -1,0 +1,5 @@
+[run]
+omit =
+    word2vec/tests/*
+source =
+    word2vec

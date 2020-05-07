@@ -1,26 +1,25 @@
-import sys
 import subprocess
-import six
+import sys
 
 
 def word2vec(
-        train,
-        output,
-        size=100,
-        window=5,
-        sample="1e-3",
-        hs=0,
-        negative=5,
-        threads=12,
-        iter_=5,
-        min_count=5,
-        alpha=0.025,
-        debug=2,
-        binary=1,
-        cbow=1,
-        save_vocab=None,
-        read_vocab=None,
-        verbose=False,
+    train,
+    output,
+    size=100,
+    window=5,
+    sample="1e-3",
+    hs=0,
+    negative=5,
+    threads=12,
+    iter_=5,
+    min_count=5,
+    alpha=0.025,
+    debug=2,
+    binary=False,
+    cbow=1,
+    save_vocab=None,
+    read_vocab=None,
+    verbose=False,
 ):
     """
     word2vec execution
@@ -95,7 +94,7 @@ def word2vec(
         min_count,
         alpha,
         debug,
-        binary,
+        int(binary),
         cbow,
     ]
 
@@ -113,24 +112,24 @@ def word2vec(
 
 
 def word2clusters(
-        train,
-        output,
-        classes,
-        size=100,
-        window=5,
-        sample="1e-3",
-        hs=0,
-        negative=5,
-        threads=12,
-        iter_=5,
-        min_count=5,
-        alpha=0.025,
-        debug=2,
-        binary=1,
-        cbow=1,
-        save_vocab=None,
-        read_vocab=None,
-        verbose=False,
+    train,
+    output,
+    classes,
+    size=100,
+    window=5,
+    sample="1e-3",
+    hs=0,
+    negative=5,
+    threads=12,
+    iter_=5,
+    min_count=5,
+    alpha=0.025,
+    debug=2,
+    binary=False,
+    cbow=1,
+    save_vocab=None,
+    read_vocab=None,
+    verbose=False,
 ):
     command = ["word2vec"]
 
@@ -164,7 +163,7 @@ def word2clusters(
         min_count,
         alpha,
         debug,
-        binary,
+        int(binary),
         cbow,
         classes,
     ]
@@ -196,23 +195,23 @@ def word2phrase(train, output, min_count=5, threshold=100, debug=2, verbose=Fals
 
 
 def doc2vec(
-        train,
-        output,
-        size=100,
-        window=5,
-        sample="1e-3",
-        hs=0,
-        negative=5,
-        threads=12,
-        iter_=5,
-        min_count=5,
-        alpha=0.025,
-        debug=2,
-        binary=1,
-        cbow=1,
-        save_vocab=None,
-        read_vocab=None,
-        verbose=False,
+    train,
+    output,
+    size=100,
+    window=5,
+    sample="1e-3",
+    hs=0,
+    negative=5,
+    threads=12,
+    iter_=5,
+    min_count=5,
+    alpha=0.025,
+    debug=2,
+    binary=False,
+    cbow=1,
+    save_vocab=None,
+    read_vocab=None,
+    verbose=False,
 ):
     command = ["word2vec-doc2vec"]
     args = [
@@ -244,7 +243,7 @@ def doc2vec(
         min_count,
         alpha,
         debug,
-        binary,
+        int(binary),
         cbow,
     ]
 
@@ -265,18 +264,25 @@ def doc2vec(
 
 
 def run_cmd(command, verbose=False):
+    if verbose:
+        print("Running command:", " ".join(command))
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if verbose:
         while proc.poll() is None:
-            string = "" if six.PY2 else b""    # Python 2: ''   -  Python 3: b''
+            string = b""
             for c in iter(lambda: proc.stdout.read(1), string):
                 c = c.decode("ascii")
                 sys.stdout.write(c)
 
         sys.stdout.flush()
 
-        if proc.returncode != 0:
-            raise Exception("The training could not be completed.")
+    proc.wait()
+    if proc.returncode != 0:
+        out, err = proc.communicate()
+        raise Exception(
+            "The training could not be completed (returncode=%i): %s %s"
+            % (proc.returncode, out, err)
+        )
 
     out, err = proc.communicate()

@@ -2,7 +2,6 @@ import numpy as np
 
 
 class WordClusters(object):
-
     def __init__(self, vocab, clusters):
         self.vocab = vocab
         self.clusters = clusters

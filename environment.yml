@@ -1,23 +1,28 @@
-name: word2vec-dev
-
+name: word2vec
+channels:
+  - conda-forge
 dependencies:
   - python=3.7
+  - pip
+
+  # Base conda deps
+  - setuptools
+  - setuptools-scm
+  - pylint
+  - flake8
+  - black
+  - isort
+  - twine
+  - wheel
+  - pytest
+  - pytest-cov
+
+  # This project conda deps
   - numpy
-  - cython
   - scikit-learn
-  
-  # Dev
+  - notebook
   - jupyterlab
+  - nltk
+
   - pip:
-    - pylint
-    - ropes
-    - yapf
-    - pytest
-    - pytest-cov
-    - pytest-cov
-    - python-coveralls
-    - nose
-    - mock
-    - versioneer
-    - twine>=1.11.0
-    - wheel>=0.31.0
+    # This project pip deps
