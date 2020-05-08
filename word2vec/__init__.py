@@ -18,7 +18,7 @@ except ImportError:
             """
             from setuptools_scm.git import parse
 
-            kwargs["describe_command"] = "git describe --dirty --tags --long"
+            kwargs["describe_command"] = "git describe --dirty --tags --long --match '*[0-9]*"
             return parse(root, **kwargs)
 
         __version__ = setuptools_scm.get_version("./", parse=parse_git)
