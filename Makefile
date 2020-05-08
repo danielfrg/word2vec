@@ -45,7 +45,7 @@ develop:  ## Install package for development
 	python -m pip install --no-build-isolation -e .
 
 
-.PHONY: clean build
+.PHONY: build
 build: package  ## Build everything
 
 
