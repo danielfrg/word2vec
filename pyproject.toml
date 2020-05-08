@@ -1,13 +1,12 @@
 [build-system]
-# Minimum requirements for the build system to execute.
-requires = [
-    "setuptools",
-    "setuptools_scm",
-    "wheel"
-]
+requires = ["setuptools", "setuptools_scm", "wheel"]
 
 [tool.setuptools_scm]
 write_to = "word2vec/_generated_version.py"
+
+[tool.coverage.run]
+parallel = true
+branch = true
 
 [tool.black]
 target-version = ["py36", "py37", "py38"]
@@ -27,3 +26,12 @@ exclude = '''
   | dist
 )
 '''
+
+[tool.isort]
+# https://black.readthedocs.io/en/stable/the_black_code_style.html#how-black-wraps-lines
+multi_line_output=3
+lines_after_imports = 2
+force_grid_wrap = 0
+include_trailing_comma = "true"
+use_parentheses = "true"
+line_length = 88
