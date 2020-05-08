@@ -20,7 +20,7 @@ except ImportError:
 
             kwargs[
                 "describe_command"
-            ] = "git describe --dirty --tags --long --match '*[0-9]*"
+            ] = "git describe --dirty --tags --long --match '*[0-9]*'"
             return parse(root, **kwargs)
 
         __version__ = setuptools_scm.get_version("./", parse=parse_git)

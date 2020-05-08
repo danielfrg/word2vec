@@ -7,7 +7,7 @@ MAKEFLAGS += --no-builtin-rules
 
 PWD := $(shell pwd)
 TEST_FILTER ?= ""
-
+TEST_MARKERS ?= "not data"
 
 first: help
 
@@ -79,7 +79,7 @@ upload-test:  ## Upload package to test PyPI
 
 .PHONY: test
 test:  ## Run tests
-	pytest -k $(TEST_FILTER)
+	pytest -k '$(TEST_FILTER)' -k $(TEST_MARKERS)
 
 
 .PHONY: report
