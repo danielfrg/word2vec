@@ -137,6 +137,7 @@ def test_model_with_clusters():
     assert len(py_response[0]) == 3
 
 
+@pytest.mark.data
 def test_verbose():
     saved_stdout = sys.stdout
 
