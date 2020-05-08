@@ -15,7 +15,7 @@ make upload-test
 
 # Create venv and install rc version
 pip install --extra-index-url=https://test.pypi.org/simple 'word2vec[test]'==${VERSION}rc0
-pytest --pyargs word2vec
+pytest --pyargs word2vec -m "not data"
 
 # Delete rc tag
 git tag -d ${VERSION}.rc0
