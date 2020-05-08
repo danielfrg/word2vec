@@ -9,11 +9,12 @@ git checkout -b release-${VERSION}
 git commit -am "Release ${VERSION}.rc0" --allow-empty
 git tag ${VERSION}.rc0
 
+make cleanall
 make build
 make upload-test
 
 # Create venv and install rc version
-pip install extra-index-url=https://test.pypi.org/simple tsne==${VERSION}rc0
+pip install --extra-index-url=https://test.pypi.org/simple word2vec==${VERSION}rc0
 
 # Delete rc tag
 git tag -d ${VERSION}.rc0
