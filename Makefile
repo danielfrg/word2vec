@@ -79,7 +79,12 @@ upload-test:  ## Upload package to test PyPI
 
 .PHONY: test
 test:  ## Run tests
-	pytest -k '$(TEST_FILTER)' -k $(TEST_MARKERS)
+	pytest -k $(TEST_FILTER) -m $(TEST_MARKERS)
+
+
+.PHONY: test-all
+test-all:  ## Run all tests
+	pytest -k $(TEST_FILTER)
 
 
 .PHONY: report

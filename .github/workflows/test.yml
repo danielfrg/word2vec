@@ -46,8 +46,7 @@ jobs:
     - name: Run tests
       if: always()
       run: |
-        make test
-        TEST_MARKERS="data" make test
+        make test-all
         make report
 
     - name: Codecov

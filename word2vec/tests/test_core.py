@@ -18,27 +18,30 @@ output_bin = os.path.join(data_dir, "test-output-vectors.bin")
 
 
 @pytest.mark.data
-def test_script_word2vec():
+def test_run_word2vec():
     word2vec.word2vec(input_text, output_txt)
     assert os.path.exists(output_txt)
 
 
 @pytest.mark.data
-def test_script_word2vec_bin():
+def test_run_word2vec_bin():
     word2vec.word2vec(input_text, output_bin, binary=1)
     assert os.path.exists(output_bin)
 
 
 @pytest.mark.data
 @pytest.mark.xfail(sys.platform == "darwin", reason="Failing on OS X")
-@pytest.mark.xfail( os.environ.get("CI", None) is not None, reason="Failing on Github Actions: Aborted (core dumped)")
-def test_script_word2phrase():
+@pytest.mark.xfail(
+    os.environ.get("CI", None) is not None,
+    reason="Failing on Github Actions: Aborted (core dumped)",
+)
+def test_run_word2phrase():
     word2vec.word2phrase(input_text, output_phrases)
     assert os.path.exists(output_phrases)
 
 
 @pytest.mark.data
-def test_script_word2clusters():
+def test_run_word2clusters():
     word2vec.word2clusters(input_text, output_clusters, 10)
     assert os.path.exists(output_clusters)
 
