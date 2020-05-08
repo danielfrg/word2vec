@@ -54,8 +54,10 @@ jobs:
       if: always()
       run: |
         make test
+        make report
 
     - name: Codecov
       uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml
+        fail_ci_if_error: true

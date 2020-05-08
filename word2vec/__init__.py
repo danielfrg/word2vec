@@ -3,6 +3,7 @@ from .scripts_interface import doc2vec, word2clusters, word2phrase, word2vec  # 
 from .wordclusters import WordClusters  # noqa
 from .wordvectors import WordVectors  # noqa
 
+
 try:
     from ._generated_version import version as __version__
 except ImportError:

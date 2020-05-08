@@ -6,6 +6,7 @@ import pytest
 
 import word2vec
 
+
 this_dir = os.path.abspath(os.path.dirname(__file__))
 data_dir = os.path.abspath(os.path.join(this_dir, "..", "..", "data"))
 input_text = os.path.join(data_dir, "text8-small")
