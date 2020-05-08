@@ -120,7 +120,7 @@ else:
 setup(
     name="word2vec",
     packages=find_packages(),
-    package_dir={"": "src"},
+    # package_dir={"": "src"},
     zip_safe=False,
     include_package_data=True,
     package_data={"word2vec": ["includes/**/*.c"]},
