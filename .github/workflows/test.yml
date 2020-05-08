@@ -39,13 +39,6 @@ jobs:
       run: |
         make test-data
 
-    - name: DEBUG
-      run: |
-        # word2phrase is failing with: Aborted (core dumped)
-        # word2phrase
-        # word2phrase -train /home/runner/work/word2vec/word2vec/data/text8-small -output /home/runner/work/word2vec/word2vec/data/test-output-phrases-inline.txt
-        # cat /home/runner/work/word2vec/word2vec/data/test-output-phrases-inline.txt
-
     - name: Check linting
       run: |
         make check
@@ -53,7 +46,7 @@ jobs:
     - name: Run tests
       if: always()
       run: |
-        make test
+        make test-all
         make report
 
     - name: Codecov

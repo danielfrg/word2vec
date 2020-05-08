@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools_scm", "wheel"]
+requires = ["setuptools>=42", "setuptools_scm[toml]>=3.4", "wheel"]
 
 [tool.setuptools_scm]
 write_to = "word2vec/_generated_version.py"
@@ -7,6 +7,9 @@ write_to = "word2vec/_generated_version.py"
 [tool.coverage.run]
 parallel = true
 branch = true
+
+[tool.coverage.report]
+omit = ["word2vec/_generated_version.py", "word2vec/tests/*"]
 
 [tool.black]
 target-version = ["py36", "py37", "py38"]
