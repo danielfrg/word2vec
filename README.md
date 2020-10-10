@@ -1,9 +1,9 @@
 # word2vec
 
 [![PyPI](https://badge.fury.io/py/word2vec.svg)](https://pypi.org/project/word2vec/)
-[![Testing](http://github.com/danielfrg/word2vec/workflows/test/badge.svg)](http://github.com/danielfrg/word2vec/actions)
+[![Testing](https://github.com/danielfrg/word2vec/workflows/test/badge.svg)](http://github.com/danielfrg/word2vec/actions)
 [![Coverage Status](https://codecov.io/gh/danielfrg/word2vec/branch/master/graph/badge.svg)](https://codecov.io/gh/danielfrg/word2vec?branch=master)
-[![License](http://img.shields.io/:license-Apache%202-blue.svg)](http://github.com/danielfrg/word2vec/blob/master/LICENSE.txt)
+[![License](https://img.shields.io/:license-Apache%202-blue.svg)](http://github.com/danielfrg/word2vec/blob/master/LICENSE.txt)
 
 Python interface to Google word2vec.
 
