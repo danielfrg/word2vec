@@ -5,6 +5,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    - cron: "0 5 * * *"
 
 jobs:
   test:
@@ -41,7 +43,7 @@ jobs:
 
     - name: Check linting
       run: |
-        make check
+        # make check
 
     - name: Run tests
       if: always()
