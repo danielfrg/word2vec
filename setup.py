@@ -123,7 +123,7 @@ setup(
     setup_requires=["setuptools_scm"],
     install_requires=read_file("requirements.txt").splitlines(),
     extras_require={
-        "test": ["pytest"],
+        "test": ["pytest", "pytest-cov"],
         "dev": read_file("requirements-dev.txt").splitlines(),
     },
     description="Wrapper for Google word2vec",
@@ -133,7 +133,7 @@ setup(
     maintainer="Daniel Rodriguez",
     maintainer_email="daniel@danielfrg.com",
     url="https://github.com/danielfrg/word2vec",
-    keywords=["NLP", "word2vec"],
+    keywords=["word2vec", "NLP"],
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.7",

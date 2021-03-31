@@ -1,6 +1,6 @@
-# Development
+# Contributing
 
-## Developmen environment
+## Development environment
 
 Create Python env
 
@@ -9,7 +9,7 @@ make env
 conda activate word2vec
 ```
 
-Install package in edit mode
+Install package for developmentt
 
 ```
 make develop

@@ -2,7 +2,7 @@ name: word2vec
 channels:
   - conda-forge
 dependencies:
-  - python=3.7
+  - python=3.8
   - pip
 
   # Base conda deps
@@ -14,15 +14,17 @@ dependencies:
   - isort
   - twine
   - wheel
+
+  # Package deps
+  - numpy>=1.9.2
+  - joblib
+
+  # Testing
   - pytest
   - pytest-cov
 
-  # This project conda deps
-  - numpy
-  - scikit-learn
+  # Examples
   - notebook
   - jupyterlab
+  - scikit-learn
   - nltk
-
-  - pip:
-    # This project pip deps

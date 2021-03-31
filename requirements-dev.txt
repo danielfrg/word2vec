@@ -9,14 +9,17 @@ black
 isort
 twine
 wheel
+
+# Package deps
+numpy>=1.9.2
+joblib
+
+# Testing
 pytest
 pytest-cov
 
-# This project conda deps
-numpy
-scikit-learn
+# Examples
 notebook
 jupyterlab
+scikit-learn
 nltk
-
-# This project pip deps
