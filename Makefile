@@ -50,7 +50,7 @@ fmt:  ## Format source
 
 
 test:  ## Run tests
-	pytest -k $(TEST_FILTER) -m $(TEST_MARKERS)
+	pytest -k $(TEST_FILTER) -m "$(TEST_MARKERS)"
 
 
 test-all:  ## Run all tests

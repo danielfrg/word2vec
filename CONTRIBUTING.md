@@ -23,7 +23,7 @@ so you have to export that to the `$PATH` for development.
 export PATH=$(PWD)/bin:$PATH
 ```
 
-## Testing
+## Tests
 
 Download test data
 
@@ -35,6 +35,13 @@ Run tests
 
 ```
 make test
+```
+
+Check linting and format
+
+```
+make check
+make fmt
 ```
 
 ### Docker (for Linux)
