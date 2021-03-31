@@ -1,11 +1,17 @@
 # Development
 
-Create dev environment
+## Developmen environment
+
+Create Python env
 
 ```
-# Create conda env
 make env
 conda activate word2vec
+```
+
+Install package in edit mode
+
+```
 make develop
 ```
 
@@ -19,19 +25,23 @@ export PATH=$(PWD)/bin:$PATH
 
 ## Testing
 
-```
-# Download test data
-make test-data
+Download test data
 
-# Run tests
+```
+make test-data
+```
+
+Run tests
+
+```
 make test
 ```
 
-### Docker for Linux
+### Docker (for Linux)
 
 ```
 make docker-img
-make docker-Run
+make docker-run
 
 # Inside the container
 conda activate word2vec

@@ -4,6 +4,14 @@ requires = ["setuptools>=42", "setuptools_scm[toml]>=3.4", "wheel"]
 [tool.setuptools_scm]
 write_to = "word2vec/_generated_version.py"
 
+[tool.pytest.ini_options]
+norecursedirs = ".git,dist,build,env,venv"
+addopts = "word2vec/tests -s -vv --cov-config=pyproject.toml --cov=word2vec --cov-report term-missing"
+markers = [
+    "data: requires the test data (deselect with '-m \"not data\"')",
+    "commands: requires the commands in the PATH (deselect with '-m \"not commands\"')"
+]
+
 [tool.coverage.run]
 parallel = true
 branch = true

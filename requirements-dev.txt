@@ -1,0 +1,22 @@
+# Used for CI - It should match environment.yml
+
+# Base conda deps
+setuptools
+setuptools-scm
+pylint
+flake8
+black
+isort
+twine
+wheel
+pytest
+pytest-cov
+
+# This project conda deps
+numpy
+scikit-learn
+notebook
+jupyterlab
+nltk
+
+# This project pip deps
