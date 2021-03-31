@@ -1,6 +1,6 @@
 # Releasing
 
-## Upload to test PyPI
+## Upload to Test PyPI
 
 ```
 export VERSION=1.0.0
