@@ -5,7 +5,7 @@ dependencies:
   - python=3.8
   - pip
 
-  # Base conda deps
+  # Dev tools
   - setuptools
   - setuptools-scm
   - pylint

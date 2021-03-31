@@ -20,7 +20,7 @@ branch = true
 omit = ["word2vec/_generated_version.py", "word2vec/tests/*"]
 
 [tool.black]
-target-version = ["py36", "py37", "py38"]
+target-version = ["py37", "py38"]
 exclude = '''
 (
     asv_bench/env
@@ -40,7 +40,7 @@ exclude = '''
 
 [tool.isort]
 # https://black.readthedocs.io/en/stable/the_black_code_style.html#how-black-wraps-lines
-multi_line_output=3
+multi_line_output = 3
 lines_after_imports = 2
 force_grid_wrap = 0
 include_trailing_comma = "true"

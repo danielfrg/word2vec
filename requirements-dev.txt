@@ -1,6 +1,6 @@
-# Used for CI - It should match environment.yml
+# Used for CI: It should match environment.yml
 
-# Base conda deps
+# Dev tools
 setuptools
 setuptools-scm
 pylint
