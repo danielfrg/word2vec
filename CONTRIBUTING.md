@@ -9,7 +9,7 @@ make env
 conda activate word2vec
 ```
 
-Install package for developmentt
+Install package for development
 
 ```
 make develop
