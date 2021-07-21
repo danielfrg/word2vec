@@ -194,7 +194,7 @@ class WordVectors(object):
         ----------
         fname : path to file
         vocabUnicodeSize: the maximum string length (78, by default)
-        desired_vocab: if set any words that don't fall into this vocab will be droped
+        desired_vocab: if set any words that don't fall into this vocab will be dropped
 
         Returns
         -------
