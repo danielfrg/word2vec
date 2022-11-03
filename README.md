@@ -29,7 +29,7 @@ WORD2VEC_CFLAGS='-march=corei7' pip install word2vec
 
 ## Usage
 
-Example notebook: [word2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/word2vec.ipynb)
+Example notebook: [word2vec](https://nbviewer.org/github/danielfrg/word2vec/blob/main/examples/word2vec.ipynb)
 
 The default functionality from word2vec is available with the following commands:
 - `word2vec`
@@ -39,4 +39,4 @@ The default functionality from word2vec is available with the following commands
 - `word2vec-compute-accuracy`
 
 Experimental functionality on doc2vec can be found in this example:
-[doc2vec](http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/word2vec/master/examples/doc2vec.ipynb)
+[doc2vec](https://nbviewer.org/github/danielfrg/word2vec/blob/main/examples/doc2vec.ipynb)
