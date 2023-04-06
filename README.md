@@ -1,3 +1,10 @@
+# NOT MAINTAINED
+
+- I have not used this code in a long time
+- No issues or PRs can be created
+- Latest release doesn't work with newer versions of numpy
+- I recommened moving to a native alternative in Tensorflow or PyTorch
+
 # word2vec
 
 [![pypi](https://badge.fury.io/py/word2vec.svg)](https://pypi.org/project/word2vec/)
